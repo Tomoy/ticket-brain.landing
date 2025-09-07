@@ -2,9 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { HeroGeometric } from "@/components/ui/shape-landing-hero";
-import { motion } from "framer-motion";
-import { BarChart3, PieChart, Leaf, ShoppingCart } from "lucide-react";
+import heroImage from "@/assets/hero-image.jpg";
 
 const Hero = () => {
   const [email, setEmail] = useState("");
@@ -21,133 +19,95 @@ const Hero = () => {
     }
   };
 
-  const benefits = [
-    {
-      icon: BarChart3,
-      title: "Price Comparisons",
-      description: "Find best deals across stores",
-      gradient: "from-blue-500/20 to-cyan-500/20",
-      iconColor: "text-blue-400",
-    },
-    {
-      icon: PieChart,
-      title: "Spending Analysis",
-      description: "Track your grocery budget",
-      gradient: "from-purple-500/20 to-pink-500/20",
-      iconColor: "text-purple-400",
-    },
-    {
-      icon: ShoppingCart,
-      title: "Nutritional Insights",
-      description: "Understand your food choices",
-      gradient: "from-green-500/20 to-emerald-500/20",
-      iconColor: "text-green-400",
-    },
-    {
-      icon: Leaf,
-      title: "Carbon Footprint",
-      description: "Make sustainable decisions",
-      gradient: "from-orange-500/20 to-red-500/20",
-      iconColor: "text-orange-400",
-    },
-  ];
-
   return (
-    <section className="relative">
-      <HeroGeometric
-        badge="TicketBrain"
-        title1="Turn Your Receipts Into"
-        title2="Smart Insights"
-      />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-hero" />
       
-      {/* Content overlay */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="relative z-20 container mx-auto px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            {/* Description */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.5 }}
-              className="text-lg md:text-xl text-white/70 mb-12 leading-relaxed max-w-2xl mx-auto"
-            >
-              Transform grocery receipts into powerful insights about spending, nutrition, and environmental impact. Make smarter shopping decisions with every purchase.
-            </motion.p>
+      {/* Content */}
+      <div className="relative z-10 container mx-auto px-6 py-20">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left column - Text content */}
+          <div className="text-center lg:text-left">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6 leading-tight">
+              Turn Your Receipts Into
+              <span className="block bg-gradient-accent bg-clip-text text-transparent">
+                Smart Insights
+              </span>
+            </h1>
+            
+            <p className="text-lg md:text-xl text-primary-foreground/90 mb-8 leading-relaxed">
+              TicketBrain transforms simple grocery receipts into powerful insights about your spending, 
+              nutrition, and environmental impact. Make smarter shopping decisions with every purchase.
+            </p>
 
-            {/* Key benefits with enhanced styling */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.8 }}
-              className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12"
-            >
-              {benefits.map((benefit, index) => (
-                <motion.div
-                  key={benefit.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 2 + index * 0.1 }}
-                  className={`
-                    relative group p-4 rounded-2xl border border-white/10 
-                    bg-gradient-to-br ${benefit.gradient} backdrop-blur-sm
-                    hover:border-white/20 hover:bg-white/[0.02] 
-                    transition-all duration-300 hover:scale-105
-                  `}
-                >
-                  <div className="flex flex-col items-center text-center space-y-2">
-                    <div className={`
-                      p-2 rounded-xl bg-white/5 group-hover:bg-white/10 
-                      transition-colors duration-300
-                    `}>
-                      <benefit.icon className={`w-5 h-5 ${benefit.iconColor}`} />
-                    </div>
-                    <h3 className="text-white font-medium text-sm">
-                      {benefit.title}
-                    </h3>
-                    <p className="text-white/60 text-xs leading-relaxed">
-                      {benefit.description}
-                    </p>
-                  </div>
-                  
-                  {/* Subtle glow effect */}
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </motion.div>
-              ))}
-            </motion.div>
+            {/* Key benefits */}
+            <div className="grid grid-cols-2 gap-4 mb-8">
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-accent rounded-full" />
+                <span className="text-primary-foreground/80 text-sm">Price Comparisons</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-accent rounded-full" />
+                <span className="text-primary-foreground/80 text-sm">Spending Analysis</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-accent rounded-full" />
+                <span className="text-primary-foreground/80 text-sm">Nutritional Insights</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-accent rounded-full" />
+                <span className="text-primary-foreground/80 text-sm">Carbon Footprint</span>
+              </div>
+            </div>
 
             {/* Email signup */}
-            <motion.form
-              onSubmit={handleEmailSubmit}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 2.5 }}
-              className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
-            >
+            <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto lg:mx-0">
               <Input
                 type="email"
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="flex-1 bg-white/10 border-white/20 text-white placeholder:text-white/50 backdrop-blur-sm focus:bg-white/15"
+                className="flex-1 bg-white/95 border-white/20 text-foreground placeholder:text-muted-foreground"
                 required
               />
               <Button 
                 type="submit" 
-                className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"
+                variant="accent"
+                className="bg-gradient-accent hover:shadow-glow transition-all duration-300"
               >
                 Get Early Access
               </Button>
-            </motion.form>
+            </form>
             
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 2.8 }}
-              className="text-sm text-white/50 mt-4"
-            >
+            <p className="text-sm text-primary-foreground/70 mt-3">
               Be the first to test TicketBrain when it launches
-            </motion.p>
+            </p>
           </div>
+
+          {/* Right column - Hero image */}
+          <div className="relative">
+            <div className="relative rounded-2xl overflow-hidden shadow-elevated">
+              <img 
+                src={heroImage} 
+                alt="TicketBrain app interface showing receipt scanning and insights"
+                className="w-full h-auto object-cover"
+              />
+              {/* Overlay gradient for better text contrast if needed */}
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
+            </div>
+            
+            {/* Floating elements */}
+            <div className="absolute -top-4 -right-4 w-12 h-12 bg-accent rounded-full shadow-soft animate-bounce" />
+            <div className="absolute -bottom-6 -left-6 w-8 h-8 bg-success rounded-full shadow-soft animate-pulse" />
+          </div>
+        </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+        <div className="w-6 h-10 border-2 border-primary-foreground/30 rounded-full flex justify-center">
+          <div className="w-1 h-3 bg-primary-foreground/50 rounded-full mt-2 animate-pulse" />
         </div>
       </div>
     </section>
