@@ -26,22 +26,22 @@ const Header = () => {
           {/* Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <button 
-              onClick={() => scrollToSection('features')}
-              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors cursor-pointer"
-            >
-              Features
-            </button>
-            <button 
               onClick={() => scrollToSection('how-it-works')}
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors cursor-pointer"
             >
               How It Works
             </button>
             <button 
-              onClick={() => scrollToSection('contact')}
+              onClick={() => scrollToSection('features')}
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors cursor-pointer"
             >
-              Contact
+              Features
+            </button>
+            <button 
+              onClick={() => scrollToSection('cta')}
+              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors cursor-pointer"
+            >
+              Join
             </button>
           </nav>
         </div>
