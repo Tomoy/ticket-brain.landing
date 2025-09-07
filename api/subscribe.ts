@@ -30,17 +30,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     );
 
-    if (mcRes.ok) {
-      return res.status(200).json({ ok: true });
-    }
-
     const data = await mcRes.json();
-    if (data?.title === "Member Exists") {
-      return res.status(200).json({ ok: true, message: "Already subscribed" });
+
+    if (mcRes.status >= 200 && mcRes.status < 300) {
+      return res.status(200).json({ ok: true, data });
     }
 
-    return res.status(mcRes.status).json(data);
-  } catch (e) {
+    return res.status(mcRes.status).json({ error: true, data });
+  } catch (err) {
+    console.error("Mailchimp error:", err);
     return res.status(500).json({ error: "Server error" });
   }
 }
