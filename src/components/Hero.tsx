@@ -32,7 +32,7 @@ const Hero = () => {
           <div className="text-center lg:text-left">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6 leading-tight">
               Turn Your Receipts Into
-              <span className="block bg-gradient-accent bg-clip-text text-transparent">
+              <span className="block bg-gradient-accent bg-clip-text text-transparent mt-2">
                 Smart Insights
               </span>
             </h1>

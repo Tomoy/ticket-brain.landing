@@ -20,7 +20,7 @@ const CTA = () => {
   };
 
   return (
-    <section className="py-20 bg-gradient-hero relative overflow-hidden">
+    <section id="contact" className="py-20 bg-gradient-hero relative overflow-hidden">
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-10 left-10 w-32 h-32 border border-white/20 rounded-full" />
