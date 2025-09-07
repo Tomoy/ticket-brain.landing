@@ -8,12 +8,12 @@ const Footer = () => {
             Transforming grocery receipts into smart insights for conscious consumers.
           </p>
           
-          <div className="flex justify-center space-x-6 text-sm text-primary-foreground/60">
+          <div className="flex justify-center items-center space-x-6 text-sm text-primary-foreground/60">
             <span>© 2024 TicketBrain</span>
             <span>•</span>
-            <span>Privacy Policy</span>
-            <span>•</span>
-            <span>Terms of Service</span>
+            <a href="/privacy-policy" className="hover:text-primary-foreground transition-colors">
+              Privacy Policy
+            </a>
           </div>
         </div>
       </div>
