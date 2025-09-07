@@ -1,4 +1,4 @@
-import { Brain } from "lucide-react";
+import { Brain, Receipt } from "lucide-react";
 
 const Header = () => {
   return (
@@ -6,9 +6,16 @@ const Header = () => {
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
-            <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-success">
-              <Brain className="w-5 h-5 text-white" />
+          <div className="flex items-center space-x-3">
+            <div className="relative flex items-center">
+              {/* Receipt background */}
+              <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-success">
+                <Receipt className="w-4 h-4 text-white" />
+              </div>
+              {/* Brain overlay */}
+              <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-br from-accent to-accent-hover rounded-full flex items-center justify-center shadow-sm">
+                <Brain className="w-2.5 h-2.5 text-white" />
+              </div>
             </div>
             <span className="text-xl font-bold">
               <span className="text-primary">Ticket</span>
