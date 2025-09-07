@@ -25,7 +25,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         },
         body: JSON.stringify({
           email_address: email,
-          status: "pending", // use "subscribed" to skip double opt-in
+          status: "subscribed", // use "subscribed" to skip double opt-in
         }),
       }
     );
