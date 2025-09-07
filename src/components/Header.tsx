@@ -1,3 +1,5 @@
+import { Brain } from "lucide-react";
+
 const Header = () => {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -12,14 +14,12 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <img 
-              src="/lovable-uploads/f086913a-d575-4ca1-a25d-24c8cabedd92.png" 
-              alt="TicketBrain Logo" 
-              className="w-10 h-10"
-            />
+            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-success shadow-soft">
+              <Brain className="w-6 h-6 text-white" />
+            </div>
             <span className="text-xl font-bold">
-              <span style={{color: '#22c55e'}}>Ticket</span>
-              <span style={{color: '#3b82f6'}}>Brain</span>
+              <span className="text-primary">Ticket</span>
+              <span className="text-foreground">Brain</span>
             </span>
           </div>
           
@@ -38,7 +38,7 @@ const Header = () => {
               Features
             </button>
             <button 
-              onClick={() => scrollToSection('contact')}
+              onClick={() => scrollToSection('cta')}
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors cursor-pointer"
             >
               Join
