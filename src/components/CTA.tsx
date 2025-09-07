@@ -20,29 +20,41 @@ const CTA = () => {
     }
   };*/
 
-  async function handleEmailSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setStatus("loading");
+async function handleEmailSubmit(e: React.FormEvent) {
+  e.preventDefault();
+  setStatus("loading");
 
+  try {
     const res = await fetch("/api/subscribe", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),
     });
 
-    if (res.ok) {
+    const data = await res.json();
+
+    if (res.ok && data.ok) {
       toast({
         title: "Welcome to the TicketBrain family!",
         description: "You'll be among the first to experience smarter shopping.",
       });
       setEmail("");
+      setStatus("success");
     } else {
       toast({
         title: "Error",
-        description: "There was an error submitting the email.",
+        description: data?.data?.detail || "There was an error submitting the email.",
       });
+      setStatus("error");
     }
+  } catch (err) {
+    toast({
+      title: "Network Error",
+      description: "Please try again later.",
+    });
+    setStatus("error");
   }
+}
 
   return (
     <section id="contact" className="py-20 bg-gradient-hero relative overflow-hidden">
@@ -100,10 +112,11 @@ const CTA = () => {
               <Button 
                 type="submit" 
                 variant="accent"
+                disabled={status === "loading"}
                 className="w-full bg-gradient-accent hover:shadow-glow transition-all duration-300"
                 size="lg"
               >
-                Join the Waitlist
+                {status === "loading" ? "Joining..." : "Join the Waitlist"}
               </Button>
             </form>
             
