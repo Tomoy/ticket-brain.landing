@@ -3,7 +3,6 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import heroImage from "@/assets/hero-image.jpg";
-import { TrendingDown, PieChart, Apple, Leaf } from "lucide-react";
 
 const Hero = () => {
   const [email, setEmail] = useState("");
@@ -41,34 +40,6 @@ const Hero = () => {
               TicketBrain transforms simple grocery receipts into powerful insights about your spending, 
               nutrition, and environmental impact. Make smarter shopping decisions with every purchase.
             </p>
-
-            {/* Key benefits */}
-            <div className="grid grid-cols-2 gap-6 mb-8">
-              <div className="group flex items-center space-x-3 p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                <div className="flex items-center justify-center w-8 h-8 bg-gradient-to-r from-accent to-accent-hover rounded-lg shadow-glow group-hover:scale-110 transition-transform duration-300">
-                  <TrendingDown className="w-4 h-4 text-white" />
-                </div>
-                <span className="text-primary-foreground font-medium text-sm">Price Comparisons</span>
-              </div>
-              <div className="group flex items-center space-x-3 p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                <div className="flex items-center justify-center w-8 h-8 bg-gradient-to-r from-success to-primary rounded-lg shadow-soft group-hover:scale-110 transition-transform duration-300">
-                  <PieChart className="w-4 h-4 text-white" />
-                </div>
-                <span className="text-primary-foreground font-medium text-sm">Spending Analysis</span>
-              </div>
-              <div className="group flex items-center space-x-3 p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                <div className="flex items-center justify-center w-8 h-8 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-lg shadow-soft group-hover:scale-110 transition-transform duration-300">
-                  <Apple className="w-4 h-4 text-white" />
-                </div>
-                <span className="text-primary-foreground font-medium text-sm">Nutritional Insights</span>
-              </div>
-              <div className="group flex items-center space-x-3 p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                <div className="flex items-center justify-center w-8 h-8 bg-gradient-to-r from-emerald-400 to-green-500 rounded-lg shadow-soft group-hover:scale-110 transition-transform duration-300">
-                  <Leaf className="w-4 h-4 text-white" />
-                </div>
-                <span className="text-primary-foreground font-medium text-sm">Carbon Footprint</span>
-              </div>
-            </div>
 
             {/* Email signup */}
             <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto lg:mx-0">
