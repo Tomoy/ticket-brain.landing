@@ -63,17 +63,24 @@ const CTA = () => {
               Get Notified When We Launch
             </h3>
             
-            <div className="flex justify-center">
-              <iframe 
-                src="https://tomasmoyano.substack.com/embed" 
-                width="480" 
-                height="320" 
-                style={{border: '1px solid #EEE', background: 'white'}} 
-                frameBorder="0" 
-                scrolling="no"
-                className="rounded-lg shadow-soft"
+            <form onSubmit={handleEmailSubmit} className="space-y-4">
+              <Input
+                type="email"
+                placeholder="Enter your email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full bg-white border-white/20 text-foreground placeholder:text-muted-foreground"
+                required
               />
-            </div>
+              <Button 
+                type="submit" 
+                variant="accent"
+                className="w-full bg-gradient-accent hover:shadow-glow transition-all duration-300"
+                size="lg"
+              >
+                Join the Waitlist
+              </Button>
+            </form>
             
             <p className="text-sm text-primary-foreground/70 mt-4">
               No spam, ever. Unsubscribe at any time. We respect your privacy.

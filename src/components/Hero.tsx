@@ -41,18 +41,24 @@ const Hero = () => {
               nutrition, and environmental impact. Make smarter shopping decisions with every purchase.
             </p>
 
-            {/* Substack signup */}
-            <div className="flex justify-center lg:justify-start">
-              <iframe 
-                src="https://tomasmoyano.substack.com/embed" 
-                width="480" 
-                height="320" 
-                style={{border: '1px solid #EEE', background: 'white'}} 
-                frameBorder="0" 
-                scrolling="no"
-                className="rounded-lg shadow-soft"
+            {/* Email signup */}
+            <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto lg:mx-0">
+              <Input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="flex-1 bg-white/95 border-white/20 text-foreground placeholder:text-muted-foreground"
+                required
               />
-            </div>
+              <Button 
+                type="submit" 
+                variant="accent"
+                className="bg-gradient-accent hover:shadow-glow transition-all duration-300"
+              >
+                Get Early Access
+              </Button>
+            </form>
             
             <p className="text-sm text-primary-foreground/70 mt-3">
               Be the first to test TicketBrain when it launches
