@@ -25,7 +25,7 @@ const Hero = () => {
       <div className="absolute inset-0 bg-gradient-hero" />
       
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-6 py-20">
+      <div className="relative z-10 container mx-auto px-6 py-20 pt-24">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left column - Text content */}
           <div className="text-center lg:text-left">
@@ -42,22 +42,22 @@ const Hero = () => {
             </p>
 
             {/* Key benefits */}
-            <div className="grid grid-cols-2 gap-4 mb-8">
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-accent rounded-full" />
-                <span className="text-primary-foreground/80 text-sm">Price Comparisons</span>
+            <div className="grid grid-cols-2 gap-6 mb-8">
+              <div className="group flex items-center space-x-3 p-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105">
+                <div className="w-3 h-3 bg-gradient-to-r from-accent to-accent-hover rounded-full shadow-glow group-hover:scale-110 transition-transform duration-300" />
+                <span className="text-primary-foreground font-medium text-sm">Price Comparisons</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-accent rounded-full" />
-                <span className="text-primary-foreground/80 text-sm">Spending Analysis</span>
+              <div className="group flex items-center space-x-3 p-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105">
+                <div className="w-3 h-3 bg-gradient-to-r from-success to-primary rounded-full shadow-soft group-hover:scale-110 transition-transform duration-300" />
+                <span className="text-primary-foreground font-medium text-sm">Spending Analysis</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-accent rounded-full" />
-                <span className="text-primary-foreground/80 text-sm">Nutritional Insights</span>
+              <div className="group flex items-center space-x-3 p-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105">
+                <div className="w-3 h-3 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full shadow-soft group-hover:scale-110 transition-transform duration-300" />
+                <span className="text-primary-foreground font-medium text-sm">Nutritional Insights</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-accent rounded-full" />
-                <span className="text-primary-foreground/80 text-sm">Carbon Footprint</span>
+              <div className="group flex items-center space-x-3 p-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105">
+                <div className="w-3 h-3 bg-gradient-to-r from-emerald-400 to-green-500 rounded-full shadow-soft group-hover:scale-110 transition-transform duration-300" />
+                <span className="text-primary-foreground font-medium text-sm">Carbon Footprint</span>
               </div>
             </div>
 
