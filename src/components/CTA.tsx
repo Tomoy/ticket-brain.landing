@@ -6,9 +6,10 @@ import { Mail, Users, Zap } from "lucide-react";
 
 const CTA = () => {
   const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const { toast } = useToast();
 
-  const handleEmailSubmit = (e: React.FormEvent) => {
+  /*const handleEmailSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (email) {
       toast({
@@ -17,7 +18,31 @@ const CTA = () => {
       });
       setEmail("");
     }
-  };
+  };*/
+
+  async function handleEmailSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setStatus("loading");
+
+    const res = await fetch("/api/subscribe", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+
+    if (res.ok) {
+      toast({
+        title: "Welcome to the TicketBrain family!",
+        description: "You'll be among the first to experience smarter shopping.",
+      });
+      setEmail("");
+    } else {
+      toast({
+        title: "Error",
+        description: "There was an error submitting the email.",
+      });
+    }
+  }
 
   return (
     <section id="contact" className="py-20 bg-gradient-hero relative overflow-hidden">
