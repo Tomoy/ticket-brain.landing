@@ -38,7 +38,7 @@ const Header = () => {
               Features
             </button>
             <button 
-              onClick={() => scrollToSection('cta')}
+              onClick={() => scrollToSection('contact')}
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors cursor-pointer"
             >
               Join

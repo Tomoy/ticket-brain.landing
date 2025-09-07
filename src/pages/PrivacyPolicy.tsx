@@ -3,7 +3,7 @@ const PrivacyPolicy = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-800 to-slate-900 p-5">
       <div className="max-w-4xl mx-auto bg-background rounded-xl shadow-2xl overflow-hidden">
         {/* Header */}
-        <div className="bg-gradient-to-r from-primary to-accent text-primary-foreground px-8 py-12 text-center">
+        <div className="bg-primary text-primary-foreground px-8 py-12 text-center">
           <h1 className="text-4xl font-bold mb-3">Privacy Policy</h1>
           <p className="text-lg opacity-90">How TicketBrain handles your personal information</p>
         </div>
