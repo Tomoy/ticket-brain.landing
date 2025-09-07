@@ -31,6 +31,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     );
 
     const data = await mcRes.json();
+    console.log("Mailchimp response:", mcRes.status, data); // 🔎 log for debugging
 
     if (mcRes.status >= 200 && mcRes.status < 300) {
       return res.status(200).json({ ok: true, data });
