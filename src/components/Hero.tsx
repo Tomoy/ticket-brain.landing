@@ -64,7 +64,6 @@ const Hero = () => {
                 variant="accent"
                 className="bg-gradient-accent hover:shadow-glow transition-all duration-300"
               >
-                Get Early Access
                 {status === "loading" ? "Joining..." : "Get Early Access"}
               </Button>
             </form>
