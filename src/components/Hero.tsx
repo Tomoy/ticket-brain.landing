@@ -3,12 +3,14 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import heroImage from "@/assets/hero-image.jpg";
+import { useEmailSignup } from "@/hooks/useEmailSignup";
 
 const Hero = () => {
   const [email, setEmail] = useState("");
-  const { toast } = useToast();
+  const { status, submitEmail } = useEmailSignup();
+  //const { toast } = useToast();
 
-  const handleEmailSubmit = (e: React.FormEvent) => {
+  /*const handleEmailSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (email) {
       toast({
@@ -17,7 +19,12 @@ const Hero = () => {
       });
       setEmail("");
     }
-  };
+  };*/
+  async function handleHeroEmailSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const ok = await submitEmail(email);
+    if (ok) setEmail("");
+  }
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -42,7 +49,7 @@ const Hero = () => {
             </p>
 
             {/* Email signup */}
-            <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto lg:mx-0">
+            <form onSubmit={handleHeroEmailSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto lg:mx-0">
               <Input
                 type="email"
                 placeholder="Enter your email"
@@ -53,10 +60,12 @@ const Hero = () => {
               />
               <Button 
                 type="submit" 
+                disabled={status === "loading"}
                 variant="accent"
                 className="bg-gradient-accent hover:shadow-glow transition-all duration-300"
               >
                 Get Early Access
+                {status === "loading" ? "Joining..." : "Get Early Access"}
               </Button>
             </form>
             
