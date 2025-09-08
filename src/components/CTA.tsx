@@ -3,11 +3,13 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, Users, Zap } from "lucide-react";
+import { useEmailSignup } from "@/hooks/useEmailSignup";
+
 
 const CTA = () => {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const { toast } = useToast();
+  const { status, submitEmail, setStatus } = useEmailSignup();
+//  const { toast } = useToast();
 
   /*const handleEmailSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,7 +22,7 @@ const CTA = () => {
     }
   };*/
 
-async function handleEmailSubmit(e: React.FormEvent) {
+/*async function handleEmailSubmit(e: React.FormEvent) {
   e.preventDefault();
   setStatus("loading");
 
@@ -54,6 +56,11 @@ async function handleEmailSubmit(e: React.FormEvent) {
     });
     setStatus("error");
   }
+}*/
+async function handleEmailSubmit(e: React.FormEvent) {
+  e.preventDefault();
+  const ok = await submitEmail(email);
+  if (ok) setEmail("");
 }
 
   return (
