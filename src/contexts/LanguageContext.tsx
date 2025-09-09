@@ -147,7 +147,7 @@ const translations: Record<Language, Record<string, string>> = {
     'hero.emailPlaceholder': 'Ingresa tu email',
     'hero.ctaButton': 'Consigue Acceso Anticipado',
     'hero.ctaButtonLoading': 'Accediendo...',
-    'hero.ctaSubtext': 'Sé el primero en probar TicketBrain cuando se lance',
+    'hero.ctaSubtext': 'Sé el primero en probar TicketBrain',
 
     // How It Works
     'howItWorks.title': 'Cómo Funciona TicketBrain',
@@ -202,7 +202,7 @@ const translations: Record<Language, Record<string, string>> = {
     'cta.emailPlaceholder': 'Ingresa tu dirección de email',
     'cta.submitButton': 'Únete a la Lista de Espera',
     'cta.submitButtonLoading': 'Accediendo...',
-    'cta.privacyNote': 'Sin spam, nunca. Cancela suscripción en cualquier momento. Respetamos tu privacidad.',
+    'cta.privacyNote': 'Sin spam, nunca. Cancela tu suscripción en cualquier momento. Respetamos tu privacidad.',
 
     // Footer
     'footer.description': 'Transformando tickets de compra en información inteligente para consumidores conscientes.',
