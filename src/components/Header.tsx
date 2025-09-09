@@ -21,12 +21,12 @@ const Header = () => {
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-1">
             <div className="flex items-center justify-center w-10 h-10">
               <img src="/lovable-uploads/e56db21d-6556-4398-ada1-4e498b4d15ce.png" alt="TicketBrain Logo" className="w-10 h-10" />
             </div>
             <span className="text-xl font-bold">
-              <span className="text-primary">Ticket</span>
+              <span style={{ color: '#124434' }}>Ticket</span>
               <span className="text-foreground">Brain</span>
             </span>
           </div>
