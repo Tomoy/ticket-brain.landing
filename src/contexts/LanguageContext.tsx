@@ -143,10 +143,10 @@ const translations: Record<Language, Record<string, string>> = {
     // Hero
     'hero.title.line1': 'Convierte Tus Tickets en',
     'hero.title.line2': 'Información Inteligente',
-    'hero.description': 'TicketBrain transforma simples tickets de compra en poderosos insights sobre tus gastos, nutrición e impacto ambiental. Toma decisiones más inteligentes con cada compra.',
+    'hero.description': 'TicketBrain convierte tus tickets de compra en valiosa información sobre tus gastos, nutrición e impacto ambiental. Toma decisiones más inteligentes con cada compra.',
     'hero.emailPlaceholder': 'Ingresa tu email',
-    'hero.ctaButton': 'Acceso Anticipado',
-    'hero.ctaButtonLoading': 'Uniéndose...',
+    'hero.ctaButton': 'Consigue Acceso Anticipado',
+    'hero.ctaButtonLoading': 'Accediendo...',
     'hero.ctaSubtext': 'Sé el primero en probar TicketBrain cuando se lance',
 
     // How It Works
@@ -156,16 +156,16 @@ const translations: Record<Language, Record<string, string>> = {
     'howItWorks.step1.description': 'Simplemente toma una foto de tu ticket de compra con la cámara de tu teléfono',
     'howItWorks.step2.title': 'Análisis IA',
     'howItWorks.step2.description': 'Nuestra IA extrae y categoriza todos los productos, precios y datos nutricionales',
-    'howItWorks.step3.title': 'Obtén Insights',
-    'howItWorks.step3.description': 'Recibe insights personalizados sobre gastos, nutrición y sostenibilidad',
+    'howItWorks.step3.title': 'Obtén Información',
+    'howItWorks.step3.description': 'Recibe información personalizada sobre gastos, nutrición y sostenibilidad',
     'howItWorks.step4.title': 'Toma Decisiones',
     'howItWorks.step4.description': 'Usa recomendaciones basadas en datos para comprar más inteligentemente',
 
     // Features
     'features.title': '¿Por Qué Elegir TicketBrain?',
     'features.description': 'Desbloquea el poder de tus datos de compra con tecnología IA de vanguardia',
-    'features.spending.title': 'Análisis Inteligente de Gastos',
-    'features.spending.description': 'Rastrea tus gastos de compras con categorización inteligente e insights de presupuesto.',
+    'features.spending.title': 'Control Inteligente de Gastos',
+    'features.spending.description': 'Con el poder de la IA, tus compras se clasifican al instante, dándote un panorama total de dónde va tu dinero.',
     'features.spending.benefit1': 'Categorización automática de gastos',
     'features.spending.benefit2': 'Seguimiento de presupuesto mensual',
     'features.spending.benefit3': 'Alertas de comparación de precios',
@@ -176,13 +176,13 @@ const translations: Record<Language, Record<string, string>> = {
     'features.nutrition.benefit2': 'Seguimiento de objetivos de salud',
     'features.nutrition.benefit3': 'Análisis de ingredientes',
     'features.nutrition.benefit4': 'Recomendaciones dietéticas',
-    'features.sustainability.title': 'Insights de Sostenibilidad',
+    'features.sustainability.title': 'Información sobre Sostenibilidad',
     'features.sustainability.description': 'Comprende el impacto ambiental de tus hábitos de compra y haz elecciones eco-amigables.',
     'features.sustainability.benefit1': 'Seguimiento de huella de carbono',
     'features.sustainability.benefit2': 'Alternativas sostenibles',
     'features.sustainability.benefit3': 'Información de origen local',
     'features.sustainability.benefit4': 'Análisis de impacto del empaque',
-    'features.analytics.title': 'Análisis Avanzados',
+    'features.analytics.title': 'Análisis Avanzados de tus compras',
     'features.analytics.description': 'Sumérgete en tus patrones de compra con análisis completos y tendencias.',
     'features.analytics.benefit1': 'Análisis de patrones de compra',
     'features.analytics.benefit2': 'Identificación de tendencias',
@@ -201,11 +201,11 @@ const translations: Record<Language, Record<string, string>> = {
     'cta.formTitle': 'Recibe Notificaciones del Lanzamiento',
     'cta.emailPlaceholder': 'Ingresa tu dirección de email',
     'cta.submitButton': 'Únete a la Lista de Espera',
-    'cta.submitButtonLoading': 'Uniéndose...',
+    'cta.submitButtonLoading': 'Accediendo...',
     'cta.privacyNote': 'Sin spam, nunca. Cancela suscripción en cualquier momento. Respetamos tu privacidad.',
 
     // Footer
-    'footer.description': 'Transformando tickets de compra en insights inteligentes para consumidores conscientes.',
+    'footer.description': 'Transformando tickets de compra en información inteligente para consumidores conscientes.',
     'footer.privacyPolicy': 'Política de Privacidad',
 
     // Privacy Policy
