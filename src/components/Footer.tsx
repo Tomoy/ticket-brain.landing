@@ -10,7 +10,7 @@ const Footer = () => {
         <div className="text-center">
           <div className="flex items-center justify-center space-x-1 mb-4">
             <div className="flex items-center justify-center w-8 h-8">
-              <img src="/lovable-uploads/e56db21d-6556-4398-ada1-4e498b4d15ce.png" alt="TicketBrain Logo" className="w-8 h-8" />
+              <img src="/lovable-uploads/logo-medium-light.png" alt="TicketBrain Logo" className="w-8 h-8" />
             </div>
             <h3 className="text-2xl font-bold">TicketBrain</h3>
           </div>

@@ -23,7 +23,7 @@ const Header = () => {
           {/* Logo */}
           <div className="flex items-center space-x-1">
             <div className="flex items-center justify-center w-10 h-10">
-              <img src="/lovable-uploads/e56db21d-6556-4398-ada1-4e498b4d15ce.png" alt="TicketBrain Logo" className="w-10 h-10" />
+              <img src="/lovable-uploads/logo-medium-light.png" alt="TicketBrain Logo" className="w-10 h-10" />
             </div>
             <span className="text-xl font-bold">
               <span style={{ color: '#124434' }}>Ticket</span>
