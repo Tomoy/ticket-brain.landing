@@ -28,12 +28,12 @@ const Hero = () => {
   }
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-hero" />
       
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-6 py-20 pt-24">
+      <div className="relative z-10 container mx-auto px-6 py-12 pt-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left column - Text content */}
           <div className="text-center lg:text-left">
@@ -76,7 +76,7 @@ const Hero = () => {
           </div>
 
           {/* Right column - Hero image */}
-          <div className="relative max-w-lg mx-auto lg:max-w-md">
+          <div className="relative max-w-xl mx-auto lg:max-w-lg">
             <div className="relative rounded-2xl overflow-hidden shadow-elevated">
               <img 
                 src="/lovable-uploads/d95e06aa-7264-45fc-993b-2ff23055be85.png" 
