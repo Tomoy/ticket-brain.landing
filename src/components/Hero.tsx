@@ -76,7 +76,7 @@ const Hero = () => {
           </div>
 
           {/* Right column - Hero image */}
-          <div className="relative">
+          <div className="relative max-w-lg mx-auto lg:max-w-md">
             <div className="relative rounded-2xl overflow-hidden shadow-elevated">
               <img 
                 src="/lovable-uploads/d95e06aa-7264-45fc-993b-2ff23055be85.png" 
@@ -86,18 +86,7 @@ const Hero = () => {
               {/* Overlay gradient for better text contrast if needed */}
               <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
             </div>
-            
-            {/* Floating elements */}
-            <div className="absolute -top-4 -right-4 w-12 h-12 bg-accent rounded-full shadow-soft animate-bounce" />
-            <div className="absolute -bottom-6 -left-6 w-8 h-8 bg-success rounded-full shadow-soft animate-pulse" />
           </div>
-        </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-        <div className="w-6 h-10 border-2 border-primary-foreground/30 rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-primary-foreground/50 rounded-full mt-2 animate-pulse" />
         </div>
       </div>
     </section>
