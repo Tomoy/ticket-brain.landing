@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import heroImage from "@/assets/hero-image.jpg";
 import { useEmailSignup } from "@/hooks/useEmailSignup";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -80,8 +79,8 @@ const Hero = () => {
           <div className="relative">
             <div className="relative rounded-2xl overflow-hidden shadow-elevated">
               <img 
-                src={heroImage} 
-                alt="TicketBrain app interface showing receipt scanning and insights"
+                src="/lovable-uploads/d95e06aa-7264-45fc-993b-2ff23055be85.png" 
+                alt="Person with glasses scanning a receipt with phone while surrounded by groceries"
                 className="w-full h-auto object-cover"
               />
               {/* Overlay gradient for better text contrast if needed */}
