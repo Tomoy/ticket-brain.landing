@@ -1,29 +1,32 @@
 import { Scan, BarChart3, Target, Leaf } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const HowItWorks = () => {
+  const { t } = useLanguage();
+  
   const steps = [
     {
       icon: Scan,
-      title: "Scan Your Receipt",
-      description: "Simply take a photo of your grocery receipt with your smartphone. Our AI instantly reads and processes all items.",
+      title: t('howItWorks.step1.title'),
+      description: t('howItWorks.step1.description'),
       color: "text-primary"
     },
     {
       icon: BarChart3,
-      title: "Get Instant Insights",
-      description: "Receive detailed analysis of your spending patterns, price comparisons, and budget tracking in seconds.",
+      title: t('howItWorks.step2.title'),
+      description: t('howItWorks.step2.description'),
       color: "text-accent"
     },
     {
       icon: Target,
-      title: "Nutritional Analysis",
-      description: "Understand the health impact of your purchases with Nutri-Score ratings and nutritional breakdowns.",
+      title: t('howItWorks.step3.title'),
+      description: t('howItWorks.step3.description'),
       color: "text-success"
     },
     {
       icon: Leaf,
-      title: "Environmental Impact",
-      description: "Learn about your carbon footprint and make more sustainable choices with every shopping trip.",
+      title: t('howItWorks.step4.title'),
+      description: t('howItWorks.step4.description'),
       color: "text-primary"
     }
   ];
@@ -33,10 +36,10 @@ const HowItWorks = () => {
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
-            How TicketBrain Works
+            {t('howItWorks.title')}
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Transform your shopping experience in four simple steps. From receipt to insights in seconds.
+            {t('howItWorks.description')}
           </p>
         </div>
 

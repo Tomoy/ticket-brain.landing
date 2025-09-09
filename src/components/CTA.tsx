@@ -4,9 +4,11 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, Users, Zap } from "lucide-react";
 import { useEmailSignup } from "@/hooks/useEmailSignup";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 
 const CTA = () => {
+  const { t } = useLanguage();
   const [email, setEmail] = useState("");
   const { status, submitEmail, setStatus } = useEmailSignup();
 //  const { toast } = useToast();
@@ -75,42 +77,41 @@ async function handleEmailSubmit(e: React.FormEvent) {
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-6">
-            Ready to Transform Your Shopping?
+            {t('cta.title')}
           </h2>
           <p className="text-lg md:text-xl text-primary-foreground/90 mb-12 max-w-2xl mx-auto">
-            Join thousands of conscious consumers who are already making smarter, 
-            healthier, and more sustainable shopping decisions with TicketBrain.
+            {t('cta.description')}
           </p>
 
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             <div className="text-center">
               <Mail className="w-12 h-12 text-accent mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-primary-foreground mb-2">Be First</h3>
-              <p className="text-primary-foreground/80">Get exclusive early access</p>
+              <h3 className="text-2xl font-bold text-primary-foreground mb-2">{t('cta.stat1.title')}</h3>
+              <p className="text-primary-foreground/80">{t('cta.stat1.description')}</p>
             </div>
             <div className="text-center">
               <Users className="w-12 h-12 text-accent mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-primary-foreground mb-2">Join Beta</h3>
-              <p className="text-primary-foreground/80">Help shape the future</p>
+              <h3 className="text-2xl font-bold text-primary-foreground mb-2">{t('cta.stat2.title')}</h3>
+              <p className="text-primary-foreground/80">{t('cta.stat2.description')}</p>
             </div>
             <div className="text-center">
               <Zap className="w-12 h-12 text-accent mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-primary-foreground mb-2">Save More</h3>
-              <p className="text-primary-foreground/80">Start saving immediately</p>
+              <h3 className="text-2xl font-bold text-primary-foreground mb-2">{t('cta.stat3.title')}</h3>
+              <p className="text-primary-foreground/80">{t('cta.stat3.description')}</p>
             </div>
           </div>
 
           {/* Email signup form */}
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 shadow-elevated max-w-lg mx-auto">
             <h3 className="text-xl font-semibold text-primary-foreground mb-6">
-              Get Notified When We Launch
+              {t('cta.formTitle')}
             </h3>
             
             <form onSubmit={handleEmailSubmit} className="space-y-4">
               <Input
                 type="email"
-                placeholder="Enter your email address"
+                placeholder={t('cta.emailPlaceholder')}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full bg-white border-white/20 text-foreground placeholder:text-muted-foreground"
@@ -123,12 +124,12 @@ async function handleEmailSubmit(e: React.FormEvent) {
                 className="w-full bg-gradient-accent hover:shadow-glow transition-all duration-300"
                 size="lg"
               >
-                {status === "loading" ? "Joining..." : "Join the Waitlist"}
+                {status === "loading" ? t('cta.submitButtonLoading') : t('cta.submitButton')}
               </Button>
             </form>
             
             <p className="text-sm text-primary-foreground/70 mt-4">
-              No spam, ever. Unsubscribe at any time. We respect your privacy.
+              {t('cta.privacyNote')}
             </p>
           </div>
         </div>

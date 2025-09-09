@@ -4,8 +4,10 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import heroImage from "@/assets/hero-image.jpg";
 import { useEmailSignup } from "@/hooks/useEmailSignup";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Hero = () => {
+  const { t } = useLanguage();
   const [email, setEmail] = useState("");
   const { status, submitEmail } = useEmailSignup();
   //const { toast } = useToast();
@@ -37,22 +39,21 @@ const Hero = () => {
           {/* Left column - Text content */}
           <div className="text-center lg:text-left">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6 leading-tight">
-              Turn Your Receipts Into
+              {t('hero.title.line1')}
               <span className="block bg-gradient-accent bg-clip-text text-transparent mt-2">
-                Smart Insights
+                {t('hero.title.line2')}
               </span>
             </h1>
             
             <p className="text-lg md:text-xl text-primary-foreground/90 mb-8 leading-relaxed">
-              TicketBrain transforms simple grocery receipts into powerful insights about your spending, 
-              nutrition, and environmental impact. Make smarter shopping decisions with every purchase.
+              {t('hero.description')}
             </p>
 
             {/* Email signup */}
             <form onSubmit={handleHeroEmailSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto lg:mx-0">
               <Input
                 type="email"
-                placeholder="Enter your email"
+                placeholder={t('hero.emailPlaceholder')}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="flex-1 bg-white/95 border-white/20 text-foreground placeholder:text-muted-foreground"
@@ -64,12 +65,12 @@ const Hero = () => {
                 variant="accent"
                 className="bg-gradient-accent hover:shadow-glow transition-all duration-300"
               >
-                {status === "loading" ? "Joining..." : "Get Early Access"}
+                {status === "loading" ? t('hero.ctaButtonLoading') : t('hero.ctaButton')}
               </Button>
             </form>
             
             <p className="text-sm text-primary-foreground/70 mt-3">
-              Be the first to test TicketBrain when it launches
+              {t('hero.ctaSubtext')}
             </p>
           </div>
 

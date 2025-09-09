@@ -1,34 +1,57 @@
 import { DollarSign, TrendingUp, Heart, Leaf } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Features = () => {
+  const { t } = useLanguage();
+  
   const features = [
     {
       icon: DollarSign,
-      title: "Smart Price Comparisons",
-      description: "Find the best deals across different supermarkets. Know which store offers the cheapest basket and optimize your shopping route for maximum savings.",
+      title: t('features.spending.title'),
+      description: t('features.spending.description'),
       gradient: "from-primary to-primary-hover",
-      benefits: ["Cross-store price analysis", "Best deal recommendations", "Route optimization"]
+      benefits: [
+        t('features.spending.benefit1'),
+        t('features.spending.benefit2'),
+        t('features.spending.benefit3'),
+        t('features.spending.benefit4')
+      ]
     },
     {
       icon: TrendingUp,
-      title: "Spending Insights",
-      description: "Get clear, digestible reports on your weekly and monthly spending. Track categories, identify trends, and budget more effectively.",
+      title: t('features.analytics.title'),
+      description: t('features.analytics.description'),
       gradient: "from-accent to-accent-hover",
-      benefits: ["Category breakdown", "Spending trends", "Budget tracking"]
+      benefits: [
+        t('features.analytics.benefit1'),
+        t('features.analytics.benefit2'),
+        t('features.analytics.benefit3'),
+        t('features.analytics.benefit4')
+      ]
     },
     {
       icon: Heart,
-      title: "Nutritional Intelligence",
-      description: "Go beyond prices and understand the health impact of your groceries. Get Nutri-Score ratings and detailed nutritional information.",
+      title: t('features.nutrition.title'),
+      description: t('features.nutrition.description'),
       gradient: "from-success to-primary",
-      benefits: ["Nutri-Score ratings", "Health impact analysis", "Nutritional breakdowns"]
+      benefits: [
+        t('features.nutrition.benefit1'),
+        t('features.nutrition.benefit2'),
+        t('features.nutrition.benefit3'),
+        t('features.nutrition.benefit4')
+      ]
     },
     {
       icon: Leaf,
-      title: "Environmental Impact",
-      description: "Learn about the carbon footprint of your shopping cart. Make more sustainable choices and contribute to a greener planet.",
+      title: t('features.sustainability.title'),
+      description: t('features.sustainability.description'),
       gradient: "from-primary to-success",
-      benefits: ["Carbon footprint tracking", "Sustainable alternatives", "Environmental insights"]
+      benefits: [
+        t('features.sustainability.benefit1'),
+        t('features.sustainability.benefit2'),
+        t('features.sustainability.benefit3'),
+        t('features.sustainability.benefit4')
+      ]
     }
   ];
 
@@ -37,11 +60,10 @@ const Features = () => {
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
-            Powerful Features for Conscious Shopping
+            {t('features.title')}
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            TicketBrain transforms your grocery receipts into actionable insights across four key areas: 
-            finances, health, environment, and shopping optimization.
+            {t('features.description')}
           </p>
         </div>
 

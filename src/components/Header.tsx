@@ -1,6 +1,10 @@
 import { Brain } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const Header = () => {
+  const { t } = useLanguage();
+  
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -29,20 +33,21 @@ const Header = () => {
               onClick={() => scrollToSection('how-it-works')}
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors cursor-pointer"
             >
-              How It Works
+              {t('nav.howItWorks')}
             </button>
             <button 
               onClick={() => scrollToSection('features')}
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors cursor-pointer"
             >
-              Features
+              {t('nav.features')}
             </button>
             <button 
               onClick={() => scrollToSection('contact')}
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors cursor-pointer"
             >
-              Join
+              {t('nav.join')}
             </button>
+            <LanguageSwitcher />
           </nav>
         </div>
       </div>
