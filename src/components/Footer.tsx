@@ -8,7 +8,7 @@ const Footer = () => {
     <footer className="bg-primary text-primary-foreground py-12">
       <div className="container mx-auto px-6">
         <div className="text-center">
-          <div className="flex items-center justify-center space-x-3 mb-4">
+          <div className="flex items-center justify-center space-x-2 mb-4">
             <div className="flex items-center justify-center w-8 h-8">
               <img src="/lovable-uploads/e56db21d-6556-4398-ada1-4e498b4d15ce.png" alt="TicketBrain Logo" className="w-8 h-8" />
             </div>
