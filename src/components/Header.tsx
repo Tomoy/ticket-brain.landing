@@ -1,14 +1,18 @@
-import { Brain } from "lucide-react";
+import { Brain, Menu } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "./LanguageSwitcher";
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { useState } from "react";
 
 const Header = () => {
   const { t } = useLanguage();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
+      setMobileMenuOpen(false); // Close mobile menu after navigation
     }
   };
 
@@ -27,7 +31,7 @@ const Header = () => {
             </span>
           </div>
           
-          {/* Navigation */}
+          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <button 
               onClick={() => scrollToSection('how-it-works')}
@@ -49,6 +53,43 @@ const Header = () => {
             </button>
             <LanguageSwitcher />
           </nav>
+
+          {/* Mobile Navigation */}
+          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+            <SheetTrigger asChild>
+              <button className="md:hidden p-2 text-foreground">
+                <Menu className="w-6 h-6" />
+              </button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-72">
+              <SheetHeader>
+                <SheetTitle className="text-left">Navigation</SheetTitle>
+              </SheetHeader>
+              <nav className="flex flex-col space-y-6 mt-8">
+                <button 
+                  onClick={() => scrollToSection('how-it-works')}
+                  className="text-left text-lg font-medium text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {t('nav.howItWorks')}
+                </button>
+                <button 
+                  onClick={() => scrollToSection('features')}
+                  className="text-left text-lg font-medium text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {t('nav.features')}
+                </button>
+                <button 
+                  onClick={() => scrollToSection('contact')}
+                  className="text-left text-lg font-medium text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {t('nav.join')}
+                </button>
+                <div className="pt-4 border-t border-border">
+                  <LanguageSwitcher />
+                </div>
+              </nav>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </header>
