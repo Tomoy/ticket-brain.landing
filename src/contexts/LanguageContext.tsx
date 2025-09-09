@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useEffect, useContext, useState, ReactNode } from 'react';
 
 type Language = 'en' | 'es';
 
@@ -23,18 +23,25 @@ interface LanguageProviderProps {
 }
 
 export const LanguageProvider = ({ children }: LanguageProviderProps) => {
-  const getDefaultLanguage = (): Language => {
-    if (typeof window !== 'undefined' && window.location.hostname === 'ticketbrain.es') {
-      return 'es';
-    }
-    return 'en';
-  };
-  
-  const [language, setLanguage] = useState<Language>(getDefaultLanguage());
+  // Step 1: start with null so nothing renders until we detect the language
+  const [language, setLanguage] = useState<Language | null>(null);
 
+  // Step 2: detect domain on client
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const host = window.location.hostname;
+      setLanguage(host === 'ticketbrain.es' ? 'es' : 'en');
+    }
+  }, []);
+
+  // Step 3: simple translation function
   const t = (key: string): string => {
+    if (!language) return key; // fallback while loading
     return translations[language][key] || key;
   };
+
+  // Step 4: avoid rendering children until language is ready
+  if (!language) return null;
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>
