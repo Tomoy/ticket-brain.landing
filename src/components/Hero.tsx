@@ -37,7 +37,7 @@ const Hero = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left column - Text content */}
           <div className="text-center lg:text-left">
-            <h1 className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-primary-foreground mb-6 leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-primary-foreground mb-6 leading-tight">
               <span className="block">
                 {t('hero.title.line1')}
               </span>
@@ -46,7 +46,7 @@ const Hero = () => {
               </span>
             </h1>
             
-            <p className="text-lg md:text-xl text-primary-foreground/90 mb-8 leading-relaxed">
+            <p className="text-base md:text-xl text-primary-foreground/90 mb-8 leading-relaxed">
               {t('hero.description')}
             </p>
 
