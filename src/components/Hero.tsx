@@ -38,9 +38,11 @@ const Hero = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left column - Text content */}
           <div className="text-center lg:text-left">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6 leading-relaxed">
-              {t('hero.title.line1')}
-              <span className="block bg-gradient-accent bg-clip-text text-transparent mt-3 pb-1">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-primary-foreground mb-6 leading-tight">
+              <span className="block">
+                {t('hero.title.line1')}
+              </span>
+              <span className="block bg-gradient-accent bg-clip-text text-transparent mt-2 pb-1">
                 {t('hero.title.line2')}
               </span>
             </h1>
