@@ -30,7 +30,7 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const host = window.location.hostname;
-      setLanguage(host === 'ticketbrain.es' ? 'es' : 'en');
+      setLanguage(host.endsWith('ticketbrain.es') ? 'es' : 'en');
     }
   }, []);
 
