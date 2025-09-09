@@ -23,7 +23,14 @@ interface LanguageProviderProps {
 }
 
 export const LanguageProvider = ({ children }: LanguageProviderProps) => {
-  const [language, setLanguage] = useState<Language>('en');
+  const getDefaultLanguage = (): Language => {
+    if (typeof window !== 'undefined' && window.location.hostname === 'ticketbrain.es') {
+      return 'es';
+    }
+    return 'en';
+  };
+  
+  const [language, setLanguage] = useState<Language>(getDefaultLanguage());
 
   const t = (key: string): string => {
     return translations[language][key] || key;
