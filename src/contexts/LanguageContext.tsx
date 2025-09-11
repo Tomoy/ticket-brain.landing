@@ -125,7 +125,7 @@ const translations: Record<Language, Record<string, string>> = {
     'hero.title.line2': 'Optimiza tus Compras con IA',
     'hero.description': 'TicketBrain te ayuda a comprender tus compras en el supermercado, categorizarlas automáticamente y ahorrar dinero con insights impulsados por IA.',
     'hero.emailPlaceholder': 'Introduce tu correo electrónico',
-    'hero.ctaButton': 'Acceso Anticipado — Empieza a Ahorrar',
+    'hero.ctaButton': 'Empieza a Ahorrar',
     'hero.ctaButtonLoading': 'Uniéndose...',
     'hero.ctaSubtext': 'Sé el primero en probar TicketBrain cuando se lance',
 
