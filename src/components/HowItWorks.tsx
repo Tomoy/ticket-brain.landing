@@ -1,4 +1,4 @@
-import { Scan, BarChart3, Target, Leaf } from "lucide-react";
+import { Scan, BarChart3, Target, CheckCircle } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const HowItWorks = () => {
@@ -24,7 +24,7 @@ const HowItWorks = () => {
       color: "text-success"
     },
     {
-      icon: Leaf,
+      icon: CheckCircle,
       title: t('howItWorks.step4.title'),
       description: t('howItWorks.step4.description'),
       color: "text-primary"

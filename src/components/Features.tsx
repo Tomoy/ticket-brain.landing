@@ -28,30 +28,6 @@ const Features = () => {
         t('features.analytics.benefit3'),
         t('features.analytics.benefit4')
       ]
-    },
-    {
-      icon: Heart,
-      title: t('features.nutrition.title'),
-      description: t('features.nutrition.description'),
-      gradient: "from-success to-primary",
-      benefits: [
-        t('features.nutrition.benefit1'),
-        t('features.nutrition.benefit2'),
-        t('features.nutrition.benefit3'),
-        t('features.nutrition.benefit4')
-      ]
-    },
-    {
-      icon: Leaf,
-      title: t('features.sustainability.title'),
-      description: t('features.sustainability.description'),
-      gradient: "from-primary to-success",
-      benefits: [
-        t('features.sustainability.benefit1'),
-        t('features.sustainability.benefit2'),
-        t('features.sustainability.benefit3'),
-        t('features.sustainability.benefit4')
-      ]
     }
   ];
 
