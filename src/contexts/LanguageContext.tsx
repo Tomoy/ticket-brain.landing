@@ -111,7 +111,30 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Footer
     'footer.description': 'Transforming grocery receipts into smart insights to save money.',
-    'footer.privacyPolicy': 'Privacy Policy'
+    'footer.privacyPolicy': 'Privacy Policy',
+
+      // Privacy Policy
+  'privacy.title': 'Privacy Policy',
+  'privacy.lastUpdated': 'Last updated: September 2025',
+  'privacy.whoWeAre.title': 'Who We Are',
+  'privacy.whoWeAre.content': 'TicketBrain is a grocery receipt analysis service that helps users gain insights into their spending and shopping habits.',
+  'privacy.infoCollect.title': 'Information We Collect',
+  'privacy.infoCollect.receipt': '• Receipt images and data extracted from them',
+  'privacy.infoCollect.email': '• Email addresses for our waitlist',
+  'privacy.infoCollect.usage': '• Usage analytics and app performance data',
+  'privacy.howStore.title': 'How We Store and Protect Your Data',
+  'privacy.howStore.content': 'Your data is stored securely using industry-standard encryption. Receipt images are processed and then deleted within 30 days. We never sell your personal information to third parties.',
+  'privacy.gdprRights.title': 'Your Rights Under GDPR',
+  'privacy.gdprRights.access': '• Right to access your personal data',
+  'privacy.gdprRights.rectification': '• Right to rectification of inaccurate data',
+  'privacy.gdprRights.erasure': '• Right to erasure (right to be forgotten)',
+  'privacy.gdprRights.portability': '• Right to data portability',
+  'privacy.gdprRights.objection': '• Right to object to processing',
+  'privacy.contact.title': 'Contact Us',
+  'privacy.contact.content': 'If you have any questions about this Privacy Policy or wish to exercise your rights, please contact us at:',
+  'privacy.contact.email': 'Email: hello@ticketbrain.app',
+  'privacy.contact.address': 'Address: Madrid, Spain',
+  'privacy.contact.authority': 'If you believe we have not addressed your concerns adequately, you may contact the Spanish Data Protection Authority (AEPD) at www.aepd.es'
   },
 
   es: {
@@ -174,6 +197,34 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Footer
     'footer.description': 'Transformando tus tickets de supermercado en insights inteligentes para ahorrar dinero.',
-    'footer.privacyPolicy': 'Política de Privacidad'
+    'footer.privacyPolicy': 'Política de Privacidad',
+
+    // Política de Privacidad
+    'privacy.title': 'Política de Privacidad',
+    'privacy.lastUpdated': 'Última actualización: Septiembre 2025',
+
+    'privacy.whoWeAre.title': 'Quiénes Somos',
+    'privacy.whoWeAre.content': 'TicketBrain es un servicio de análisis de tickets de compra que ayuda a los usuarios a comprender mejor sus gastos y hábitos de consumo.',
+
+    'privacy.infoCollect.title': 'Información que Recopilamos',
+    'privacy.infoCollect.receipt': '• Imágenes de tickets y los datos extraídos de ellas',
+    'privacy.infoCollect.email': '• Direcciones de correo electrónico para nuestra lista de espera',
+    'privacy.infoCollect.usage': '• Datos de uso y rendimiento de la aplicación',
+
+    'privacy.howStore.title': 'Cómo Almacenamos y Protegemos tus Datos',
+    'privacy.howStore.content': 'Tus datos se almacenan de forma segura utilizando encriptación con estándares de la industria. Las imágenes de tickets se procesan y se eliminan en un plazo máximo de 30 días. Nunca vendemos tu información personal a terceros.',
+
+    'privacy.gdprRights.title': 'Tus Derechos según el RGPD',
+    'privacy.gdprRights.access': '• Derecho a acceder a tus datos personales',
+    'privacy.gdprRights.rectification': '• Derecho a rectificar datos inexactos',
+    'privacy.gdprRights.erasure': '• Derecho a la supresión (derecho al olvido)',
+    'privacy.gdprRights.portability': '• Derecho a la portabilidad de los datos',
+    'privacy.gdprRights.objection': '• Derecho a oponerte al tratamiento',
+
+    'privacy.contact.title': 'Contáctanos',
+    'privacy.contact.content': 'Si tienes alguna pregunta sobre esta Política de Privacidad o deseas ejercer tus derechos, puedes ponerte en contacto con nosotros en:',
+    'privacy.contact.email': 'Correo electrónico: hello@ticketbrain.app',
+    'privacy.contact.address': 'Dirección: Madrid, España',
+    'privacy.contact.authority': 'Si consideras que no hemos resuelto adecuadamente tu solicitud, puedes contactar con la Agencia Española de Protección de Datos (AEPD) en www.aepd.es'
   }
 };
