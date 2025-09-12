@@ -4,6 +4,8 @@
     "deploymentEnabled": false
   },
   "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
+    { "source": "/(.*)", "destination": "/" },
+    { "source": "/", "destination": "/index.en.html", "has": [{ "type": "host", "value": "ticketbrain.app" }] },
+    { "source": "/", "destination": "/index.es.html", "has": [{ "type": "host", "value": "ticketbrain.es" }] }
   ]
 }
