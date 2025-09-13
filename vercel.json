@@ -16,7 +16,13 @@
     },
     {
       "source": "/(.*)",
-      "destination": "/"
+      "has": [{ "type": "host", "value": "ticketbrain.app" }],
+      "destination": "/index.en.html"
+    },
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "ticketbrain.es" }],
+      "destination": "/index.es.html"
     }
   ]
 }
