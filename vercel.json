@@ -13,10 +13,6 @@
       "source": "/",
       "has": [{ "type": "host", "value": "ticketbrain.es" }],
       "destination": "/index.es.html"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/"
     }
   ]
 }
