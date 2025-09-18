@@ -5,14 +5,14 @@
   },
   "rewrites": [
     {
-      "source": "/:path*",
+      "source": "/",
       "has": [
         { "type": "host", "value": "www.ticketbrain.app" }
       ],
       "destination": "/index.en.html"
     },
     {
-      "source": "/:path*",
+      "source": "/",
       "has": [
         { "type": "host", "value": "www.ticketbrain.es" }
       ],
