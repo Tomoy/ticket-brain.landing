@@ -79,50 +79,49 @@ const BlogPost = () => {
           )}
 
           {/* Article Header */}
-          <header className="mb-8">
-            <Badge variant="secondary" className="mb-4">
+          <header className="mb-12 text-center">
+            <Badge variant="secondary" className="mb-6">
               {formatDate(post.date)}
             </Badge>
             
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight max-w-4xl mx-auto">
               {post.title}
             </h1>
             
-            <p className="text-xl text-muted-foreground leading-relaxed">
+            <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
               {post.description}
             </p>
           </header>
 
           {/* Article Content */}
-          <article 
-            className="prose prose-lg max-w-none
-              prose-headings:text-foreground
-              prose-p:text-foreground/90
-              prose-p:leading-relaxed
-              prose-strong:text-foreground
-              prose-ul:text-foreground/90
-              prose-ol:text-foreground/90
-              prose-li:text-foreground/90
-              prose-blockquote:text-foreground/80
-              prose-blockquote:border-l-primary
-              prose-a:text-primary
-              prose-a:no-underline
-              hover:prose-a:text-primary/80
-              prose-code:text-foreground
-              prose-code:bg-muted
-              prose-code:px-1
-              prose-code:py-0.5
-              prose-code:rounded
-              prose-pre:bg-muted
-              prose-pre:text-foreground"
-            dangerouslySetInnerHTML={{ __html: post.content }}
-          />
+          <div className="max-w-3xl mx-auto">
+            <article 
+              className="prose prose-lg prose-slate max-w-none
+                prose-headings:text-foreground prose-headings:font-bold
+                prose-h1:text-3xl prose-h1:mb-8 prose-h1:mt-12
+                prose-h2:text-2xl prose-h2:mb-6 prose-h2:mt-10
+                prose-h3:text-xl prose-h3:mb-4 prose-h3:mt-8
+                prose-p:text-foreground/90 prose-p:leading-relaxed prose-p:mb-6
+                prose-strong:text-foreground prose-strong:font-semibold
+                prose-ul:text-foreground/90 prose-ul:mb-6
+                prose-ol:text-foreground/90 prose-ol:mb-6
+                prose-li:text-foreground/90 prose-li:mb-2
+                prose-blockquote:text-foreground/80 prose-blockquote:border-l-primary prose-blockquote:pl-6 prose-blockquote:italic
+                prose-a:text-primary prose-a:no-underline prose-a:font-medium
+                hover:prose-a:text-primary/80 hover:prose-a:underline
+                prose-code:text-foreground prose-code:bg-muted prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm
+                prose-pre:bg-muted prose-pre:text-foreground prose-pre:p-4 prose-pre:rounded-lg
+                prose-img:rounded-lg prose-img:shadow-md
+                [&>*:first-child]:mt-0"
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            />
+          </div>
 
           {/* Article Footer */}
-          <footer className="mt-12 pt-8 border-t">
-            <div className="flex justify-between items-center">
+          <footer className="mt-16 pt-8 border-t max-w-3xl mx-auto">
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
               <Link to="/blog">
-                <Button variant="outline">
+                <Button variant="outline" className="w-full sm:w-auto">
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   More Articles
                 </Button>
