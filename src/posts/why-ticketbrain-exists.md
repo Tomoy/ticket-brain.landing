@@ -3,6 +3,7 @@ title: "Why TicketBrain Exists"
 date: "2025-09-19"
 description: "How TicketBrain helps people discover events smarter and manage their entertainment spending better."
 slug: "why-ticketbrain-exists"
+image: "blog-why-ticketbrain-exists.jpg"
 ---
 
 # Why TicketBrain Exists

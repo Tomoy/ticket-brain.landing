@@ -56,7 +56,7 @@ const BlogPost = () => {
       <Header />
       
       <main className="container mx-auto px-4 py-12">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           {/* Back to Blog Link */}
           <div className="mb-8">
             <Link to="/blog">
@@ -67,13 +67,24 @@ const BlogPost = () => {
             </Link>
           </div>
 
+          {/* Hero Image */}
+          {post.image && (
+            <div className="relative w-full h-64 md:h-80 lg:h-96 mb-8 rounded-lg overflow-hidden">
+              <img 
+                src={`/src/assets/${post.image}`}
+                alt={post.title}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          )}
+
           {/* Article Header */}
           <header className="mb-8">
             <Badge variant="secondary" className="mb-4">
               {formatDate(post.date)}
             </Badge>
             
-            <h1 className="text-4xl font-bold mb-4 leading-tight">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
               {post.title}
             </h1>
             

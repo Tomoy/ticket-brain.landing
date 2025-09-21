@@ -53,17 +53,28 @@ const Blog = () => {
           </header>
 
           {/* Blog Posts Grid */}
-          <div className="grid gap-8 md:gap-6">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {posts.map((post) => (
-              <Card key={post.slug} className="hover:shadow-lg transition-shadow duration-300">
-                <CardHeader>
+              <Card key={post.slug} className="hover:shadow-lg transition-shadow duration-300 overflow-hidden">
+                {/* Thumbnail Image */}
+                {post.image && (
+                  <div className="relative w-full h-48 overflow-hidden">
+                    <img 
+                      src={`/src/assets/${post.image}`}
+                      alt={post.title}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                )}
+                
+                <CardHeader className="pb-3">
                   <div className="flex items-center justify-between mb-2">
-                    <Badge variant="secondary">
+                    <Badge variant="secondary" className="text-xs">
                       {formatDate(post.date)}
                     </Badge>
                   </div>
                   
-                  <CardTitle className="text-2xl mb-2">
+                  <CardTitle className="text-lg mb-2 line-clamp-2">
                     <Link 
                       to={`/blog/${post.slug}`}
                       className="hover:text-primary transition-colors"
@@ -72,23 +83,23 @@ const Blog = () => {
                     </Link>
                   </CardTitle>
                   
-                  <CardDescription className="text-base">
+                  <CardDescription className="text-sm line-clamp-2">
                     {post.description}
                   </CardDescription>
                 </CardHeader>
                 
-                <CardContent>
-                  <p className="text-muted-foreground mb-4 leading-relaxed">
+                <CardContent className="pt-0">
+                  <p className="text-muted-foreground text-sm mb-4 leading-relaxed line-clamp-3">
                     {post.excerpt}
                   </p>
                   
                   <Link 
                     to={`/blog/${post.slug}`}
-                    className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors"
+                    className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors text-sm"
                   >
                     Read more
                     <svg 
-                      className="ml-1 w-4 h-4" 
+                      className="ml-1 w-3 h-3" 
                       fill="none" 
                       stroke="currentColor" 
                       viewBox="0 0 24 24"

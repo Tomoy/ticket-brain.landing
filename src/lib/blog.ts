@@ -7,6 +7,7 @@ export interface BlogPost {
   description: string;
   content: string;
   excerpt: string;
+  image?: string;
 }
 
 // Simple frontmatter parser for browser compatibility
@@ -55,7 +56,8 @@ export const getAllPosts = (): BlogPost[] => {
       date: data.date || '',
       description: data.description || '',
       content: marked.parse(markdownContent) as string,
-      excerpt
+      excerpt,
+      image: data.image
     });
   });
 
