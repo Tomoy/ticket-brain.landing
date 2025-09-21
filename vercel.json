@@ -1,21 +1,15 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "git": {
-    "deploymentEnabled": false
-  },
+  "git": { "deploymentEnabled": false },
   "rewrites": [
     {
-      "source": "/",
-      "has": [
-        { "type": "host", "value": "www.ticketbrain.app" }
-      ],
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "www.ticketbrain.app" }],
       "destination": "/index.html"
     },
     {
-      "source": "/",
-      "has": [
-        { "type": "host", "value": "www.ticketbrain.es" }
-      ],
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "www.ticketbrain.es" }],
       "destination": "/index.es.html"
     }
   ],
