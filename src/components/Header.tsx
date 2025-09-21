@@ -3,6 +3,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const { t } = useLanguage();
@@ -21,7 +22,7 @@ const Header = () => {
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center space-x-1">
+          <Link to="/" className="flex items-center space-x-1">
             <div className="flex items-center justify-center w-10 h-10">
               <img src="/lovable-uploads/logo-medium-light.png" alt="TicketBrain Logo" className="w-10 h-10" />
             </div>
@@ -29,7 +30,7 @@ const Header = () => {
               <span style={{ color: '#124434' }}>Ticket</span>
               <span className="text-foreground">Brain</span>
             </span>
-          </div>
+          </Link>
           
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
@@ -45,6 +46,12 @@ const Header = () => {
             >
               {t('nav.features')}
             </button>
+            <Link 
+              to="/blog"
+              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+            >
+              Blog
+            </Link>
             <button 
               onClick={() => scrollToSection('contact')}
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors cursor-pointer"
@@ -78,6 +85,13 @@ const Header = () => {
                 >
                   {t('nav.features')}
                 </button>
+                <Link 
+                  to="/blog"
+                  className="text-left text-lg font-medium text-muted-foreground hover:text-primary transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Blog
+                </Link>
                 <button 
                   onClick={() => scrollToSection('contact')}
                   className="text-left text-lg font-medium text-muted-foreground hover:text-primary transition-colors"
