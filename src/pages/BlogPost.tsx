@@ -55,7 +55,7 @@ const BlogPost = () => {
     <div className="min-h-screen">
       <Header />
       
-      <main className="container mx-auto px-4 py-12">
+      <main className="container mx-auto px-4 py-12 pt-24">
         <div className="max-w-4xl mx-auto">
           {/* Back to Blog Link */}
           <div className="mb-8">
@@ -68,10 +68,10 @@ const BlogPost = () => {
           </div>
 
           {/* Hero Image */}
-          {post.image && (
+          {post.imageUrl && (
             <div className="relative w-full h-64 md:h-80 lg:h-96 mb-8 rounded-lg overflow-hidden">
               <img 
-                src={`/src/assets/${post.image}`}
+                src={post.imageUrl}
                 alt={post.title}
                 className="w-full h-full object-cover"
               />

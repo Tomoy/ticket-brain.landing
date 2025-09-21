@@ -57,10 +57,10 @@ const Blog = () => {
             {posts.map((post) => (
               <Card key={post.slug} className="hover:shadow-lg transition-shadow duration-300 overflow-hidden">
                 {/* Thumbnail Image */}
-                {post.image && (
+                {post.imageUrl && (
                   <div className="relative w-full h-48 overflow-hidden">
                     <img 
-                      src={`/src/assets/${post.image}`}
+                      src={post.imageUrl}
                       alt={post.title}
                       className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                     />

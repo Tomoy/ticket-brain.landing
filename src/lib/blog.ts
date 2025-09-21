@@ -1,5 +1,23 @@
 import { marked } from 'marked';
 
+// Import blog images
+import blogWhyTicketBrainExists from '@/assets/blog-why-ticketbrain-exists.jpg';
+import blogSmartGroceryShopping from '@/assets/blog-smart-grocery-shopping.jpg';
+import blogReceiptData from '@/assets/blog-receipt-data.jpg';
+
+// Configure marked options for better parsing
+marked.setOptions({
+  breaks: true,
+  gfm: true
+});
+
+// Image mapping
+const imageMap: Record<string, string> = {
+  'blog-why-ticketbrain-exists.jpg': blogWhyTicketBrainExists,
+  'blog-smart-grocery-shopping.jpg': blogSmartGroceryShopping,
+  'blog-receipt-data.jpg': blogReceiptData,
+};
+
 export interface BlogPost {
   slug: string;
   title: string;
@@ -8,6 +26,7 @@ export interface BlogPost {
   content: string;
   excerpt: string;
   image?: string;
+  imageUrl?: string;
 }
 
 // Simple frontmatter parser for browser compatibility
@@ -57,7 +76,8 @@ export const getAllPosts = (): BlogPost[] => {
       description: data.description || '',
       content: marked.parse(markdownContent) as string,
       excerpt,
-      image: data.image
+      image: data.image,
+      imageUrl: data.image ? imageMap[data.image] : undefined
     });
   });
 
