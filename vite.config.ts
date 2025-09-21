@@ -16,12 +16,12 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-    build: {
+  build: {
     rollupOptions: {
       input: {
-        en: path.resolve(__dirname, "index.en.html"),
-        es: path.resolve(__dirname, "index.es.html"),
+        main: path.resolve(__dirname, "index.html"),
       },
     },
   },
+  assetsInclude: ['**/*.md'],
 }));
