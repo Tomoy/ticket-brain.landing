@@ -50,18 +50,29 @@ const parseFrontmatter = (content: string) => {
   return { data, content: markdownContent };
 };
 
-// Import all markdown files
+// Import all markdown files (including Spanish versions)
 const postModules = import.meta.glob('/src/posts/*.md', { 
   as: 'raw',
   eager: true 
 });
 
-export const getAllPosts = (): BlogPost[] => {
+export const getAllPosts = (language: 'en' | 'es' = 'en'): BlogPost[] => {
   const posts: BlogPost[] = [];
 
   Object.entries(postModules).forEach(([path, content]) => {
+    const fileName = path.replace('/src/posts/', '');
+    
+    // Skip files that don't match the current language
+    if (language === 'es') {
+      // For Spanish, only include .es.md files
+      if (!fileName.endsWith('.es.md')) return;
+    } else {
+      // For English, only include files that don't have .es.md extension
+      if (fileName.endsWith('.es.md')) return;
+    }
+
     const { data, content: markdownContent } = parseFrontmatter(content);
-    const slug = path.replace('/src/posts/', '').replace('.md', '');
+    const slug = fileName.replace('.es.md', '').replace('.md', '');
     
     // Generate excerpt from content (first 150 characters)
     const plainText = markdownContent.replace(/[#*\[\]]/g, '').trim();
@@ -85,7 +96,7 @@ export const getAllPosts = (): BlogPost[] => {
   return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 };
 
-export const getPostBySlug = (slug: string): BlogPost | null => {
-  const posts = getAllPosts();
+export const getPostBySlug = (slug: string, language: 'en' | 'es' = 'en'): BlogPost | null => {
+  const posts = getAllPosts(language);
   return posts.find(post => post.slug === slug) || null;
 };

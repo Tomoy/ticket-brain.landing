@@ -10,8 +10,8 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
-  const post = slug ? getPostBySlug(slug) : null;
   const { t, language } = useLanguage();
+  const post = slug ? getPostBySlug(slug, language) : null;
 
   useEffect(() => {
     if (post) {

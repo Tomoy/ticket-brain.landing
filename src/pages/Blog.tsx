@@ -8,8 +8,8 @@ import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const Blog = () => {
-  const posts = getAllPosts();
   const { t, language } = useLanguage();
+  const posts = getAllPosts(language);
 
   useEffect(() => {
     // Set SEO meta tags for blog listing page
