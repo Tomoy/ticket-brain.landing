@@ -5,33 +5,37 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Blog = () => {
   const posts = getAllPosts();
+  const { t, language } = useLanguage();
 
   useEffect(() => {
     // Set SEO meta tags for blog listing page
-    document.title = "Blog | TicketBrain - Smart Grocery Shopping Insights";
+    const blogTitle = `${t('blog.title')} | TicketBrain - Smart Grocery Shopping Insights`;
+    document.title = blogTitle;
     
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Discover insights about smart grocery shopping, AI-powered receipt analysis, and money-saving tips from the TicketBrain blog.');
+      metaDescription.setAttribute('content', t('blog.description'));
     }
 
     // OpenGraph tags
     const ogTitle = document.querySelector('meta[property="og:title"]');
     if (ogTitle) {
-      ogTitle.setAttribute('content', 'Blog | TicketBrain - Smart Grocery Shopping Insights');
+      ogTitle.setAttribute('content', blogTitle);
     }
 
     const ogDescription = document.querySelector('meta[property="og:description"]');
     if (ogDescription) {
-      ogDescription.setAttribute('content', 'Discover insights about smart grocery shopping, AI-powered receipt analysis, and money-saving tips from the TicketBrain blog.');
+      ogDescription.setAttribute('content', t('blog.description'));
     }
-  }, []);
+  }, [t]);
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
+    const locale = language === 'es' ? 'es-ES' : 'en-US';
+    return new Date(dateString).toLocaleDateString(locale, {
       year: 'numeric',
       month: 'long',
       day: 'numeric'
@@ -46,9 +50,9 @@ const Blog = () => {
         <div className="max-w-4xl mx-auto">
           {/* Page Header */}
           <header className="text-center mb-12">
-            <h1 className="text-4xl font-bold mb-4">TicketBrain Blog</h1>
+            <h1 className="text-4xl font-bold mb-4">{t('blog.title')}</h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Insights on smart grocery shopping, AI-powered receipt analysis, and practical money-saving tips.
+              {t('blog.description')}
             </p>
           </header>
 
@@ -97,7 +101,7 @@ const Blog = () => {
                     to={`/blog/${post.slug}`}
                     className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors text-sm"
                   >
-                    Read more
+                    {t('blog.readMore')}
                     <svg 
                       className="ml-1 w-3 h-3" 
                       fill="none" 
@@ -120,7 +124,7 @@ const Blog = () => {
           {posts.length === 0 && (
             <div className="text-center py-12">
               <p className="text-muted-foreground text-lg">
-                No blog posts available yet. Check back soon!
+                {t('blog.noPosts')}
               </p>
             </div>
           )}

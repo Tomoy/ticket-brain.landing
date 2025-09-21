@@ -6,10 +6,12 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const post = slug ? getPostBySlug(slug) : null;
+  const { t, language } = useLanguage();
 
   useEffect(() => {
     if (post) {
@@ -44,7 +46,8 @@ const BlogPost = () => {
   }
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
+    const locale = language === 'es' ? 'es-ES' : 'en-US';
+    return new Date(dateString).toLocaleDateString(locale, {
       year: 'numeric',
       month: 'long',
       day: 'numeric'
@@ -62,7 +65,7 @@ const BlogPost = () => {
             <Link to="/blog">
               <Button variant="ghost" className="pl-0">
                 <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Blog
+                {t('blog.backToBlog')}
               </Button>
             </Link>
           </div>
@@ -123,12 +126,12 @@ const BlogPost = () => {
               <Link to="/blog">
                 <Button variant="outline" className="w-full sm:w-auto">
                   <ArrowLeft className="w-4 h-4 mr-2" />
-                  More Articles
+                  {t('blog.moreArticles')}
                 </Button>
               </Link>
               
               <div className="text-sm text-muted-foreground">
-                Published {formatDate(post.date)}
+                {t('blog.published')} {formatDate(post.date)}
               </div>
             </div>
           </footer>
