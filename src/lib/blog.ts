@@ -1,4 +1,3 @@
-import matter from 'gray-matter';
 import { marked } from 'marked';
 
 export interface BlogPost {
@@ -10,6 +9,27 @@ export interface BlogPost {
   excerpt: string;
 }
 
+// Simple frontmatter parser for browser compatibility
+const parseFrontmatter = (content: string) => {
+  const parts = content.split('---');
+  if (parts.length < 3) return { data: {}, content };
+  
+  const frontmatterText = parts[1].trim();
+  const markdownContent = parts.slice(2).join('---').trim();
+  
+  const data: Record<string, string> = {};
+  frontmatterText.split('\n').forEach(line => {
+    const colonIndex = line.indexOf(':');
+    if (colonIndex > 0) {
+      const key = line.substring(0, colonIndex).trim();
+      const value = line.substring(colonIndex + 1).trim().replace(/^["']|["']$/g, '');
+      data[key] = value;
+    }
+  });
+  
+  return { data, content: markdownContent };
+};
+
 // Import all markdown files
 const postModules = import.meta.glob('/src/posts/*.md', { 
   as: 'raw',
@@ -20,7 +40,7 @@ export const getAllPosts = (): BlogPost[] => {
   const posts: BlogPost[] = [];
 
   Object.entries(postModules).forEach(([path, content]) => {
-    const { data, content: markdownContent } = matter(content);
+    const { data, content: markdownContent } = parseFrontmatter(content);
     const slug = path.replace('/src/posts/', '').replace('.md', '');
     
     // Generate excerpt from content (first 150 characters)
