@@ -4,8 +4,18 @@
   "rewrites": [
     {
       "source": "/(.*)",
+      "has": [{ "type": "host", "value": "ticketbrain.app" }],
+      "destination": "/index.en.html"
+    },
+    {
+      "source": "/(.*)",
       "has": [{ "type": "host", "value": "www.ticketbrain.app" }],
-      "destination": "/index.html"
+      "destination": "/index.en.html"
+    },
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "ticketbrain.es" }],
+      "destination": "/index.es.html"
     },
     {
       "source": "/(.*)",
