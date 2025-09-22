@@ -1,7 +1,8 @@
 {
   "git": { "deploymentEnabled": false },
-  "cleanUrls": true,
+  "cleanUrls": false,
   "trailingSlash": false,
+  "framework": null,
   "rewrites": [
     {
       "source": "/(.*)",
