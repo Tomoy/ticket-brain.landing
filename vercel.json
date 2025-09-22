@@ -5,13 +5,43 @@
   "framework": null,
   "rewrites": [
     {
-      "source": "/(.*)",
-      "has": [{ "type": "host", "value": "ticketbrain.app" }],
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "ticketbrain.app"
+        }
+      ],
+      "destination": "/index.html"
+    },
+    {
+      "source": "/en",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.ticketbrain.app"
+        }
+      ],
       "destination": "/index.en.html"
     },
     {
-      "source": "/(.*)",
-      "has": [{ "type": "host", "value": "ticketbrain.es" }],
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.ticketbrain.es"
+        }
+      ],
+      "destination": "/index.es.html"
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "ticketbrain.es"
+        }
+      ],
       "destination": "/index.es.html"
     }
   ]
