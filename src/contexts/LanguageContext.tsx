@@ -22,7 +22,22 @@ interface LanguageProviderProps {
   children: ReactNode;
 }
 
+// ✅ Detect initial language from <html lang="...">
+const getInitialLanguage = (): Language => {
+  if (typeof document !== "undefined") {
+    const langAttr = document.documentElement.lang;
+    if (langAttr === "es") return "es";
+  }
+  return "en"; // fallback
+};
+
 export const LanguageProvider = ({ children }: LanguageProviderProps) => {
+  const [language, setLanguage] = useState<Language>(getInitialLanguage);
+
+  const t = (key: string): string =>
+    translations[language][key] || key;
+
+/*export const LanguageProvider = ({ children }: LanguageProviderProps) => {
   // Step 1: start with null so nothing renders until we detect the language
   const [language, setLanguage] = useState<Language | null>(null);
 
@@ -41,7 +56,7 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
   };
 
   // Step 4: avoid rendering children until language is ready
-  if (!language) return null;
+  if (!language) return null;*/
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>
