@@ -60,7 +60,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Hero
     'hero.title.line1': 'Finally Understand Your',
     'hero.title.line2': 'Grocery Spending',
-    'hero.description': 'Stop wondering where your money goes. Scan your receipts to discover which purchases are breaking your budget and get actionable insights to take control.',
+    'hero.description': 'Stop wondering where your money goes. Scan your receipts using our mobile app to discover which purchases are breaking your budget and get actionable insights to take control.',
     'hero.emailPlaceholder': 'Enter your email',
     'hero.ctaButton': 'Get Early Access',
     'hero.ctaButtonLoading': 'Joining...',
@@ -155,7 +155,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Hero
     "hero.title.line1": "Por fin entiende tus",
     "hero.title.line2": "gastos en el súper",
-    "hero.description": "Deja de preguntarte a dónde va tu dinero. Escanea tus tickets y descubre qué compras están rompiendo tu presupuesto. Obtén ideas prácticas para tomar el control.",
+    "hero.description": "Deja de preguntarte a dónde va tu dinero. Escanea tus tickets usando nuestra app y descubre qué compras están rompiendo tu presupuesto. Obtén ideas prácticas para tomar el control.",
     "hero.emailPlaceholder": "Escribe tu email",
     "hero.ctaButton": "Accede Antes que Nadie",
     "hero.ctaButtonLoading": "Uniéndote...",
