@@ -1,48 +1,12 @@
 {
-  "git": { "deploymentEnabled": false },
-  "cleanUrls": false,
-  "trailingSlash": false,
-  "framework": null,
-  "rewrites": [
+  "version": 2,
+  "builds": [
+    { "src": "dist/**/*", "use": "@vercel/static" }
+  ],
+  "routes": [
     {
-      "source": "/",
-      "has": [
-        {
-          "type": "host",
-          "value": "ticketbrain.app"
-        }
-      ],
-      "destination": "/index.html"
-    },
-    {
-      "source": "/en",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.ticketbrain.app"
-        }
-      ],
-      "destination": "/index.en.html"
-    },
-    {
-      "source": "/",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.ticketbrain.es"
-        }
-      ],
-      "destination": "/index.es.html"
-    },
-    {
-      "source": "/",
-      "has": [
-        {
-          "type": "host",
-          "value": "ticketbrain.es"
-        }
-      ],
-      "destination": "/index.es.html"
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
