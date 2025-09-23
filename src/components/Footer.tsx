@@ -1,5 +1,6 @@
 import { Brain } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { analytics, logEvent } from "../../firebase-config";
 
 const Footer = () => {
   const { t } = useLanguage();
@@ -21,7 +22,16 @@ const Footer = () => {
           <div className="flex justify-center items-center space-x-6 text-sm text-primary-foreground/60">
             <span>© 2025 Ticket Brain</span>
             <span>•</span>
-            <a href="/privacy-policy" className="hover:text-primary-foreground transition-colors">
+            <a href="/privacy-policy" 
+            className="hover:text-primary-foreground transition-colors"
+            onClick={() => {
+                //Firebase event logging
+                logEvent(analytics, 'footer_privacy_policy_tap', {
+                  button_name: 'privacyPolicy',
+                  page_location: window.location.pathname
+                })
+              }}
+            >
               {t('footer.privacyPolicy')}
             </a>
           </div>

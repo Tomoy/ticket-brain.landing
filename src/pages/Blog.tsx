@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { analytics, logEvent } from "../../firebase-config";
 
 const Blog = () => {
   const { t, language } = useLanguage();
@@ -82,6 +83,14 @@ const Blog = () => {
                     <Link 
                       to={`/blog/${post.slug}`}
                       className="hover:text-primary transition-colors"
+                      onClick={() => {
+                        //Firebase event logging
+                        logEvent(analytics, 'blog_post_tap', {
+                        button_name: "blogPost",
+                        post_name: post.title,
+                        page_location: window.location.pathname
+                        })
+                      }}
                     >
                       {post.title}
                     </Link>
@@ -100,6 +109,14 @@ const Blog = () => {
                   <Link 
                     to={`/blog/${post.slug}`}
                     className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors text-sm"
+                    onClick={() => {
+                      //Firebase event logging
+                      logEvent(analytics, 'blog_post_tap', {
+                        button_name: "readMore",
+                        post_name: post.title,
+                        page_location: window.location.pathname
+                      })
+                    }}
                   >
                     {t('blog.readMore')}
                     <svg 

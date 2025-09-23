@@ -4,6 +4,7 @@ import LanguageSwitcher from "./LanguageSwitcher";
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { analytics, logEvent } from "../../firebase-config";
 
 const Header = () => {
   const { t } = useLanguage();
@@ -50,13 +51,27 @@ const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <button 
-              onClick={() => scrollToSection('how-it-works')}
+              onClick={() => {
+                //Firebase event logging
+                logEvent(analytics, 'header_how_it_works_tap', {
+                  button_name: 'howItWorks',
+                  page_location: window.location.pathname
+                })
+                scrollToSection('how-it-works')
+              }}
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors cursor-pointer"
             >
               {t('nav.howItWorks')}
             </button>
             <button 
-              onClick={() => scrollToSection('features')}
+                onClick={() => {
+                  //Firebase event logging
+                  logEvent(analytics, 'header_features_tap', {
+                    button_name: 'features',
+                    page_location: window.location.pathname
+                  })
+                  scrollToSection('features')
+                }}
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors cursor-pointer"
             >
               {t('nav.features')}
@@ -64,11 +79,25 @@ const Header = () => {
             <Link 
               to="/blog"
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+              onClick={() => {
+              //Firebase event logging
+              logEvent(analytics, 'header_blog_tap', {
+                button_name: 'blog',
+                page_location: window.location.pathname
+              });
+              }}
             >
               Blog
             </Link>
             <button 
-              onClick={() => scrollToSection('contact')}
+                onClick={() => {
+                  //Firebase event logging
+                  logEvent(analytics, 'header_join_us_tap', {
+                    button_name: 'joinUs',
+                    page_location: window.location.pathname
+                  })
+                  scrollToSection('contact')
+                }}
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors cursor-pointer"
             >
               {t('nav.join')}

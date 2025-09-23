@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useEmailSignup } from "@/hooks/useEmailSignup";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { analytics, logEvent } from "../../firebase-config";
 
 const Hero = () => {
   const { t } = useLanguage();
@@ -23,6 +24,13 @@ const Hero = () => {
   };*/
   async function handleHeroEmailSubmit(e: React.FormEvent) {
     e.preventDefault();
+
+    //Firebase event logging
+    logEvent(analytics, 'hero_cta_tap', {
+      button_name: 'hero',
+      page_location: window.location.pathname
+    });
+
     const ok = await submitEmail(email);
     if (ok) setEmail("");
   }

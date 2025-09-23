@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { analytics, logEvent } from "../../firebase-config";
 
 export function useEmailSignup() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -15,6 +16,8 @@ export function useEmailSignup() {
       });
       const data = await res.json();
       if (res.ok && data.ok) {
+        //Firebase event logging
+        logEvent(analytics, 'email_signup_success')
         toast({
           title: "Welcome to the TicketBrain family!",
           description: "You'll be among the first to experience smarter shopping.",
