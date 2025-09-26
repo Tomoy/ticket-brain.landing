@@ -8,11 +8,18 @@
     <priority>1.0</priority>
   </url>
 
-    <!-- Blog Section -->
+  <!-- Blog Section -->
   <url>
     <loc>https://ticketbrain.app/blog</loc>
     <lastmod>2025-09-21</lastmod>
     <priority>0.8</priority>
+  </url>
+
+  <!-- Frequently Asked Questions -->
+  <url>
+    <loc>https://ticketbrain.app/frequently-asked-questions</loc>
+    <lastmod>2025-09-26</lastmod>
+    <priority>0.7</priority>
   </url>
 
   <!-- Privacy Policy -->
