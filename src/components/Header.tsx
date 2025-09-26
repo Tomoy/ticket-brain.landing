@@ -89,6 +89,19 @@ const Header = () => {
             >
               Blog
             </Link>
+            <Link 
+              to="/frequently-asked-questions"
+              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+              onClick={() => {
+              //Firebase event logging
+              logEvent(analytics, 'header_faq_tap', {
+                button_name: 'faq',
+                page_location: window.location.pathname
+              });
+              }}
+            >
+              FAQ
+            </Link>
             <button 
                 onClick={() => {
                   //Firebase event logging
@@ -135,6 +148,13 @@ const Header = () => {
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Blog
+                </Link>
+                <Link 
+                  to="/frequently-asked-questions"
+                  className="text-left text-lg font-medium text-muted-foreground hover:text-primary transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  FAQ
                 </Link>
                 <button 
                   onClick={() => scrollToSection('contact')}
