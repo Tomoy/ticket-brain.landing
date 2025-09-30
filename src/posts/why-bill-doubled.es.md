@@ -1,35 +1,50 @@
 ---
-title: "Por Qué Existe TicketBrain"
-date: "2025-09-19"
-description: "Cómo TicketBrain ayuda a las personas a descubrir eventos de manera más inteligente y gestionar mejor sus gastos de entretenimiento."
-slug: "why-bill-doubled"
+title: "Por Qué Tu Cuenta del Supermercado se Duplicó"
+date: "2025-09-28"
+description: "¿Inflación, reduflación o hábitos? Descubre las verdaderas razones detrás del aumento en los costos del supermercado y qué está realmente bajo tu control."
+slug: "por-que-tu-cuenta-supermercado-duplico"
 image: "blog-receipt-data.jpg"
 ---
 
-# Por Qué Existe TicketBrain
+# Por Qué Tu Cuenta del Supermercado se Duplicó (Y Qué Sí Puedes Controlar)
 
-En el mundo actual, gastamos constantemente dinero en comestibles y artículos cotidianos, pero ¿realmente entendemos a dónde va nuestro dinero? Esa es exactamente la razón por la que creamos TicketBrain.
+Si sientes que tu cuenta del supermercado **se disparó en los últimos años**, no lo estás imaginando. Los precios *sí* han subido — pero no siempre por las razones que pensamos.  
 
-## El Problema Que Resolvemos
+Hay tres grandes fuerzas en juego:  
 
-La mayoría de las personas no tienen una imagen clara de sus patrones de gasto en el supermercado. Pueden saber que gastaron 150€ esta semana, pero no saben:
+## 1. Inflación
+La inflación básica ha afectado a casi todos los productos en las estanterías. Pero no todas las categorías subieron igual:  
+- **Carnes, lácteos y huevos** tuvieron algunos de los aumentos más pronunciados entre 2021–2023.  
+- **Básicos** como arroz y pasta subieron, pero de manera más moderada.  
+- **Snacks y comidas rápidas** aumentaron por encima del promedio, impulsados por la demanda.  
 
-- Qué categorías consumieron la mayor parte de su presupuesto
-- Cómo se compara su gasto con semanas anteriores
-- Dónde podrían ahorrar dinero sin sacrificar calidad
-- Qué artículos compran repetidamente vs. compras impulsivas
+📊 Datos de reportes de consumo muestran que entre 2019–2024, la inflación promedio en alimentos en las principales economías osciló entre **25% y 40%**, según la categoría.  
 
-## Nuestra Solución Impulsada por IA
+## 2. Reduflación (Shrinkflation)
+A veces el precio no cambia — pero el envase sí.  
+- Una caja de cereales de 500 g pasa silenciosamente a 420 g.  
+- Los packs de yogur pierden un vaso, mientras el precio en la estantería se mantiene.  
 
-TicketBrain utiliza inteligencia artificial avanzada para:
+Esta “inflación invisible” golpea fuerte al consumidor porque es más difícil de detectar.  
 
-1. **Categorizar automáticamente** cada artículo en tus tickets
-2. **Identificar patrones de gasto** a lo largo de semanas y meses
-3. **Sugerir ahorros inteligentes** basados en tu comportamiento de compra real
-4. **Rastrear cambios de precios** para artículos que compras regularmente
+## 3. Cambios de Comportamiento
+Aquí está la parte complicada: no todos los aumentos vienen de la tienda. A veces vienen de nosotros mismos:  
+- Añadir más snacks y caprichos al carrito.  
+- Pasar de productos genéricos a marcas reconocidas.  
+- Ir más veces a comprar (lo que genera más compras por impulso).  
 
-## El Impacto
+---
 
-Nuestros usuarios típicamente ahorran 15-20% en sus facturas de supermercado dentro del primer mes, no cambiando lo que comen, sino entendiendo lo que compran.
+## Lo Que Sí Puedes Controlar
 
-¿Listo para tomar control de tus gastos de supermercado? Únete a TicketBrain hoy.
+No puedes revertir la inflación global, pero **sí** puedes influir en tu propio carrito:  
+- **Detecta la reduflación:** Compara precios por unidad, no solo el precio en la estantería.  
+- **Audita tus hábitos:** Busca categorías donde tu propio comportamiento cambió (ejemplo: comprar marcas en lugar de genéricos).  
+- **Planifica mejor tus compras:** Menos visitas al súper significan menos extras imprevistos.  
+
+---
+
+## En Resumen
+Tu cuenta del supermercado se duplicó por una mezcla de fuerzas globales y pequeñas decisiones personales que pasaron desapercibidas.  
+La buena noticia: **no puedes controlar la inflación, pero *sí* puedes controlar tus hábitos.**  
+Y muchas veces, ahí es donde se esconden los mayores ahorros.  

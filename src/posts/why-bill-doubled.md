@@ -1,5 +1,5 @@
 ---
-title: "Why Your Grocery Bill Doubled (And What You Can Actually Control)"
+title: "Why Your Grocery Bill Doubled"
 date: "2025-09-28"
 description: "Inflation, shrinkflation, or habits? Break down the real reasons behind rising grocery costs and learn what’s actually in your control."
 slug: "why-your-grocery-bill-doubled"
