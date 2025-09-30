@@ -3,7 +3,7 @@ title: "Entendiendo los Datos de tu Ticket"
 date: "2025-09-17"
 description: "Aprende cómo descifrar las valiosas perspectivas ocultas en tus tickets de supermercado y tomar decisiones de compra basadas en datos."
 slug: "understanding-your-receipt-data"
-image: "blog-receipt-data.jpg"
+image: "blog-why-ticketbrain-exists.jpg"
 ---
 
 # Entendiendo los Datos de tu Ticket

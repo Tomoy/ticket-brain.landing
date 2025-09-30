@@ -2,8 +2,8 @@
 title: "Por Qué Existe TicketBrain"
 date: "2025-09-19"
 description: "Cómo TicketBrain ayuda a las personas a descubrir eventos de manera más inteligente y gestionar mejor sus gastos de entretenimiento."
-slug: "why-ticketbrain-exists"
-image: "blog-why-ticketbrain-exists.jpg"
+slug: "why-bill-doubled"
+image: "blog-receipt-data.jpg"
 ---
 
 # Por Qué Existe TicketBrain
