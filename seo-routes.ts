@@ -119,6 +119,43 @@ export const seoRoutes: SeoRoute[] = [
     ),
   },
 
+  {
+    path: "/blog/spendscan-alternative",
+    file: "blog/spendscan-alternative.html",
+    title: "SpendScan Alternative for Grocery Budgeting | TicketBrain",
+    description:
+      "SpendScan and TicketBrain both read your grocery receipts with AI. The difference is what they optimise for. Here is an honest comparison to help you pick.",
+    jsonLd: blogPosting(
+      "/blog/spendscan-alternative",
+      "SpendScan Alternative: Receipt Scanning Focused on Your Budget",
+      "2026-09-06"
+    ),
+  },
+  {
+    path: "/blog/fetch-alternative",
+    file: "blog/fetch-alternative.html",
+    title: "Fetch Alternative: Receipt Insights, Not Points | TicketBrain",
+    description:
+      "Fetch turns your receipts into gift cards. If you would rather have your receipts explain where your grocery money goes, here is what changes.",
+    jsonLd: blogPosting(
+      "/blog/fetch-alternative",
+      "Fetch Alternative: Turn Receipts Into Insights, Not Points",
+      "2026-09-06"
+    ),
+  },
+  {
+    path: "/blog/ynab-alternative-groceries",
+    file: "blog/ynab-alternative-groceries.html",
+    title: "YNAB Alternative for Grocery Spending | TicketBrain",
+    description:
+      "Budgeting apps track groceries as one category. Here is why item-level receipt data changes what you can actually cut, and when a budgeting app is still the right tool.",
+    jsonLd: blogPosting(
+      "/blog/ynab-alternative-groceries",
+      "YNAB Alternative for Groceries: See the Items, Not Just the Total",
+      "2026-09-06"
+    ),
+  },
+
   // Vercel serves this with a real 404 status for any path that matches no
   // rewrite. It boots the same SPA, so React Router still renders NotFound.
   {

@@ -1,49 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <!-- Homepage -->
   <url>
     <loc>https://www.ticketbrain.app/</loc>
-    <lastmod>2025-09-12</lastmod>
+    <lastmod>2026-09-06</lastmod>
     <priority>1.0</priority>
   </url>
 
-  <!-- Blog Section -->
   <url>
     <loc>https://www.ticketbrain.app/blog</loc>
-    <lastmod>2025-09-21</lastmod>
+    <lastmod>2026-09-06</lastmod>
     <priority>0.8</priority>
   </url>
 
-  <!-- Blog Posts -->
-  <url>
-    <loc>https://www.ticketbrain.app/blog/why-your-grocery-bill-doubled</loc>
-    <lastmod>2025-09-28</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.ticketbrain.app/blog/smart-grocery-shopping-with-ai</loc>
-    <lastmod>2025-09-18</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.ticketbrain.app/blog/understanding-your-receipt-data</loc>
-    <lastmod>2025-09-17</lastmod>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- Frequently Asked Questions -->
   <url>
     <loc>https://www.ticketbrain.app/frequently-asked-questions</loc>
     <lastmod>2025-09-26</lastmod>
     <priority>0.7</priority>
   </url>
 
-  <!-- Privacy Policy -->
   <url>
     <loc>https://www.ticketbrain.app/privacy-policy</loc>
     <lastmod>2025-09-12</lastmod>
     <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.ticketbrain.app/blog/why-your-grocery-bill-doubled</loc>
+    <lastmod>2025-09-28</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.ticketbrain.app/blog/smart-grocery-shopping-with-ai</loc>
+    <lastmod>2025-09-18</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.ticketbrain.app/blog/understanding-your-receipt-data</loc>
+    <lastmod>2025-09-17</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.ticketbrain.app/blog/spendscan-alternative</loc>
+    <lastmod>2026-09-06</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.ticketbrain.app/blog/fetch-alternative</loc>
+    <lastmod>2026-09-06</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.ticketbrain.app/blog/ynab-alternative-groceries</loc>
+    <lastmod>2026-09-06</lastmod>
+    <priority>0.7</priority>
   </url>
 
 </urlset>
