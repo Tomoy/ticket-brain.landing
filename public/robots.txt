@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://ticketbrain.app/sitemap.xml
+Sitemap: https://www.ticketbrain.app/sitemap.xml

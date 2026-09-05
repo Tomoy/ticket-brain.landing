@@ -22,26 +22,23 @@ interface LanguageProviderProps {
   children: ReactNode;
 }
 
+const detectLanguage = (): Language => {
+  if (typeof window === 'undefined') return 'en';
+  return window.location.hostname.endsWith('ticketbrain.es') ? 'es' : 'en';
+};
+
 export const LanguageProvider = ({ children }: LanguageProviderProps) => {
-  // Step 1: start with null so nothing renders until we detect the language
-  const [language, setLanguage] = useState<Language | null>(null);
+  // Detected synchronously from the domain: the very first render already has
+  // the right language, so there is no blank frame and crawlers that snapshot
+  // early still get real content.
+  const [language, setLanguage] = useState<Language>(detectLanguage);
 
-  // Step 2: detect domain on client
+  // Keep <html lang> in sync with whatever language is active
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const host = window.location.hostname;
-      setLanguage(host.endsWith('ticketbrain.es') ? 'es' : 'en');
-    }
-  }, []);
+    document.documentElement.lang = language;
+  }, [language]);
 
-  // Step 3: simple translation function
-  const t = (key: string): string => {
-    if (!language) return key; // fallback while loading
-    return translations[language][key] || key;
-  };
-
-  // Step 4: avoid rendering children until language is ready
-  if (!language) return null;
+  const t = (key: string): string => translations[language][key] || key;
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>

@@ -1,10 +1,12 @@
 import { useLanguage } from "@/contexts/LanguageContext";
+import Header from "@/components/Header";
 
 const PrivacyPolicy = () => {
   const { t } = useLanguage();
   
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-800 to-slate-900 p-5">
+    <div className="min-h-screen bg-gradient-to-br from-slate-800 to-slate-900 p-5 pt-24">
+      <Header />
       <div className="max-w-4xl mx-auto bg-background rounded-xl shadow-2xl overflow-hidden">
         {/* Header */}
         <div className="bg-primary text-primary-foreground px-8 py-12 text-center">

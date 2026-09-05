@@ -3,7 +3,7 @@
 
   <!-- Homepage -->
   <url>
-    <loc>https://www.ticketbrain.app</loc>
+    <loc>https://www.ticketbrain.app/</loc>
     <lastmod>2025-09-12</lastmod>
     <priority>1.0</priority>
   </url>
@@ -13,6 +13,23 @@
     <loc>https://www.ticketbrain.app/blog</loc>
     <lastmod>2025-09-21</lastmod>
     <priority>0.8</priority>
+  </url>
+
+  <!-- Blog Posts -->
+  <url>
+    <loc>https://www.ticketbrain.app/blog/why-your-grocery-bill-doubled</loc>
+    <lastmod>2025-09-28</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ticketbrain.app/blog/smart-grocery-shopping-with-ai</loc>
+    <lastmod>2025-09-18</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ticketbrain.app/blog/understanding-your-receipt-data</loc>
+    <lastmod>2025-09-17</lastmod>
+    <priority>0.7</priority>
   </url>
 
   <!-- Frequently Asked Questions -->
