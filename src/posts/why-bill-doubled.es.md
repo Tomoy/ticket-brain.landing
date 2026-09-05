@@ -6,7 +6,6 @@ slug: "por-que-tu-cuenta-supermercado-duplico"
 image: "blog-receipt-data.jpg"
 ---
 
-# Por Qué Tu Cuenta del Supermercado se Duplicó (Y Qué Sí Puedes Controlar)
 
 Si sientes que tu cuenta del supermercado **se disparó en los últimos años**, no lo estás imaginando. Los precios *sí* han subido — pero no siempre por las razones que pensamos.  
 

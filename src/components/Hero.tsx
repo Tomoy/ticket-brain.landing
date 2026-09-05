@@ -89,6 +89,9 @@ const Hero = () => {
               <img 
                 src="/lovable-uploads/d95e06aa-7264-45fc-993b-2ff23055be85.png" 
                 alt="Person with glasses scanning a receipt with phone while surrounded by groceries"
+                width={1024}
+                height={1024}
+                fetchpriority="high"
                 className="w-full h-auto object-cover"
               />
               {/* Overlay gradient for better text contrast if needed */}

@@ -29,7 +29,7 @@ const generateRouteHtml = (): Plugin => ({
       const title = escapeAttr(route.title);
       const description = escapeAttr(route.description);
 
-      const html = template
+      let html = template
         .replace(/<title>[\s\S]*?<\/title>/, `<title>${title}</title>`)
         .replace(
           /<meta\s+name="description"\s+content="[^"]*"\s*\/?>/,
@@ -37,7 +37,7 @@ const generateRouteHtml = (): Plugin => ({
         )
         .replace(
           /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/,
-          `<link rel="canonical" href="${url}">`
+          route.noindex ? "" : `<link rel="canonical" href="${url}">`
         )
         .replace(
           /<meta\s+property="og:title"\s+content="[^"]*"\s*\/?>/,
@@ -59,6 +59,22 @@ const generateRouteHtml = (): Plugin => ({
           /<meta\s+name="twitter:description"\s+content="[^"]*"\s*\/?>/,
           `<meta name="twitter:description" content="${description}" />`
         );
+
+      if (route.noindex) {
+        html = html.replace(
+          /<meta\s+name="robots"\s+content="[^"]*"\s*\/?>/,
+          `<meta name="robots" content="noindex, follow">`
+        );
+      }
+
+      if (route.jsonLd) {
+        // The route's own description is the single source of truth for it.
+        const data = { ...route.jsonLd, description: route.description };
+        html = html.replace(
+          "</head>",
+          `  <script type="application/ld+json">${JSON.stringify(data)}</script>\n  </head>`
+        );
+      }
 
       const outFile = resolve(distDir, route.file);
       mkdirSync(dirname(outFile), { recursive: true });

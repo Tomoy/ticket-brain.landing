@@ -6,7 +6,6 @@ slug: "compra-inteligente-supermercado-ia"
 image: "blog-smart-grocery-shopping.jpg"
 ---
 
-# Compra inteligente en el supermercado con IA
 
 Terminas tu compra semanal, miras el ticket y piensas: *¿En qué se fue todo este dinero?*  
 La mayoría repetimos los mismos patrones sin darnos cuenta: snacks por impulso, productos “saludables” que en realidad son procesados, o pagar de más por marcas cuando existen alternativas más baratas.  

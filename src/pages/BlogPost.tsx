@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
-import { getPostBySlug } from "@/lib/blog";
+import { getAllPosts, getPostBySlug } from "@/lib/blog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
@@ -12,6 +12,12 @@ const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const { t, language } = useLanguage();
   const post = slug ? getPostBySlug(slug, language) : null;
+
+  // Sibling articles. Without these every post's only inbound internal link
+  // was the blog index, which is a dead end for both readers and crawlers.
+  const relatedPosts = post
+    ? getAllPosts(language).filter((p) => p.slug !== post.slug).slice(0, 2)
+    : [];
 
   useEffect(() => {
     if (post) {
@@ -76,6 +82,9 @@ const BlogPost = () => {
               <img 
                 src={post.imageUrl}
                 alt={post.title}
+                width={800}
+                height={512}
+                fetchpriority="high"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -135,6 +144,28 @@ const BlogPost = () => {
               </div>
             </div>
           </footer>
+
+          {/* Related articles */}
+          {relatedPosts.length > 0 && (
+            <aside className="mt-16 pt-8 border-t max-w-3xl mx-auto">
+              <h2 className="text-2xl font-bold mb-6">{t('blog.related')}</h2>
+              <ul className="grid gap-4 sm:grid-cols-2">
+                {relatedPosts.map((related) => (
+                  <li key={related.slug}>
+                    <Link
+                      to={`/blog/${related.slug}`}
+                      className="block h-full rounded-lg border p-4 transition-colors hover:border-primary hover:bg-muted/40"
+                    >
+                      <span className="block font-semibold mb-1">{related.title}</span>
+                      <span className="block text-sm text-muted-foreground line-clamp-2">
+                        {related.description}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </aside>
+          )}
         </div>
       </main>
 

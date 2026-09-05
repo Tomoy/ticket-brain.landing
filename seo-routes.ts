@@ -19,7 +19,43 @@ export interface SeoRoute {
   file: string;
   title: string;
   description: string;
+  /** Marks the page noindex and drops its canonical (used for 404.html). */
+  noindex?: boolean;
+  /** Injected into <head> as an application/ld+json block. */
+  jsonLd?: Record<string, unknown>;
 }
+
+const ORG = {
+  "@type": "Organization",
+  name: "TicketBrain",
+  url: SITE_URL,
+  logo: {
+    "@type": "ImageObject",
+    url: `${SITE_URL}/icon-512x512.png`,
+    width: 512,
+    height: 512,
+  },
+};
+
+/**
+ * Shared shape for the three blog posts. `description` is not passed here --
+ * generateRouteHtml merges the route's own description in, so the text lives
+ * in exactly one place.
+ */
+const blogPosting = (
+  path: string,
+  headline: string,
+  datePublished: string
+) => ({
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline,
+  datePublished,
+  image: `${SITE_URL}/sharing-image.png`,
+  author: ORG,
+  publisher: ORG,
+  mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE_URL}${path}` },
+});
 
 export const seoRoutes: SeoRoute[] = [
   {
@@ -52,6 +88,11 @@ export const seoRoutes: SeoRoute[] = [
     title: "Why Your Grocery Bill Doubled | TicketBrain Blog",
     description:
       "Inflation, shrinkflation, or habits? Break down the real reasons behind rising grocery costs and learn what's actually in your control.",
+    jsonLd: blogPosting(
+      "/blog/why-your-grocery-bill-doubled",
+      "Why Your Grocery Bill Doubled",
+      "2025-09-28"
+    ),
   },
   {
     path: "/blog/smart-grocery-shopping-with-ai",
@@ -59,6 +100,11 @@ export const seoRoutes: SeoRoute[] = [
     title: "Smart Grocery Shopping with AI | TicketBrain Blog",
     description:
       "Discover how artificial intelligence can transform your grocery shopping experience and help you save money.",
+    jsonLd: blogPosting(
+      "/blog/smart-grocery-shopping-with-ai",
+      "Smart Grocery Shopping with AI",
+      "2025-09-18"
+    ),
   },
   {
     path: "/blog/understanding-your-receipt-data",
@@ -66,5 +112,20 @@ export const seoRoutes: SeoRoute[] = [
     title: "Understanding Your Receipt Data | TicketBrain Blog",
     description:
       "Learn how to decode the valuable insights hidden in your grocery receipts and make data-driven shopping decisions.",
+    jsonLd: blogPosting(
+      "/blog/understanding-your-receipt-data",
+      "Understanding Your Receipt Data",
+      "2025-09-17"
+    ),
+  },
+
+  // Vercel serves this with a real 404 status for any path that matches no
+  // rewrite. It boots the same SPA, so React Router still renders NotFound.
+  {
+    path: "/404",
+    file: "404.html",
+    title: "Page not found | TicketBrain",
+    description: "This page does not exist.",
+    noindex: true,
   },
 ];

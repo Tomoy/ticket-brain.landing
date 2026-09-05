@@ -6,7 +6,6 @@ slug: "smart-grocery-shopping-with-ai"
 image: "blog-smart-grocery-shopping.jpg"
 ---
 
-# Smart Grocery Shopping with AI
 
 You finish your weekly shop, look at the receipt, and wonder: *Where did all that money go?*  
 Most of us repeat the same patterns without realizing it — impulse snacks, “healthy-looking” processed foods, or overspending on brand names when cheaper alternatives exist.  

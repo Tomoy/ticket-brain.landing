@@ -6,7 +6,6 @@ slug: "why-your-grocery-bill-doubled"
 image: "blog-receipt-data.jpg"
 ---
 
-# Why Your Grocery Bill Doubled (And What You Can Actually Control)
 
 If you’ve felt like your grocery bill **skyrocketed over the last few years**, you’re not imagining things. Prices *have* gone up — but not always for the reasons we assume.  
 

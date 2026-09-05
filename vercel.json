@@ -6,7 +6,6 @@
     { "source": "/blog/smart-grocery-shopping-with-ai", "destination": "/blog/smart-grocery-shopping-with-ai.html" },
     { "source": "/blog/understanding-your-receipt-data", "destination": "/blog/understanding-your-receipt-data.html" },
     { "source": "/frequently-asked-questions", "destination": "/frequently-asked-questions.html" },
-    { "source": "/privacy-policy", "destination": "/privacy-policy.html" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/privacy-policy", "destination": "/privacy-policy.html" }
   ]
 }

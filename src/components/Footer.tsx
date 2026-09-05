@@ -11,7 +11,7 @@ const Footer = () => {
         <div className="text-center">
           <div className="flex items-center justify-center space-x-1 mb-4">
             <div className="flex items-center justify-center w-10 h-10">
-              <img src="/lovable-uploads/logo-medium-light.png" alt="TicketBrain Logo" className="w-10 h-10" />
+              <img src="/lovable-uploads/logo-medium-light.png" alt="TicketBrain Logo" width="40" height="40" loading="lazy" className="w-10 h-10" />
             </div>
             <h3 className="text-2xl font-bold">TicketBrain</h3>
           </div>

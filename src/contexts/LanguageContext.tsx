@@ -113,6 +113,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Blog
     'blog.title': 'TicketBrain Blog',
     'blog.description': 'Insights on smart grocery shopping, AI-powered receipt analysis, and practical money-saving tips.',
+    'blog.related': 'Keep reading',
     'blog.readMore': 'Read more',
     'blog.noPosts': 'No blog posts available yet. Check back soon!',
     'blog.backToBlog': 'Back to Blog',
@@ -238,6 +239,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Blog
     'blog.title': 'Blog de TicketBrain',
     'blog.description': 'Insights sobre compras inteligentes, análisis de tickets con IA y consejos prácticos para ahorrar dinero.',
+    'blog.related': 'Seguí leyendo',
     'blog.readMore': 'Leer más',
     'blog.noPosts': '¡Aún no hay artículos disponibles. Vuelve pronto!',
     'blog.backToBlog': 'Volver al Blog',

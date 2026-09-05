@@ -6,7 +6,6 @@ slug: "understanding-your-receipt-data"
 image: "blog-why-ticketbrain-exists.jpg"
 ---
 
-# Entendiendo los Datos de tu Ticket
 
 Cada ticket de supermercado cuenta una historia sobre tus hábitos de compra, preferencias y patrones financieros. La mayoría de las personas los tiran sin darse cuenta de la mina de oro de perspectivas que contienen.
 

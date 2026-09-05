@@ -40,7 +40,7 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-1">
             <div className="flex items-center justify-center w-10 h-10">
-              <img src="/lovable-uploads/logo-medium-light.png" alt="TicketBrain Logo" className="w-10 h-10" />
+              <img src="/lovable-uploads/logo-medium-light.png" alt="TicketBrain Logo" width="40" height="40" className="w-10 h-10" />
             </div>
             <span className="text-xl font-bold">
               <span style={{ color: '#124434' }}>Ticket</span>
