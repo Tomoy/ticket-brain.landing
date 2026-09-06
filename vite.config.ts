@@ -2,7 +2,7 @@ import { defineConfig, Plugin } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
-import { mkdirSync, readFileSync, writeFileSync } from "fs";
+import { copyFileSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "fs";
 import { dirname, resolve } from "path";
 import { seoRoutes, SITE_URL } from "./seo-routes";
 
@@ -11,7 +11,7 @@ const escapeAttr = (value: string) =>
 
 /**
  * Emits one static HTML file per entry in seo-routes.ts, cloned from the
- * compiled index.html so the hashed asset references stay correct, with the
+ * compiled app.html so the hashed asset references stay correct, with the
  * head tags swapped for that route's own. Nothing about the runtime changes:
  * every file still boots the same SPA bundle and React Router picks the page
  * from the URL. Crawlers that don't execute JavaScript now read the right
@@ -22,7 +22,7 @@ const generateRouteHtml = (): Plugin => ({
   apply: "build",
   closeBundle() {
     const distDir = resolve(__dirname, "dist");
-    const template = readFileSync(resolve(distDir, "index.html"), "utf-8");
+    const template = readFileSync(resolve(distDir, "app.html"), "utf-8");
 
     for (const route of seoRoutes) {
       const url = `${SITE_URL}${route.path}`;
@@ -81,6 +81,16 @@ const generateRouteHtml = (): Plugin => ({
       writeFileSync(outFile, html);
       console.log(`  generated ${route.file}  ->  ${route.path}`);
     }
+
+    // The homepage is hand-written static HTML, not a clone of the shell:
+    // it ships real content so crawlers that never run JavaScript can read
+    // it. Vite does not process it (it is not an entry), so copy it over.
+    copyFileSync(resolve(__dirname, "index.html"), resolve(distDir, "index.html"));
+    console.log("  copied    index.html  ->  /  (static, no React)");
+
+    // The shell itself must not be reachable: every real route has its own
+    // file, so a bare /app.html would only be a thin duplicate.
+    rmSync(resolve(distDir, "app.html"), { force: true });
   },
 });
 
@@ -103,7 +113,7 @@ export default defineConfig(({ mode }) => ({
   build: {
     rollupOptions: {
       input: {
-        main: path.resolve(__dirname, "index.html")
+        main: path.resolve(__dirname, "app.html")
       },
     },
   },

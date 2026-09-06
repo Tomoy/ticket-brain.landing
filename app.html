@@ -1,0 +1,55 @@
+<!doctype html>
+<!--
+  React shell. NOT a page anyone visits.
+
+  This is the Vite entry point (it carries the <script> that builds the
+  bundle) and the template generateRouteHtml clones for /blog, /faq,
+  /privacy-policy, the blog posts and 404.html — that is why its <head>
+  keeps a full set of tags: they are placeholders the plugin rewrites per
+  route. dist/app.html is deleted at the end of the build.
+
+  The homepage is NOT built from this file. It is the hand-written static
+  index.html next to this one, which ships real HTML instead of an empty
+  #root, so crawlers that do not run JavaScript can read it.
+
+  In `npm run dev`, / serves the static home; open /app.html to work on the
+  React pages.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grocery Receipt Scanner App to Cut Your Grocery Bill | TicketBrain</title>
+    <meta name="description" content="Scan any supermarket receipt and TicketBrain reads every item, categorises it, and shows which purchases are driving your grocery budget up. Join the early access list.">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="TicketBrain" />
+
+    <!-- hreflang alternates are disabled while ticketbrain.es is not ours:
+         pointing them at a domain we no longer control would leak signals to
+         whoever picks it up. Restore both lines when the domain is back. -->
+    <link rel="canonical" href="https://www.ticketbrain.app/">
+
+    <meta property="og:title" content="Finally Understand Your Grocery Spending | TicketBrain" />
+    <meta property="og:description" content="Stop wondering where your money goes. Scan receipts to discover which purchases break your budget and get actionable insights." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.ticketbrain.app/" />
+    <meta property="og:image" content="https://www.ticketbrain.app/sharing-image.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Finally Understand Your Grocery Spending" />
+    <meta name="twitter:description" content="Scan receipts to discover which purchases break your budget. Get AI insights to take control." />
+    <meta name="twitter:site" content="TicketBrain" />
+    <meta name="twitter:image" content="https://www.ticketbrain.app/sharing-image.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "name": "TicketBrain", "url": "https://www.ticketbrain.app", "logo": {"@type": "ImageObject", "url": "https://www.ticketbrain.app/icon-512x512.png", "width": 512, "height": 512}, "description": "Receipt scanning app that turns grocery receipts into spending insights.", "email": "hello@ticketbrain.app", "address": {"@type": "PostalAddress", "addressLocality": "Barcelona", "addressCountry": "ES"}}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "TicketBrain", "url": "https://www.ticketbrain.app"}</script>
+
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
