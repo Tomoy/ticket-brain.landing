@@ -1,41 +1,6 @@
 {
-  "version": 2,
-  "rewrites": [
-    {
-      "source": "/blog",
-      "destination": "/blog.html"
-    },
-    {
-      "source": "/frequently-asked-questions",
-      "destination": "/frequently-asked-questions.html"
-    },
-    {
-      "source": "/privacy-policy",
-      "destination": "/privacy-policy.html"
-    },
-    {
-      "source": "/blog/why-your-grocery-bill-doubled",
-      "destination": "/blog/why-your-grocery-bill-doubled.html"
-    },
-    {
-      "source": "/blog/smart-grocery-shopping-with-ai",
-      "destination": "/blog/smart-grocery-shopping-with-ai.html"
-    },
-    {
-      "source": "/blog/understanding-your-receipt-data",
-      "destination": "/blog/understanding-your-receipt-data.html"
-    },
-    {
-      "source": "/blog/spendscan-alternative",
-      "destination": "/blog/spendscan-alternative.html"
-    },
-    {
-      "source": "/blog/fetch-alternative",
-      "destination": "/blog/fetch-alternative.html"
-    },
-    {
-      "source": "/blog/ynab-alternative-groceries",
-      "destination": "/blog/ynab-alternative-groceries.html"
-    }
-  ]
+  "buildCommand": "node site/build.mjs",
+  "outputDirectory": "dist",
+  "cleanUrls": true,
+  "trailingSlash": false
 }
