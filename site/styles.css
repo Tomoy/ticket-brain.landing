@@ -27,11 +27,12 @@
       .brand{display:flex;align-items:center;gap:10px;font-family:var(--f-head);font-size:21px;color:var(--ink)}
       .brand img{width:34px;height:34px}
       .brand b{font-weight:800}
-      .nav-links{display:flex;align-items:center;gap:26px;font-size:15px;font-weight:500}
+      .nav-links{display:flex;align-items:center;gap:22px;font-size:15px;font-weight:500;white-space:nowrap}
       .nav-links a:hover{color:var(--green-600)}
       .nav-links .is-new{color:var(--orange-ink);font-weight:700}
       .btn{display:inline-block;background:var(--green-900);color:#fff;font-weight:700;font-size:15px;
-           padding:13px 24px;border-radius:999px;border:0;cursor:pointer;font-family:var(--f-body)}
+           padding:13px 24px;border-radius:999px;border:0;cursor:pointer;font-family:var(--f-body);
+           white-space:nowrap}
       .btn:hover{background:var(--green-800)}
       .btn-orange{background:var(--orange);color:#3d2408}
       .btn-orange:hover{background:var(--orange-strong)}
@@ -47,7 +48,7 @@
       .menu-panel a{display:block;padding:13px 0;font-size:17px;font-weight:600;border-bottom:1px solid var(--line)}
       .menu-panel a:last-child{border-bottom:0}
       .menu-panel .btn{display:block;text-align:center;margin-top:16px}
-      @media(max-width:940px){
+      @media(max-width:1100px){
         .nav-links{display:none}
         .menu{display:block}
         /* The nav CTA would collide with the wordmark at this width; it lives
@@ -78,10 +79,20 @@
       @media(max-width:940px){.hero-grid{grid-template-columns:1fr;gap:44px}.hero{padding:48px 0 60px}}
 
       /* ---------- phone ---------- */
-      .phone{width:100%;max-width:352px;margin:0 auto;background:#0c231b;border-radius:44px;padding:11px;
-             box-shadow:0 30px 70px rgba(12,35,27,.28)}
-      .phone-in{background:#fff;border-radius:34px;overflow:hidden}
-      .status{display:flex;justify-content:space-between;align-items:center;padding:11px 22px 7px;
+      /* iPhone silhouette: thin uniform bezel, 52px corners, a Dynamic Island
+         over the status bar and the three left-hand buttons. Without the
+         island the frame reads as a generic Android handset. */
+      .phone{position:relative;width:100%;max-width:340px;margin:0 auto;padding:9px;border-radius:52px;
+             background:linear-gradient(155deg,#42544d,#16241f 20%,#0c231b 62%,#33443d);
+             box-shadow:0 30px 70px rgba(12,35,27,.30),inset 0 0 0 1px rgba(255,255,255,.09)}
+      .phone-in{position:relative;background:#fff;border-radius:44px;overflow:hidden}
+      .phone::after{content:"";position:absolute;z-index:3;top:20px;left:50%;transform:translateX(-50%);
+                    width:31%;height:26px;border-radius:999px;background:#07120e}
+      .phone::before{content:"";position:absolute;left:-2px;top:104px;width:3px;height:24px;border-radius:3px;
+                     background:#2b3c35;box-shadow:0 38px 0 #2b3c35,0 78px 0 #2b3c35}
+      /* Status-bar strip so the island never covers the screenshot's own UI. */
+      .appshot-bar{height:46px;background:#f3f7f5}
+      .status{display:flex;justify-content:space-between;align-items:center;height:46px;padding:0 22px;
               font-size:12px;font-weight:700;color:#6d7c76}
       .batt{background:#2f9e6f;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px}
       .p-head{background:var(--green-800);color:#dcece4;padding:16px 20px 30px}
@@ -263,7 +274,7 @@ article.prose code{background:var(--green-50);padding:2px 6px;border-radius:5px;
 
 /* Language switcher. Points at the counterpart page, not the other homepage,
    so switching language never loses your place. */
-.langswitch{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);
+.langswitch{white-space:nowrap;display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);
             border-radius:999px;padding:7px 15px;font-size:14px;font-weight:700;
             color:var(--green-600);background:#fff;line-height:1}
 .langswitch::before{content:"";width:14px;height:14px;flex:none;border-radius:50%;
