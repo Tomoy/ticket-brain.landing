@@ -1,5 +1,5 @@
 ---
-title: "Por Qué Tu Cuenta del Supermercado se Duplicó"
+title: "Por qué tu cuenta del supermercado se duplicó"
 date: "2025-09-28"
 description: "¿Inflación, reduflación o hábitos? Descubre las verdaderas razones detrás del aumento en los costos del supermercado y qué está realmente bajo tu control."
 slug: "por-que-tu-cuenta-supermercado-duplico"
