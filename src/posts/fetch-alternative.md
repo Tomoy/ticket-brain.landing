@@ -1,9 +1,9 @@
 ---
 title: "Fetch Alternative: Turn Receipts Into Insights, Not Points"
-date: "2026-09-06"
+date: "2025-09-20"
 description: "Fetch turns your receipts into gift cards. If you would rather have your receipts explain where your grocery money goes, here is what changes."
 slug: "fetch-alternative"
-image: "blog-smart-grocery-shopping.jpg"
+image: "blog-alt-fetch.jpg"
 ---
 
 Fetch is probably the best known receipt app there is. Its pitch is simple and

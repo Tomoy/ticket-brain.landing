@@ -1,9 +1,9 @@
 ---
 title: "YNAB Alternative for Groceries: See the Items, Not Just the Total"
-date: "2026-09-06"
+date: "2025-09-15"
 description: "Budgeting apps track groceries as one category. Here is why item-level receipt data changes what you can actually cut, and when a budgeting app is still the right tool."
 slug: "ynab-alternative-groceries"
-image: "blog-why-ticketbrain-exists.jpg"
+image: "blog-alt-ynab.jpg"
 ---
 
 YNAB, Copilot and Monarch are good budgeting apps. If you want a complete

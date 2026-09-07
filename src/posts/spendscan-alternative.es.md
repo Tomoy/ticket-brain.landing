@@ -1,9 +1,9 @@
 ---
 title: "Alternativa a SpendScan: escaneo de tickets centrado en tu presupuesto"
-date: "2026-09-06"
+date: "2025-09-24"
 description: "SpendScan y TicketBrain leen los tickets del súper con IA. La diferencia está en qué priorizan. Aquí tienes una comparación honesta para que elijas."
 slug: "alternativa-a-spendscan"
-image: "blog-receipt-data.jpg"
+image: "blog-alt-spendscan.jpg"
 ---
 
 Si estás comparando escáneres de tickets del supermercado, SpendScan y
