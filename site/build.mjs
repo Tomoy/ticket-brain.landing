@@ -1,32 +1,31 @@
 /**
- * Static site generator for ticketbrain.app.
+ * Static site generator for ticketbrain.app — bilingual (en / es).
  *
- * The site used to be a React SPA: every route served the same empty
- * <div id="root"> and the content only appeared after 569KB of JavaScript
- * ran. Crawlers that do not execute JS saw nothing, and the homepage had to
- * be split off as hand-written HTML, which left two navigations that could
- * drift apart. This script replaces the whole thing: one layout, one
- * stylesheet, real HTML on every page, no client framework.
+ * English lives at the root, Spanish under /es with translated slugs. Every
+ * page declares its own canonical plus hreflang alternates when a counterpart
+ * exists, and carries a language switcher that jumps to that counterpart
+ * rather than dumping you on the other homepage.
  *
- * Content sources:
- *   - home body      site/pages/home.html
- *   - blog posts     src/posts/*.md  (English files; *.es.md are ignored
- *                    while ticketbrain.es is not ours)
- *   - FAQ + privacy  site/content.mjs
+ * Sources:
+ *   site/pages/home.<lang>.html   hand-authored homepage body
+ *   src/posts/*.md                English posts; *.es.md are their Spanish
+ *                                 counterparts, matched by base filename
+ *   site/content.mjs              FAQ, privacy policy, privacy page, UI strings
  *
- * Output goes to dist/, which is what Vercel serves.
+ * Only three of the six posts have a Spanish version, so the Spanish blog is
+ * shorter and those three are the only posts with hreflang pairs. That is
+ * correct: hreflang must only point at a real translation.
  */
 import { marked } from "marked";
-import {
-  cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync,
-} from "fs";
+import { cpSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "fs";
 import { dirname, join, resolve } from "path";
 import { fileURLToPath } from "url";
-import { faq, privacy } from "./content.mjs";
+import { faq, privacyDoc, privacyPage, ui } from "./content.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const DIST = join(ROOT, "dist");
-const SITE_URL = "https://www.ticketbrain.app";
+const SITE = "https://www.ticketbrain.app";
+const LANGS = ["en", "es"];
 
 const read = (p) => readFileSync(join(ROOT, p), "utf-8");
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;")
@@ -34,45 +33,73 @@ const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;")
 
 const CSS = read("site/styles.css");
 const SIGNUP_JS = read("site/pages/_signup.js");
-
 marked.setOptions({ breaks: true, gfm: true });
 
-/* ---------------------------------------------------------------- layout */
+/* ------------------------------------------------------------------ paths */
 
-// Anchors are absolute (/#how) so the same markup works on every page.
-const NAV = [
-  ["/#how", "How it works", ""],
-  ["/#features", "Features", ""],
-  ["/#coupons", "Coupons", " class=\"is-new\""],
-  ["/blog", "Blog", ""],
-  ["/frequently-asked-questions", "FAQ", ""],
-  ["/#privacy", "Privacy", ""],
-];
+const P = {
+  en: { home: "/", blog: "/blog", post: (s) => `/blog/${s}`,
+        faq: "/frequently-asked-questions", privacy: "/privacy", policy: "/privacy-policy" },
+  es: { home: "/es", blog: "/es/blog", post: (s) => `/es/blog/${s}`,
+        faq: "/es/preguntas-frecuentes", privacy: "/es/privacidad",
+        policy: "/es/politica-de-privacidad" },
+};
+const fileFor = (p) =>
+  p === "/" ? "index.html" : p === "/es" ? "es/index.html" : `${p.slice(1)}.html`;
 
-const header = () => `
+/* ----------------------------------------------------------------- layout */
+
+const navFor = (lang) => {
+  const t = ui[lang], p = P[lang];
+  return [
+    [`${p.home === "/" ? "" : p.home}/#how`.replace("//", "/"), t.nav[0], ""],
+    [`${p.home === "/" ? "" : p.home}/#features`.replace("//", "/"), t.nav[1], ""],
+    [`${p.home === "/" ? "" : p.home}/#coupons`.replace("//", "/"), t.nav[2], ' class="is-new"'],
+    [p.blog, t.nav[3], ""],
+    [p.faq, t.nav[4], ""],
+    [p.privacy, t.nav[5], ""],
+  ];
+};
+
+/** Switcher target: the counterpart page, or the other language's home. */
+const switcher = (lang, alt) => {
+  const other = lang === "en" ? "es" : "en";
+  const href = alt || P[other].home;
+  return `<a class="langswitch" href="${href}" hreflang="${other}" lang="${other}">${ui[lang].otherLangName}</a>`;
+};
+
+const header = (lang, alt) => {
+  const t = ui[lang], nav = navFor(lang);
+  const links = (indent) => nav.map(([h, l, c]) => `${indent}<a href="${h}"${c}>${esc(l)}</a>`).join("\n");
+  return `
     <header class="nav">
       <div class="wrap nav-in">
-        <a class="brand" href="/">
+        <a class="brand" href="${P[lang].home}">
           <img src="/lovable-uploads/logo-medium-light.png" alt="" width="34" height="34">
           <span>Ticket<b>Brain</b></span>
         </a>
         <nav class="nav-links">
-${NAV.map(([h, t, c]) => `          <a href="${h}"${c}>${t}</a>`).join("\n")}
+${links("          ")}
+          ${switcher(lang, alt)}
         </nav>
-        <a class="btn" href="/#get">Get the app</a>
+        <a class="btn" href="${P[lang].home === "/" ? "" : P[lang].home}/#get">${esc(t.getApp)}</a>
         <details class="menu">
-          <summary aria-label="Open menu">
+          <summary aria-label="${esc(t.openMenu)}">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10261d" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
           </summary>
           <div class="menu-panel">
-${NAV.map(([h, t, c]) => `            <a href="${h}"${c}>${t}</a>`).join("\n")}
-            <a class="btn" href="/#get">Get the app</a>
+${links("            ")}
+            ${switcher(lang, alt)}
+            <a class="btn" href="${P[lang].home === "/" ? "" : P[lang].home}/#get">${esc(t.getApp)}</a>
           </div>
         </details>
       </div>
     </header>`;
+};
 
-const footer = () => `
+const footer = (lang) => {
+  const t = ui[lang], p = P[lang], h = p.home === "/" ? "" : p.home;
+  return `
     <footer>
       <div class="wrap">
         <div class="fgrid2">
@@ -81,40 +108,46 @@ const footer = () => `
               <img src="/lovable-uploads/logo-medium-light.png" alt="" width="34" height="34" loading="lazy">
               <span>Ticket<b>Brain</b></span>
             </span>
-            <p style="max-width:34ch">Turn your grocery receipts into clear insights that actually help you save money.</p>
+            <p style="max-width:34ch">${esc(t.footerTag)}</p>
             <div class="cta-row" style="margin-top:22px">
-              <span class="store store-dark"><span><small>Coming soon</small><strong>App Store</strong></span></span>
-              <span class="store store-dark"><span><small>Coming soon</small><strong>Google Play</strong></span></span>
+              <span class="store store-dark"><span><small>${esc(t.comingSoon)}</small><strong>App Store</strong></span></span>
+              <span class="store store-dark"><span><small>${esc(t.comingSoon)}</small><strong>Google Play</strong></span></span>
             </div>
           </div>
           <div>
-            <h4>Product</h4>
+            <h4>${esc(t.product)}</h4>
             <ul>
-              <li><a href="/#how">How it works</a></li>
-              <li><a href="/#features">Features</a></li>
-              <li><a href="/#coupons" class="is-new">Coupons</a></li>
+              <li><a href="${h}/#how">${esc(t.nav[0])}</a></li>
+              <li><a href="${h}/#features">${esc(t.nav[1])}</a></li>
+              <li><a href="${h}/#coupons" class="is-new">${esc(t.nav[2])}</a></li>
             </ul>
           </div>
           <div>
-            <h4>More</h4>
+            <h4>${esc(t.more)}</h4>
             <ul>
-              <li><a href="/blog">Blog</a></li>
-              <li><a href="/frequently-asked-questions">FAQ</a></li>
-              <li><a href="/privacy-policy">Privacy policy</a></li>
+              <li><a href="${p.blog}">${esc(t.nav[3])}</a></li>
+              <li><a href="${p.faq}">${esc(t.nav[4])}</a></li>
+              <li><a href="${p.privacy}">${esc(t.nav[5])}</a></li>
+              <li><a href="${p.policy}">${esc(t.privacyPolicy)}</a></li>
             </ul>
           </div>
         </div>
         <p class="legal">© 2026 TicketBrain · Barcelona</p>
       </div>
     </footer>`;
+};
 
-function page({ path, title, description, body, jsonLd = [], noindex = false, script = "" }) {
-  const url = SITE_URL + path;
-  const ld = jsonLd
-    .map((d) => `    <script type="application/ld+json">${JSON.stringify(d)}</script>`)
-    .join("\n");
+function page({ lang, path, alt, title, description, body, jsonLd = [], noindex = false, script = "" }) {
+  const url = SITE + path;
+  const alts = alt
+    ? `    <link rel="alternate" hreflang="${lang}" href="${url}">
+    <link rel="alternate" hreflang="${lang === "en" ? "es" : "en"}" href="${SITE}${alt}">
+    <link rel="alternate" hreflang="x-default" href="${SITE}${lang === "en" ? path : alt}">\n`
+    : "";
+  const ld = jsonLd.map((d) =>
+    `    <script type="application/ld+json">${JSON.stringify(d)}</script>`).join("\n");
   return `<!doctype html>
-<html lang="en">
+<html lang="${lang}">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -122,16 +155,17 @@ function page({ path, title, description, body, jsonLd = [], noindex = false, sc
     <meta name="description" content="${esc(description)}">
     <meta name="robots" content="${noindex ? "noindex, follow" : "index, follow"}">
     <meta name="author" content="TicketBrain" />
-${noindex ? "" : `    <link rel="canonical" href="${url}">\n`}    <meta property="og:title" content="${esc(title)}" />
+${noindex ? "" : `    <link rel="canonical" href="${url}">\n`}${alts}    <meta property="og:title" content="${esc(title)}" />
     <meta property="og:description" content="${esc(description)}" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="${url}" />
-    <meta property="og:image" content="${SITE_URL}/sharing-image.png" />
+    <meta property="og:locale" content="${lang === "es" ? "es_ES" : "en_GB"}" />
+    <meta property="og:image" content="${SITE}/sharing-image.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${esc(title)}" />
     <meta name="twitter:description" content="${esc(description)}" />
     <meta name="twitter:site" content="TicketBrain" />
-    <meta name="twitter:image" content="${SITE_URL}/sharing-image.png" />
+    <meta name="twitter:image" content="${SITE}/sharing-image.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/manifest.json">
@@ -142,233 +176,268 @@ ${ld}
     <style>${CSS}</style>
   </head>
   <body>
-${header()}
+${header(lang, alt)}
     <main>
 ${body}
     </main>
-${footer()}
+${footer(lang)}
 ${script ? `    <script>${script}</script>` : ""}
   </body>
 </html>
 `;
 }
 
-/* ------------------------------------------------------------ blog posts */
+/* ------------------------------------------------------------------ posts */
 
 function loadPosts() {
   const dir = join(ROOT, "src/posts");
-  return readdirSync(dir)
-    .filter((f) => f.endsWith(".md") && !f.endsWith(".es.md"))
-    .map((f) => {
-      const raw = readFileSync(join(dir, f), "utf-8");
-      const parts = raw.split("---");
-      const meta = {};
-      parts[1].trim().split("\n").forEach((line) => {
-        const i = line.indexOf(":");
-        if (i > 0) meta[line.slice(0, i).trim()] =
-          line.slice(i + 1).trim().replace(/^["']|["']$/g, "");
-      });
-      const md = parts.slice(2).join("---").trim();
-      return {
-        slug: meta.slug,
-        title: meta.title,
-        date: meta.date,
-        description: meta.description,
-        image: meta.image ? `/blog-media/${meta.image}` : null,
-        html: marked.parse(md),
-      };
-    })
-    .sort((a, b) => new Date(b.date) - new Date(a.date));
+  const parse = (file) => {
+    const parts = readFileSync(join(dir, file), "utf-8").split("---");
+    const meta = {};
+    parts[1].trim().split("\n").forEach((line) => {
+      const i = line.indexOf(":");
+      if (i > 0) meta[line.slice(0, i).trim()] = line.slice(i + 1).trim().replace(/^["']|["']$/g, "");
+    });
+    return { ...meta, image: meta.image ? `/blog-media/${meta.image}` : null,
+             html: marked.parse(parts.slice(2).join("---").trim()) };
+  };
+  const files = readdirSync(dir).filter((f) => f.endsWith(".md"));
+  const out = { en: [], es: [] };
+  for (const f of files.filter((f) => !f.endsWith(".es.md"))) {
+    const base = f.replace(/\.md$/, "");
+    const en = parse(f);
+    const esFile = `${base}.es.md`;
+    const es = files.includes(esFile) ? parse(esFile) : null;
+    en.alt = es ? P.es.post(es.slug) : null;
+    out.en.push(en);
+    if (es) { es.alt = P.en.post(en.slug); out.es.push(es); }
+  }
+  const byDate = (a, b) => new Date(b.date) - new Date(a.date);
+  out.en.sort(byDate); out.es.sort(byDate);
+  return out;
 }
 
-const fmtDate = (d) =>
-  new Date(d).toLocaleDateString("en-GB", { year: "numeric", month: "long", day: "numeric" });
+const fmtDate = (d, lang) => new Date(d).toLocaleDateString(ui[lang].locale,
+  { year: "numeric", month: "long", day: "numeric" });
 
-const ORG = {
-  "@type": "Organization", name: "TicketBrain", url: SITE_URL,
-  logo: { "@type": "ImageObject", url: `${SITE_URL}/icon-512x512.png`, width: 512, height: 512 },
-};
+const ORG = { "@type": "Organization", name: "TicketBrain", url: SITE,
+  logo: { "@type": "ImageObject", url: `${SITE}/icon-512x512.png`, width: 512, height: 512 } };
 
-/* ------------------------------------------------------------- the build */
+/* ------------------------------------------------------------------ build */
 
-const write = (rel, html) => {
-  const out = join(DIST, rel);
+let count = 0;
+const write = (path, html) => {
+  const out = join(DIST, fileFor(path));
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, html);
-  console.log(`  ${rel.padEnd(46)} ${String(html.length).padStart(6)} bytes`);
+  count++;
+  console.log(`  ${path.padEnd(40)} ${fileFor(path).padEnd(40)} ${String(html.length).padStart(6)}b`);
 };
 
 function build() {
   rmSync(DIST, { recursive: true, force: true });
   mkdirSync(DIST, { recursive: true });
-
-  // static assets
   cpSync(join(ROOT, "public"), DIST, { recursive: true });
+  rmSync(join(DIST, "sitemap-es.xml"), { force: true });
   const media = join(DIST, "blog-media");
   mkdirSync(media, { recursive: true });
   for (const f of readdirSync(join(ROOT, "src/assets"))) {
-    if (/^blog-.*\.(jpg|jpeg|png|webp)$/i.test(f)) {
-      cpSync(join(ROOT, "src/assets", f), join(media, f));
-    }
+    if (/^blog-.*\.(jpg|jpeg|png|webp)$/i.test(f)) cpSync(join(ROOT, "src/assets", f), join(media, f));
   }
 
   const posts = loadPosts();
-  console.log(`\nGenerating ${posts.length + 5} pages\n`);
+  const urls = [];
+  console.log("");
 
-  /* home ---------------------------------------------------------------- */
-  write("index.html", page({
-    path: "/",
-    title: "Grocery Receipt Scanner App to Cut Your Grocery Bill | TicketBrain",
-    description: "Scan any supermarket receipt and TicketBrain reads every item, categorises it, and shows which purchases are driving your grocery budget up. Join the early access list.",
-    body: read("site/pages/home.html"),
-    script: SIGNUP_JS,
-    jsonLd: [
-      { "@context": "https://schema.org", ...ORG,
-        description: "Receipt scanning app that turns grocery receipts into spending insights.",
-        email: "hello@ticketbrain.app",
-        address: { "@type": "PostalAddress", addressLocality: "Barcelona", addressCountry: "ES" } },
-      { "@context": "https://schema.org", "@type": "WebSite", name: "TicketBrain", url: SITE_URL },
-      { "@context": "https://schema.org", "@type": "MobileApplication", name: "TicketBrain",
-        applicationCategory: "FinanceApplication", operatingSystem: "iOS, Android",
-        description: "Scan grocery receipts and see item-level spending by category and store, plus coupon reminders. No bank connection required." },
-    ],
-  }));
+  for (const lang of LANGS) {
+    const t = ui[lang], p = P[lang], L = posts[lang];
 
-  /* blog index ---------------------------------------------------------- */
-  write("blog.html", page({
-    path: "/blog",
-    title: "TicketBrain Blog | Smart Grocery Shopping Insights",
-    description: "Insights on smart grocery shopping, AI-powered receipt analysis, and practical money-saving tips.",
-    body: `      <section class="page-hero"><div class="wrap">
+    /* home */
+    write(p.home, page({
+      lang, path: p.home, alt: lang === "en" ? P.es.home : P.en.home,
+      title: lang === "en"
+        ? "Grocery Receipt Scanner App to Cut Your Grocery Bill | TicketBrain"
+        : "App para escanear tickets del súper y bajar tu factura | TicketBrain",
+      description: lang === "en"
+        ? "Scan any supermarket receipt and TicketBrain reads every item, categorises it, and shows which purchases are driving your grocery budget up. Join the early access list."
+        : "Escanea cualquier ticket del supermercado y TicketBrain lee cada producto, lo categoriza y te muestra qué compras están disparando tu presupuesto. Apúntate al acceso anticipado.",
+      body: read(`site/pages/home.${lang}.html`),
+      script: SIGNUP_JS,
+      jsonLd: lang === "en" ? [
+        { "@context": "https://schema.org", ...ORG,
+          description: "Receipt scanning app that turns grocery receipts into spending insights.",
+          email: "hello@ticketbrain.app",
+          address: { "@type": "PostalAddress", addressLocality: "Barcelona", addressCountry: "ES" } },
+        { "@context": "https://schema.org", "@type": "WebSite", name: "TicketBrain", url: SITE },
+        { "@context": "https://schema.org", "@type": "MobileApplication", name: "TicketBrain",
+          applicationCategory: "FinanceApplication", operatingSystem: "iOS, Android",
+          description: "Scan grocery receipts and see item-level spending by category and store, plus coupon reminders. No bank connection required." },
+      ] : [],
+    }));
+    urls.push([p.home, "1.0"]);
+
+    /* blog index */
+    write(p.blog, page({
+      lang, path: p.blog, alt: lang === "en" ? P.es.blog : P.en.blog,
+      title: lang === "en" ? "TicketBrain Blog | Smart Grocery Shopping Insights"
+                           : "Blog de TicketBrain | Compra inteligente en el súper",
+      description: t.blogLede,
+      body: `      <section class="page-hero"><div class="wrap">
         <p class="kicker">Blog</p>
-        <h1>Grocery spending, explained</h1>
-        <p>Insights on smart grocery shopping, AI-powered receipt analysis, and practical money-saving tips.</p>
+        <h1>${esc(t.blogTitle)}</h1>
+        <p>${esc(t.blogLede)}</p>
       </div></section>
       <section><div class="wrap">
         <div class="posts">
-${posts.map((p) => `          <a class="post" href="/blog/${p.slug}">
-            ${p.image ? `<img src="${p.image}" alt="" width="800" height="512" loading="lazy">` : ""}
+${L.map((x) => `          <a class="post" href="${p.post(x.slug)}">
+            ${x.image ? `<img src="${x.image}" alt="" width="800" height="512" loading="lazy">` : ""}
             <span class="in">
-              <time datetime="${p.date}">${fmtDate(p.date)}</time>
-              <h3>${esc(p.title)}</h3>
-              <p>${esc(p.description)}</p>
-              <span class="more">Read more →</span>
+              <time datetime="${x.date}">${fmtDate(x.date, lang)}</time>
+              <h3>${esc(x.title)}</h3>
+              <p>${esc(x.description)}</p>
+              <span class="more">${esc(t.readMore)}</span>
             </span>
           </a>`).join("\n")}
         </div>
       </div></section>`,
-    jsonLd: [{ "@context": "https://schema.org", "@type": "Blog", name: "TicketBrain Blog",
-      url: `${SITE_URL}/blog`, publisher: ORG }],
-  }));
+      jsonLd: [{ "@context": "https://schema.org", "@type": "Blog",
+        name: "TicketBrain Blog", url: SITE + p.blog, publisher: ORG, inLanguage: lang }],
+    }));
+    urls.push([p.blog, "0.8"]);
 
-  /* posts --------------------------------------------------------------- */
-  for (const p of posts) {
-    const others = posts.filter((o) => o.slug !== p.slug).slice(0, 2);
-    write(`blog/${p.slug}.html`, page({
-      path: `/blog/${p.slug}`,
-      title: `${p.title} | TicketBrain Blog`,
-      description: p.description,
-      body: `      <section class="page-hero"><div class="wrap">
-        <a class="crumb" href="/blog">← Back to blog</a>
-        <h1>${esc(p.title)}</h1>
-        <p><time datetime="${p.date}">${fmtDate(p.date)}</time></p>
+    /* posts */
+    for (const x of L) {
+      const others = L.filter((o) => o.slug !== x.slug).slice(0, 2);
+      write(p.post(x.slug), page({
+        lang, path: p.post(x.slug), alt: x.alt,
+        title: `${x.title} | TicketBrain`, description: x.description,
+        body: `      <section class="page-hero"><div class="wrap">
+        <a class="crumb" href="${p.blog}">${esc(t.backToBlog)}</a>
+        <h1>${esc(x.title)}</h1>
+        <p><time datetime="${x.date}">${fmtDate(x.date, lang)}</time></p>
       </div></section>
       <section><div class="wrap">
-        ${p.image ? `<img class="hero-img" src="${p.image}" alt="" width="800" height="512">` : ""}
+        ${x.image ? `<img class="hero-img" src="${x.image}" alt="" width="800" height="512">` : ""}
         <article class="prose">
-${p.html}
+${x.html}
         </article>
 ${others.length ? `        <aside class="related">
-          <h2>Keep reading</h2>
+          <h2>${esc(t.keepReading)}</h2>
           <div class="related-grid">
-${others.map((o) => `            <a href="/blog/${o.slug}"><b>${esc(o.title)}</b><span>${esc(o.description)}</span></a>`).join("\n")}
+${others.map((o) => `            <a href="${p.post(o.slug)}"><b>${esc(o.title)}</b><span>${esc(o.description)}</span></a>`).join("\n")}
           </div>
         </aside>` : ""}
       </div></section>`,
-      jsonLd: [{ "@context": "https://schema.org", "@type": "BlogPosting",
-        headline: p.title, description: p.description, datePublished: p.date,
-        image: `${SITE_URL}/sharing-image.png`, author: ORG, publisher: ORG,
-        mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE_URL}/blog/${p.slug}` } }],
-    }));
-  }
+        jsonLd: [{ "@context": "https://schema.org", "@type": "BlogPosting",
+          headline: x.title, description: x.description, datePublished: x.date, inLanguage: lang,
+          image: `${SITE}/sharing-image.png`, author: ORG, publisher: ORG,
+          mainEntityOfPage: { "@type": "WebPage", "@id": SITE + p.post(x.slug) } }],
+      }));
+      urls.push([p.post(x.slug), "0.7"]);
+    }
 
-  /* FAQ ----------------------------------------------------------------- */
-  write("frequently-asked-questions.html", page({
-    path: "/frequently-asked-questions",
-    title: "Frequently Asked Questions | TicketBrain",
-    description: "Everything you need to know about TicketBrain: how receipt scanning works, what we do with your data, and how the app helps you cut your grocery bill.",
-    body: `      <section class="page-hero"><div class="wrap">
-        <p class="kicker">FAQ</p>
-        <h1>Frequently asked questions</h1>
-        <p>Everything you need to know about TicketBrain.</p>
+    /* FAQ */
+    const F = faq[lang];
+    write(p.faq, page({
+      lang, path: p.faq, alt: lang === "en" ? P.es.faq : P.en.faq,
+      title: lang === "en" ? "Frequently Asked Questions | TicketBrain"
+                           : "Preguntas frecuentes | TicketBrain",
+      description: lang === "en"
+        ? "Everything you need to know about TicketBrain: how receipt scanning works, what we do with your data, and how the app helps you cut your grocery bill."
+        : "Todo lo que necesitas saber sobre TicketBrain: cómo funciona el escaneo de tickets, qué hacemos con tus datos y cómo la app te ayuda a bajar la factura del súper.",
+      body: `      <section class="page-hero"><div class="wrap">
+        <p class="kicker">${esc(t.nav[4])}</p>
+        <h1>${esc(t.faqTitle)}</h1>
+        <p>${esc(t.faqLede)}</p>
       </div></section>
       <section><div class="wrap">
         <div class="faq-list">
-${faq.map((f, i) => `          <details class="faq-item"${i === 0 ? " open" : ""}>
+${F.map((f, i) => `          <details class="faq-item"${i === 0 ? " open" : ""}>
             <summary>${esc(f.q)}</summary>
             <div class="a">${esc(f.a)}</div>
           </details>`).join("\n")}
         </div>
       </div></section>`,
-    jsonLd: [{ "@context": "https://schema.org", "@type": "FAQPage",
-      mainEntity: faq.map((f) => ({ "@type": "Question", name: f.q,
-        acceptedAnswer: { "@type": "Answer", text: f.a } })) }],
-  }));
+      jsonLd: [{ "@context": "https://schema.org", "@type": "FAQPage", inLanguage: lang,
+        mainEntity: F.map((f) => ({ "@type": "Question", name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a } })) }],
+    }));
+    urls.push([p.faq, "0.7"]);
 
-  /* privacy policy ------------------------------------------------------ */
-  const P = privacy;
-  write("privacy-policy.html", page({
-    path: "/privacy-policy",
-    title: "Privacy Policy | TicketBrain",
-    description: "How TicketBrain collects, stores and protects your data. GDPR-compliant privacy policy for our grocery receipt scanning app.",
-    body: `      <section class="page-hero"><div class="wrap">
-        <p class="kicker">Legal</p>
-        <h1>${esc(P.title)}</h1>
-        <p class="updated">${esc(P.lastUpdated)}</p>
+    /* privacy approach page */
+    const PP = privacyPage[lang];
+    write(p.privacy, page({
+      lang, path: p.privacy, alt: lang === "en" ? P.es.privacy : P.en.privacy,
+      title: lang === "en" ? "Privacy: no bank connection, no stored photos | TicketBrain"
+                           : "Privacidad: sin conexión bancaria ni fotos guardadas | TicketBrain",
+      description: PP.lede,
+      body: `      <section class="page-hero"><div class="wrap">
+        <p class="kicker">${esc(PP.kicker)}</p>
+        <h1>${esc(PP.title)}</h1>
+        <p>${esc(PP.lede)}</p>
+      </div></section>
+      <section><div class="wrap">
+        <div class="faq-list">
+${PP.cards.map(([h, b]) => `          <div class="faq-item" style="padding:22px 24px">
+            <h2 style="font-size:19px;margin-bottom:8px">${esc(h)}</h2>
+            <p style="margin:0">${esc(b)}</p>
+          </div>`).join("\n")}
+          <p style="margin-top:26px"><a class="lnk" href="${p.policy}">${esc(PP.docLink)}</a></p>
+        </div>
+      </div></section>`,
+    }));
+    urls.push([p.privacy, "0.6"]);
+
+    /* privacy policy (legal) */
+    const D = privacyDoc[lang];
+    write(p.policy, page({
+      lang, path: p.policy, alt: lang === "en" ? P.es.policy : P.en.policy,
+      title: lang === "en" ? "Privacy Policy | TicketBrain" : "Política de Privacidad | TicketBrain",
+      description: lang === "en"
+        ? "How TicketBrain collects, stores and protects your data. GDPR-compliant privacy policy for our grocery receipt scanning app."
+        : "Cómo TicketBrain recoge, almacena y protege tus datos. Política de privacidad conforme al RGPD de nuestra app de escaneo de tickets.",
+      body: `      <section class="page-hero"><div class="wrap">
+        <p class="kicker">${esc(t.legalKicker)}</p>
+        <h1>${esc(D.title)}</h1>
+        <p class="updated">${esc(D.lastUpdated)}</p>
       </div></section>
       <section><div class="wrap"><div class="doc">
-        <h2>${esc(P.whoWeAre_title)}</h2><p>${esc(P.whoWeAre_content)}</p>
-        <h2>${esc(P.infoCollect_title)}</h2>
-        <p>${esc(P.infoCollect_receipt)}</p><p>${esc(P.infoCollect_email)}</p><p>${esc(P.infoCollect_usage)}</p>
-        <h2>${esc(P.howStore_title)}</h2><p>${esc(P.howStore_content)}</p>
-        <h2>${esc(P.gdprRights_title)}</h2>
-        <p>${esc(P.gdprRights_access)}</p><p>${esc(P.gdprRights_rectification)}</p>
-        <p>${esc(P.gdprRights_erasure)}</p><p>${esc(P.gdprRights_portability)}</p>
-        <p>${esc(P.gdprRights_objection)}</p>
-        <h2>${esc(P.contact_title)}</h2><p>${esc(P.contact_content)}</p>
-        <div class="box"><p>${esc(P.contact_email)}<br>${esc(P.contact_address)}</p></div>
-        <p>${esc(P.contact_authority)}</p>
+        <h2>${esc(D.whoWeAre_title)}</h2><p>${esc(D.whoWeAre_content)}</p>
+        <h2>${esc(D.infoCollect_title)}</h2>
+        <p>${esc(D.infoCollect_receipt)}</p><p>${esc(D.infoCollect_email)}</p><p>${esc(D.infoCollect_usage)}</p>
+        <h2>${esc(D.howStore_title)}</h2><p>${esc(D.howStore_content)}</p>
+        <h2>${esc(D.gdprRights_title)}</h2>
+        <p>${esc(D.gdprRights_access)}</p><p>${esc(D.gdprRights_rectification)}</p>
+        <p>${esc(D.gdprRights_erasure)}</p><p>${esc(D.gdprRights_portability)}</p>
+        <p>${esc(D.gdprRights_objection)}</p>
+        <h2>${esc(D.contact_title)}</h2><p>${esc(D.contact_content)}</p>
+        <div class="box"><p>${esc(D.contact_email)}<br>${esc(D.contact_address)}</p></div>
+        <p>${esc(D.contact_authority)}</p>
       </div></div></section>`,
-  }));
+    }));
+    urls.push([p.policy, "0.6"]);
+  }
 
-  /* 404 ----------------------------------------------------------------- */
-  write("404.html", page({
-    path: "/404", noindex: true,
-    title: "Page not found | TicketBrain",
-    description: "This page does not exist.",
+  /* 404 — English only; Vercel serves one file for every unmatched path */
+  const t = ui.en;
+  writeFileSync(join(DIST, "404.html"), page({
+    lang: "en", path: "/404", noindex: true,
+    title: "Page not found | TicketBrain", description: "This page does not exist.",
     body: `      <section class="page-hero"><div class="wrap">
         <p class="kicker">404</p>
-        <h1>This page does not exist</h1>
-        <p>The link may be old or mistyped. <a class="crumb" href="/">Go back to the homepage</a>.</p>
+        <h1>${esc(t.notFoundTitle)}</h1>
+        <p>${esc(t.notFoundLede)} <a class="crumb" href="/">${esc(t.notFoundCta)}</a>.</p>
       </div></section>`,
   }));
+  count++;
 
-  /* sitemap ------------------------------------------------------------- */
-  const urls = [
-    ["/", "1.0"], ["/blog", "0.8"],
-    ...posts.map((p) => [`/blog/${p.slug}`, "0.7"]),
-    ["/frequently-asked-questions", "0.7"], ["/privacy-policy", "0.6"],
-  ];
   const today = new Date().toISOString().slice(0, 10);
   writeFileSync(join(DIST, "sitemap.xml"),
     `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
-    urls.map(([u, pr]) =>
-      `  <url>\n    <loc>${SITE_URL}${u}</loc>\n    <lastmod>${today}</lastmod>\n    <priority>${pr}</priority>\n  </url>`
-    ).join("\n") + `\n</urlset>\n`);
-  console.log(`  sitemap.xml                                    ${urls.length} URLs`);
+    urls.map(([u, pr]) => `  <url>\n    <loc>${SITE}${u}</loc>\n    <lastmod>${today}</lastmod>\n    <priority>${pr}</priority>\n  </url>`).join("\n") +
+    `\n</urlset>\n`);
 
-  if (existsSync(join(DIST, "sitemap-es.xml"))) rmSync(join(DIST, "sitemap-es.xml"));
-  console.log("\nDone. No JavaScript framework shipped.\n");
+  console.log(`\n  ${count} pages · sitemap with ${urls.length} URLs · no JavaScript framework\n`);
 }
 
 build();
