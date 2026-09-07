@@ -277,3 +277,8 @@ article.prose code{background:var(--green-50);padding:2px 6px;border-radius:5px;
                     background:linear-gradient(currentColor,currentColor) center/100% 1.5px no-repeat}
 .langswitch:hover{border-color:var(--green-600);background:var(--green-50)}
 .menu-panel .langswitch{margin-top:16px;border-bottom:1px solid var(--line);border-radius:999px}
+
+/* Pricing line under the signup form: answers "how much?" at the exact point
+   the visitor decides whether to hand over their email. */
+.pricing-note{margin:16px auto 0;max-width:46em;font-size:14.5px;color:var(--muted)}
+.pricing-note b{color:var(--body);font-weight:700}
