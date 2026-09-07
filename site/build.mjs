@@ -49,12 +49,15 @@ const fileFor = (p) =>
 
 /* ----------------------------------------------------------------- layout */
 
+/** Link to a homepage section: "/#how" in English, "/es#how" in Spanish. */
+const anchor = (lang, id) => `${P[lang].home === "/" ? "/" : P[lang].home}#${id}`;
+
 const navFor = (lang) => {
   const t = ui[lang], p = P[lang];
   return [
-    [`${p.home === "/" ? "" : p.home}/#how`.replace("//", "/"), t.nav[0], ""],
-    [`${p.home === "/" ? "" : p.home}/#features`.replace("//", "/"), t.nav[1], ""],
-    [`${p.home === "/" ? "" : p.home}/#coupons`.replace("//", "/"), t.nav[2], ""],
+    [anchor(lang, "how"), t.nav[0], ""],
+    [anchor(lang, "features"), t.nav[1], ""],
+    [anchor(lang, "coupons"), t.nav[2], ""],
     [p.blog, t.nav[3], ""],
     [p.faq, t.nav[4], ""],
     [p.privacy, t.nav[5], ""],
@@ -101,7 +104,7 @@ const header = (lang, alt, active) => {
 ${links("          ")}
           ${switcher(lang, alt)}
         </nav>
-        <a class="btn" href="${P[lang].home === "/" ? "" : P[lang].home}/#get">${esc(t.getApp)}</a>
+        <a class="btn" href="${anchor(lang, "get")}">${esc(t.getApp)}</a>
         <details class="menu">
           <summary aria-label="${esc(t.openMenu)}">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10261d" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -109,7 +112,7 @@ ${links("          ")}
           <div class="menu-panel">
 ${links("            ")}
             ${switcher(lang, alt)}
-            <a class="btn" href="${P[lang].home === "/" ? "" : P[lang].home}/#get">${esc(t.getApp)}</a>
+            <a class="btn" href="${anchor(lang, "get")}">${esc(t.getApp)}</a>
           </div>
         </details>
       </div>
@@ -117,7 +120,7 @@ ${links("            ")}
 };
 
 const footer = (lang) => {
-  const t = ui[lang], p = P[lang], h = p.home === "/" ? "" : p.home;
+  const t = ui[lang], p = P[lang];
   return `
     <footer>
       <div class="wrap">
@@ -136,9 +139,9 @@ const footer = (lang) => {
           <div>
             <h4>${esc(t.product)}</h4>
             <ul>
-              <li><a href="${h}/#how">${esc(t.nav[0])}</a></li>
-              <li><a href="${h}/#features">${esc(t.nav[1])}</a></li>
-              <li><a href="${h}/#coupons">${esc(t.nav[2])}</a></li>
+              <li><a href="${anchor(lang, "how")}">${esc(t.nav[0])}</a></li>
+              <li><a href="${anchor(lang, "features")}">${esc(t.nav[1])}</a></li>
+              <li><a href="${anchor(lang, "coupons")}">${esc(t.nav[2])}</a></li>
             </ul>
           </div>
           <div>
