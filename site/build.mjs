@@ -200,6 +200,16 @@ ${header(lang, alt, activeFor(path))}
 ${body}
     </main>
 ${footer(lang)}
+    <script>
+      // Cierra el menú móvil al pulsar un enlace: es un <details>, y al saltar
+      // a un ancla de la misma página se quedaba abierto tapándola.
+      document.querySelectorAll(".menu-panel a").forEach(function (a) {
+        a.addEventListener("click", function () {
+          var m = document.querySelector(".menu");
+          if (m) m.open = false;
+        });
+      });
+    </script>
 ${script ? `    <script>${script}</script>` : ""}
   </body>
 </html>

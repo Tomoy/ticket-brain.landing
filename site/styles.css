@@ -11,6 +11,9 @@
       }
       *{box-sizing:border-box}
       html{scroll-behavior:smooth}
+      /* El header es fijo, así que un salto a #ancla dejaba el titular
+         escondido debajo. Se reserva su altura más un respiro. */
+      section[id],[id]{scroll-margin-top:84px}
       body{margin:0;font-family:var(--f-body);color:var(--body);background:var(--white);
            line-height:1.6;-webkit-font-smoothing:antialiased}
       h1,h2,h3{font-family:var(--f-head);color:var(--ink);line-height:1.12;margin:0;letter-spacing:-.02em}
@@ -285,7 +288,8 @@ article.prose code{background:var(--green-50);padding:2px 6px;border-radius:5px;
             color:var(--green-600);background:#fff;line-height:1}
 .langswitch svg{flex:none;opacity:.85}
 .langswitch:hover{border-color:var(--green-600);background:var(--green-50)}
-.menu-panel .langswitch{margin-top:16px;border-bottom:1px solid var(--line);border-radius:999px}
+.menu-panel .langswitch{display:inline-flex;width:auto;gap:7px;padding:7px 15px;margin-top:16px;
+                        border:1px solid var(--line);border-radius:999px}
 
 /* Pricing line under the signup form: answers "how much?" at the exact point
    the visitor decides whether to hand over their email. */
