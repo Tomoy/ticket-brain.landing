@@ -1,6 +1,6 @@
 ---
 title: "SpendScan Alternative: Receipt Scanning Focused on Your Budget"
-date: "2025-09-24"
+date: "2026-07-14"
 description: "SpendScan and TicketBrain both read your grocery receipts with AI. The difference is what they optimise for. Here is an honest comparison to help you pick."
 slug: "spendscan-alternative"
 image: "blog-alt-spendscan.jpg"

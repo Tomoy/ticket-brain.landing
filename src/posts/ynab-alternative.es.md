@@ -1,6 +1,6 @@
 ---
 title: "Alternativa a YNAB para el súper: mira los productos, no solo el total"
-date: "2025-09-15"
+date: "2026-04-07"
 description: "Las apps de presupuesto tratan el súper como una sola categoría. Por qué el detalle producto a producto cambia lo que puedes recortar, y cuándo una app de presupuesto sigue siendo la herramienta correcta."
 slug: "alternativa-a-ynab-supermercado"
 image: "blog-alt-ynab.jpg"

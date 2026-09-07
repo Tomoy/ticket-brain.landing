@@ -1,6 +1,6 @@
 ---
 title: "Smart Grocery Shopping with AI"
-date: "2025-09-18"
+date: "2026-06-23"
 description: "Discover how artificial intelligence can transform your grocery shopping experience and help you save money."
 slug: "smart-grocery-shopping-with-ai"
 image: "blog-smart-grocery-shopping.jpg"

@@ -1,6 +1,6 @@
 ---
 title: "YNAB Alternative for Groceries: See the Items, Not Just the Total"
-date: "2025-09-15"
+date: "2026-04-07"
 description: "Budgeting apps track groceries as one category. Here is why item-level receipt data changes what you can actually cut, and when a budgeting app is still the right tool."
 slug: "ynab-alternative-groceries"
 image: "blog-alt-ynab.jpg"

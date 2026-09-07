@@ -1,6 +1,6 @@
 ---
 title: "Understanding Your Receipt Data"
-date: "2025-09-17"
+date: "2026-04-21"
 description: "Learn how to decode the valuable insights hidden in your grocery receipts and make data-driven shopping decisions."
 slug: "understanding-your-receipt-data"
 image: "blog-why-ticketbrain-exists.jpg"

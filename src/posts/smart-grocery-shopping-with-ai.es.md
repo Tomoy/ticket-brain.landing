@@ -1,6 +1,6 @@
 ---
 title: "Compra inteligente en el supermercado con IA"
-date: "2025-09-18"
+date: "2026-06-23"
 description: "Descubre cómo la inteligencia artificial puede transformar tu experiencia de compra en el supermercado y ayudarte a ahorrar dinero."
 slug: "compra-inteligente-supermercado-ia"
 image: "blog-smart-grocery-shopping.jpg"
