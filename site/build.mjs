@@ -113,8 +113,8 @@ const footer = (lang) => {
             </span>
             <p style="max-width:34ch">${esc(t.footerTag)}</p>
             <div class="cta-row" style="margin-top:22px">
-              <span class="store store-dark"><span><small>${esc(t.comingSoon)}</small><strong>App Store</strong></span></span>
-              <span class="store store-dark"><span><small>${esc(t.comingSoon)}</small><strong>Google Play</strong></span></span>
+              <span class="store store-dark"><svg viewBox="0 0 16 20" width="19" height="23" aria-hidden="true"><path d="M13.1 10.6c0-2 1.6-3 1.7-3-1-1.4-2.4-1.6-2.9-1.6-1.2-.1-2.4.7-3 .7-.6 0-1.6-.7-2.6-.7-1.3 0-2.6.8-3.2 2C1.7 10.6 2.8 14.4 4 16.5c.6 1 1.4 2.1 2.3 2.1.9 0 1.3-.6 2.4-.6 1.1 0 1.4.6 2.4.6 1 0 1.6-1 2.2-2 .7-1.1 1-2.2 1-2.3 0 0-1.9-.7-2-2.9zM11.2 4c.5-.6.9-1.5.8-2.4-.8 0-1.7.5-2.3 1.2-.5.6-.9 1.5-.8 2.4.9 0 1.8-.5 2.3-1.2z"/></svg><span><small>${esc(t.comingSoon)}</small><strong>App Store</strong></span></span>
+              <span class="store store-dark"><svg viewBox="0 0 14 16" width="17" height="19" aria-hidden="true"><path d="M.6.4C.3.7.1 1.1.1 1.7v12.6c0 .6.2 1 .5 1.3l.1.1L7.8 8.6v-.2L.7.3.6.4z"/><path d="M10.2 11l-2.4-2.4v-.2l2.4-2.4.1.1 2.8 1.6c.8.5.8 1.2 0 1.7L10.2 11z"/></svg><span><small>${esc(t.comingSoon)}</small><strong>Google Play</strong></span></span>
             </div>
           </div>
           <div>
