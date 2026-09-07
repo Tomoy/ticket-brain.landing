@@ -54,7 +54,7 @@ const navFor = (lang) => {
   return [
     [`${p.home === "/" ? "" : p.home}/#how`.replace("//", "/"), t.nav[0], ""],
     [`${p.home === "/" ? "" : p.home}/#features`.replace("//", "/"), t.nav[1], ""],
-    [`${p.home === "/" ? "" : p.home}/#coupons`.replace("//", "/"), t.nav[2], ' class="is-new"'],
+    [`${p.home === "/" ? "" : p.home}/#coupons`.replace("//", "/"), t.nav[2], ""],
     [p.blog, t.nav[3], ""],
     [p.faq, t.nav[4], ""],
     [p.privacy, t.nav[5], ""],
@@ -71,9 +71,25 @@ const switcher = (lang, alt) => {
   return `<a class="langswitch" href="${href}" hreflang="${other}" lang="${other}">${globe}${ui[lang].otherLangName}</a>`;
 };
 
-const header = (lang, alt) => {
-  const t = ui[lang], nav = navFor(lang);
-  const links = (indent) => nav.map(([h, l, c]) => `${indent}<a href="${h}"${c}>${esc(l)}</a>`).join("\n");
+/**
+ * `active` is the nav entry matching the page being rendered, so the current
+ * section is marked with aria-current. The three homepage anchors never get it:
+ * without scroll-spy there is no honest way to say which one you are "on".
+ */
+const activeFor = (path) => {
+  if (/^\/(es\/)?blog(\/|$)/.test(path)) return "blog";
+  if (/(frequently-asked-questions|preguntas-frecuentes)$/.test(path)) return "faq";
+  if (/(privacy|privacidad|privacy-policy|politica-de-privacidad)$/.test(path)) return "privacy";
+  return null;
+};
+
+const header = (lang, alt, active) => {
+  const t = ui[lang], p = P[lang], nav = navFor(lang);
+  const keyed = [null, null, null, "blog", "faq", "privacy"];
+  const links = (indent) => nav.map(([h, l, c], i) => {
+    const cur = keyed[i] && keyed[i] === active ? ' aria-current="page"' : "";
+    return `${indent}<a href="${h}"${c}${cur}>${esc(l)}</a>`;
+  }).join("\n");
   return `
     <header class="nav">
       <div class="wrap nav-in">
@@ -122,7 +138,7 @@ const footer = (lang) => {
             <ul>
               <li><a href="${h}/#how">${esc(t.nav[0])}</a></li>
               <li><a href="${h}/#features">${esc(t.nav[1])}</a></li>
-              <li><a href="${h}/#coupons" class="is-new">${esc(t.nav[2])}</a></li>
+              <li><a href="${h}/#coupons">${esc(t.nav[2])}</a></li>
             </ul>
           </div>
           <div>
@@ -179,7 +195,7 @@ ${ld}
     <style>${CSS}</style>
   </head>
   <body>
-${header(lang, alt)}
+${header(lang, alt, activeFor(path))}
     <main>
 ${body}
     </main>

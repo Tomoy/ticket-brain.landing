@@ -29,7 +29,13 @@
       .brand b{font-weight:800}
       .nav-links{display:flex;align-items:center;gap:22px;font-size:15px;font-weight:500;white-space:nowrap}
       .nav-links a:hover{color:var(--green-600)}
-      .nav-links .is-new{color:var(--orange-ink);font-weight:700}
+      /* Página actual. Sólo la llevan Blog, FAQ y Privacidad: los otros tres
+         enlaces son anclas del inicio y no hay forma honesta de decir en cuál
+         estás sin scroll-spy. */
+      .nav-links a[aria-current]{color:var(--green-900);font-weight:700}
+      .nav-links a[aria-current]::after{content:"";display:block;height:2px;border-radius:2px;
+                                        background:var(--green-600);margin-top:5px}
+      .menu-panel a[aria-current]{color:var(--green-900);font-weight:800}
       .btn{display:inline-block;background:var(--green-900);color:#fff;font-weight:700;font-size:15px;
            padding:13px 24px;border-radius:999px;border:0;cursor:pointer;font-family:var(--f-body);
            white-space:nowrap}
@@ -199,7 +205,6 @@
       footer ul{list-style:none;margin:0;padding:0}
       footer li{margin-bottom:11px}
       footer a:hover{color:#fff}
-      footer .is-new{color:var(--orange)}
       .store-dark{background:transparent;border:1px solid #2d5c4a;box-shadow:none}
       .store-dark strong{color:#fff} .store-dark small{color:#7fae9b}
       .legal{border-top:1px solid #21503c;margin-top:44px;padding-top:22px;font-size:13.5px;color:#7fae9b}
