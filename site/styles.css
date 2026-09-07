@@ -162,13 +162,7 @@
             padding:15px 17px;font-size:14.5px;color:#5c4a2e}
       @media(max-width:520px){.minis{grid-template-columns:1fr}}
 
-      .shot{background:repeating-linear-gradient(135deg,#f7ecda,#f7ecda 12px,#f2e3cb 12px,#f2e3cb 24px);
-            border-radius:34px;aspect-ratio:9/17;display:flex;flex-direction:column;align-items:center;
-            justify-content:center;text-align:center;padding:30px;gap:9px}
-      .shot .lab{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange-ink)}
-      .shot b{font-family:var(--f-head);font-size:16px;color:#4a3a1e}
-      .shot small{font-family:var(--f-mono);font-size:12px;color:#7d6a4a;line-height:1.5}
-
+                        
       .band{background:var(--green-900);color:#cfe3d9;border-radius:26px;padding:56px}
       .band h2{color:#fff;max-width:16em}
       .band p{font-size:17.5px;margin:20px 0 0;max-width:52em}
@@ -282,3 +276,6 @@ article.prose code{background:var(--green-50);padding:2px 6px;border-radius:5px;
    the visitor decides whether to hand over their email. */
 .pricing-note{margin:16px auto 0;max-width:46em;font-size:14.5px;color:var(--muted)}
 .pricing-note b{color:var(--body);font-weight:700}
+
+/* Real app screenshots sitting inside the phone frame. */
+.appshot{display:block;width:100%;height:auto}
