@@ -87,6 +87,22 @@
                    text-transform:uppercase;color:var(--muted);line-height:1.5}
       .store strong{font-family:var(--f-head);font-size:16px;font-weight:700;color:var(--ink)}
       @media(max-width:940px){.hero-grid{grid-template-columns:1fr;gap:44px}.hero{padding:48px 0 60px}}
+      /* En móvil las dos insignias suman más que el ancho disponible (348 de
+         327 en un iPhone SE), así que se cae una a la segunda línea. Se oculta
+         el icono de la app y se aprietan los laterales para que entren juntas,
+         que es como se leen: dos tiendas, una decisión. */
+      @media(max-width:520px){
+        .cta-row{gap:10px}
+        .store{padding:11px 13px}
+        /* El icono de la app se oculta y las dos insignias se reparten la fila
+           a partes iguales a partir de una base de 140px: con anchos fijos en
+           inglés sólo sobraban 4px y en un móvil de 360px volvían a partirse.
+           La base flexible mantiene la fila cuando cabe y deja que salten sin
+           desbordar cuando la pantalla es más estrecha todavía. */
+        .hero .cta-row .appicon{display:none}
+        .hero .cta-row .store{flex:1 1 140px;min-width:0;justify-content:center;padding:11px 8px}
+        .hero .cta-row .store small,.hero .cta-row .store strong{white-space:nowrap}
+      }
 
       /* ---------- phone ---------- */
       /* iPhone silhouette: thin uniform bezel, 52px corners, a Dynamic Island
