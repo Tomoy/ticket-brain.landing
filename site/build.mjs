@@ -65,7 +65,10 @@ const navFor = (lang) => {
 const switcher = (lang, alt) => {
   const other = lang === "en" ? "es" : "en";
   const href = alt || P[other].home;
-  return `<a class="langswitch" href="${href}" hreflang="${other}" lang="${other}">${ui[lang].otherLangName}</a>`;
+  const globe = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" '
+    + 'stroke-width="1.9" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/>'
+    + '<path d="M12 3c2.4 2.5 3.6 5.5 3.6 9s-1.2 6.5-3.6 9c-2.4-2.5-3.6-5.5-3.6-9S9.6 5.5 12 3z"/></svg>';
+  return `<a class="langswitch" href="${href}" hreflang="${other}" lang="${other}">${globe}${ui[lang].otherLangName}</a>`;
 };
 
 const header = (lang, alt) => {
