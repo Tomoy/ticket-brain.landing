@@ -269,7 +269,12 @@ const write = (path, html) => {
 function build() {
   rmSync(DIST, { recursive: true, force: true });
   mkdirSync(DIST, { recursive: true });
-  cpSync(join(ROOT, "public"), DIST, { recursive: true });
+  // .DS_Store rides along in public/ on macOS. Vercel does not serve dotfiles,
+  // so it never leaked, but there is no reason to ship it either.
+  cpSync(join(ROOT, "public"), DIST, {
+    recursive: true,
+    filter: (src) => !src.endsWith(".DS_Store"),
+  });
   rmSync(join(DIST, "sitemap-es.xml"), { force: true });
   const media = join(DIST, "blog-media");
   mkdirSync(media, { recursive: true });
