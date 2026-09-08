@@ -8,7 +8,7 @@
  *
  * Sources:
  *   site/pages/home.<lang>.html   hand-authored homepage body
- *   src/posts/*.md                English posts; *.es.md are their Spanish
+ *   site/posts/*.md               English posts; *.es.md are their Spanish
  *                                 counterparts, matched by base filename
  *   site/content.mjs              FAQ, privacy policy, privacy page, UI strings
  *
@@ -222,7 +222,7 @@ ${script ? `    <script>${script}</script>` : ""}
 /* ------------------------------------------------------------------ posts */
 
 function loadPosts() {
-  const dir = join(ROOT, "src/posts");
+  const dir = join(ROOT, "site/posts");
   const parse = (file) => {
     const parts = readFileSync(join(dir, file), "utf-8").split("---");
     const meta = {};
@@ -273,8 +273,8 @@ function build() {
   rmSync(join(DIST, "sitemap-es.xml"), { force: true });
   const media = join(DIST, "blog-media");
   mkdirSync(media, { recursive: true });
-  for (const f of readdirSync(join(ROOT, "src/assets"))) {
-    if (/^blog-.*\.(jpg|jpeg|png|webp)$/i.test(f)) cpSync(join(ROOT, "src/assets", f), join(media, f));
+  for (const f of readdirSync(join(ROOT, "site/assets"))) {
+    if (/^blog-.*\.(jpg|jpeg|png|webp)$/i.test(f)) cpSync(join(ROOT, "site/assets", f), join(media, f));
   }
 
   const posts = loadPosts();
