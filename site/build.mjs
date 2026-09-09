@@ -293,11 +293,11 @@ function build() {
     write(p.home, page({
       lang, path: p.home, alt: lang === "en" ? P.es.home : P.en.home,
       title: lang === "en"
-        ? "Grocery Receipt Scanner App to Cut Your Grocery Bill | TicketBrain"
-        : "App para escanear tickets del súper y bajar tu factura | TicketBrain",
+        ? "Grocery Receipt Scanner App to Cut Your Bill | TicketBrain"
+        : "Escanea tickets del súper y baja tu factura | TicketBrain",
       description: lang === "en"
-        ? "Scan any supermarket receipt and TicketBrain reads every item, categorises it, and shows which purchases are driving your grocery budget up. Join the early access list."
-        : "Escanea cualquier ticket del supermercado y TicketBrain lee cada producto, lo categoriza y te muestra qué compras están disparando tu presupuesto. Apúntate al acceso anticipado.",
+        ? "Scan any supermarket receipt and TicketBrain reads every item, categorises it, and shows which purchases are driving your grocery budget up."
+        : "Escanea cualquier ticket del supermercado y TicketBrain lee cada producto, lo categoriza y te muestra qué compras están disparando tu presupuesto.",
       body: read(`site/pages/home.${lang}.html`),
       script: SIGNUP_JS,
       jsonLd: lang === "en" ? [
@@ -347,7 +347,7 @@ ${L.map((x) => `          <a class="post" href="${p.post(x.slug)}">
       const others = L.filter((o) => o.slug !== x.slug).slice(0, 2);
       write(p.post(x.slug), page({
         lang, path: p.post(x.slug), alt: x.alt,
-        title: `${x.title} | TicketBrain`, description: x.description,
+        title: `${x.seoTitle || x.title} | TicketBrain`, description: x.description,
         body: `      <section class="page-hero"><div class="wrap">
         <a class="crumb" href="${p.blog}">${esc(t.backToBlog)}</a>
         <h1>${esc(x.title)}</h1>
@@ -381,7 +381,7 @@ ${others.map((o) => `            <a href="${p.post(o.slug)}"><b>${esc(o.title)}<
                            : "Preguntas frecuentes | TicketBrain",
       description: lang === "en"
         ? "Everything you need to know about TicketBrain: how receipt scanning works, what we do with your data, and how the app helps you cut your grocery bill."
-        : "Todo lo que necesitas saber sobre TicketBrain: cómo funciona el escaneo de tickets, qué hacemos con tus datos y cómo la app te ayuda a bajar la factura del súper.",
+        : "Todo lo que necesitas saber sobre TicketBrain: cómo funciona el escaneo de tickets, qué hacemos con tus datos y cómo te ayuda a ahorrar.",
       body: `      <section class="page-hero"><div class="wrap">
         <p class="kicker">${esc(t.nav[4])}</p>
         <h1>${esc(t.faqTitle)}</h1>
@@ -406,7 +406,7 @@ ${F.map((f, i) => `          <details class="faq-item"${i === 0 ? " open" : ""}>
     write(p.privacy, page({
       lang, path: p.privacy, alt: lang === "en" ? P.es.privacy : P.en.privacy,
       title: lang === "en" ? "Privacy: no bank connection, no stored photos | TicketBrain"
-                           : "Privacidad: sin conexión bancaria ni fotos guardadas | TicketBrain",
+                           : "Privacidad: sin conexión bancaria | TicketBrain",
       description: PP.lede,
       body: `      <section class="page-hero"><div class="wrap">
         <p class="kicker">${esc(PP.kicker)}</p>

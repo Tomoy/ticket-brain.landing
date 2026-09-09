@@ -1,5 +1,6 @@
 ---
 title: "Alternativa a Fetch: convierte tus tickets en información, no en puntos"
+seoTitle: "Alternativa a Fetch: información, no puntos"
 date: "2026-05-12"
 description: "Fetch convierte tus tickets en tarjetas regalo. Si prefieres que tus tickets te expliquen a dónde va el dinero del súper, esto es lo que cambia."
 slug: "alternativa-a-fetch"

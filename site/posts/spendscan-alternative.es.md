@@ -1,5 +1,6 @@
 ---
 title: "Alternativa a SpendScan: escaneo de tickets centrado en tu presupuesto"
+seoTitle: "Alternativa a SpendScan para tu presupuesto"
 date: "2026-07-14"
 description: "SpendScan y TicketBrain leen los tickets del súper con IA. La diferencia está en qué priorizan. Aquí tienes una comparación honesta para que elijas."
 slug: "alternativa-a-spendscan"

@@ -1,5 +1,6 @@
 ---
 title: "Fetch Alternative: Turn Receipts Into Insights, Not Points"
+seoTitle: "Fetch Alternative: Insights, Not Points"
 date: "2026-05-12"
 description: "Fetch turns your receipts into gift cards. If you would rather have your receipts explain where your grocery money goes, here is what changes."
 slug: "fetch-alternative"
