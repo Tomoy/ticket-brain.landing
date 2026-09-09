@@ -156,6 +156,7 @@ export const ui = {
     legalKicker: "Legal",
     notFoundTitle: "This page does not exist",
     notFoundLede: "The link may be old or mistyped.", notFoundCta: "Go back to the homepage",
+    offerTitle: "Prefer English?", offerCta: "View in English", offerClose: "Dismiss",
   },
   es: {
     locale: "es-ES", langName: "Español", otherLangName: "English",
@@ -171,5 +172,6 @@ export const ui = {
     legalKicker: "Legal",
     notFoundTitle: "Esta página no existe",
     notFoundLede: "El enlace puede ser antiguo o estar mal escrito.", notFoundCta: "Volver al inicio",
+    offerTitle: "¿Prefieres español?", offerCta: "Ver en español", offerClose: "Cerrar",
   },
 };

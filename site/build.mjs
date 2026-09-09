@@ -168,6 +168,18 @@ function page({ lang, path, alt, title, description, body, jsonLd = [], noindex 
     : "";
   const ld = jsonLd.map((d) =>
     `    <script type="application/ld+json">${JSON.stringify(d)}</script>`).join("\n");
+  const other = lang === "en" ? "es" : "en";
+  const o = ui[other];
+  // Sólo se ofrece el idioma contrario si esta página tiene equivalente: los
+  // tres posts que existen únicamente en inglés no lo tienen.
+  const langbar = alt
+    ? `    <div class="langbar" id="langbar" data-lang="${other}" hidden>
+      <span>${esc(o.offerTitle)}</span>
+      <a href="${alt}" hreflang="${other}" lang="${other}">${esc(o.offerCta)}</a>
+      <button type="button" class="langbar-close" aria-label="${esc(o.offerClose)}">&times;</button>
+    </div>\n`
+    : "";
+
   return `<!doctype html>
 <html lang="${lang}">
   <head>
@@ -203,7 +215,7 @@ ${header(lang, alt, activeFor(path))}
 ${body}
     </main>
 ${footer(lang)}
-    <script>
+${langbar}    <script>
       // Cierra el menú móvil al pulsar un enlace: es un <details>, y al saltar
       // a un ancla de la misma página se quedaba abierto tapándola.
       document.querySelectorAll(".menu-panel a").forEach(function (a) {
@@ -212,6 +224,28 @@ ${footer(lang)}
           if (m) m.open = false;
         });
       });
+
+      // Sugerencia de idioma: se muestra sólo si el navegador está en el otro
+      // idioma y no se ha descartado antes. localStorage puede lanzar en modo
+      // privado, así que todo va envuelto.
+      (function () {
+        var bar = document.getElementById("langbar");
+        if (!bar) return;
+        var KEY = "tb-lang-choice";
+        var seen;
+        try { seen = localStorage.getItem(KEY); } catch (e) {}
+        var browser = (navigator.language || "").toLowerCase().split("-")[0];
+        if (seen || browser !== bar.getAttribute("data-lang")) return;
+        bar.hidden = false;
+        function remember() {
+          try { localStorage.setItem(KEY, "1"); } catch (e) {}
+        }
+        bar.querySelector(".langbar-close").addEventListener("click", function () {
+          remember();
+          bar.hidden = true;
+        });
+        bar.querySelector("a").addEventListener("click", remember);
+      })();
     </script>
 ${script ? `    <script>${script}</script>` : ""}
   </body>
