@@ -174,6 +174,7 @@ function page({ lang, path, alt, title, description, body, jsonLd = [], noindex 
   // tres posts que existen únicamente en inglés no lo tienen.
   const langbar = alt
     ? `    <div class="langbar" id="langbar" data-lang="${other}" hidden>
+      <img src="/lovable-uploads/logo-medium-light.png" alt="" width="26" height="26">
       <span>${esc(o.offerTitle)}</span>
       <a href="${alt}" hreflang="${other}" lang="${other}">${esc(o.offerCta)}</a>
       <button type="button" class="langbar-close" aria-label="${esc(o.offerClose)}">&times;</button>
@@ -382,12 +383,12 @@ ${L.map((x) => `          <a class="post" href="${p.post(x.slug)}">
       write(p.post(x.slug), page({
         lang, path: p.post(x.slug), alt: x.alt,
         title: `${x.seoTitle || x.title} | TicketBrain`, description: x.description,
-        body: `      <section class="page-hero"><div class="wrap">
+        body: `      <section class="page-hero"><div class="wrap narrow">
         <a class="crumb" href="${p.blog}">${esc(t.backToBlog)}</a>
         <h1>${esc(x.title)}</h1>
         <p><time datetime="${x.date}">${fmtDate(x.date, lang)}</time></p>
       </div></section>
-      <section><div class="wrap">
+      <section><div class="wrap narrow">
         ${x.image ? `<img class="hero-img" src="${x.image}" alt="" width="800" height="512">` : ""}
         <article class="prose">
 ${x.html}
@@ -416,12 +417,12 @@ ${others.map((o) => `            <a href="${p.post(o.slug)}"><b>${esc(o.title)}<
       description: lang === "en"
         ? "Everything you need to know about TicketBrain: how receipt scanning works, what we do with your data, and how the app helps you cut your grocery bill."
         : "Todo lo que necesitas saber sobre TicketBrain: cómo funciona el escaneo de tickets, qué hacemos con tus datos y cómo te ayuda a ahorrar.",
-      body: `      <section class="page-hero"><div class="wrap">
+      body: `      <section class="page-hero"><div class="wrap narrow">
         <p class="kicker">${esc(t.nav[4])}</p>
         <h1>${esc(t.faqTitle)}</h1>
         <p>${esc(t.faqLede)}</p>
       </div></section>
-      <section><div class="wrap">
+      <section><div class="wrap narrow">
         <div class="faq-list">
 ${F.map((f, i) => `          <details class="faq-item"${i === 0 ? " open" : ""}>
             <summary>${esc(f.q)}</summary>
@@ -442,12 +443,12 @@ ${F.map((f, i) => `          <details class="faq-item"${i === 0 ? " open" : ""}>
       title: lang === "en" ? "Privacy: no bank connection, no stored photos | TicketBrain"
                            : "Privacidad: sin conexión bancaria | TicketBrain",
       description: PP.lede,
-      body: `      <section class="page-hero"><div class="wrap">
+      body: `      <section class="page-hero"><div class="wrap narrow">
         <p class="kicker">${esc(PP.kicker)}</p>
         <h1>${esc(PP.title)}</h1>
         <p>${esc(PP.lede)}</p>
       </div></section>
-      <section><div class="wrap">
+      <section><div class="wrap narrow">
         <div class="faq-list">
 ${PP.cards.map(([h, b]) => `          <div class="faq-item" style="padding:22px 24px">
             <h2 style="font-size:19px;margin-bottom:8px">${esc(h)}</h2>
@@ -467,12 +468,12 @@ ${PP.cards.map(([h, b]) => `          <div class="faq-item" style="padding:22px 
       description: lang === "en"
         ? "How TicketBrain collects, stores and protects your data. GDPR-compliant privacy policy for our grocery receipt scanning app."
         : "Cómo TicketBrain recoge, almacena y protege tus datos. Política de privacidad conforme al RGPD de nuestra app de escaneo de tickets.",
-      body: `      <section class="page-hero"><div class="wrap">
+      body: `      <section class="page-hero"><div class="wrap narrow">
         <p class="kicker">${esc(t.legalKicker)}</p>
         <h1>${esc(D.title)}</h1>
         <p class="updated">${esc(D.lastUpdated)}</p>
       </div></section>
-      <section><div class="wrap"><div class="doc">
+      <section><div class="wrap narrow"><div class="doc">
         <h2>${esc(D.whoWeAre_title)}</h2><p>${esc(D.whoWeAre_content)}</p>
         <h2>${esc(D.infoCollect_title)}</h2>
         <p>${esc(D.infoCollect_receipt)}</p><p>${esc(D.infoCollect_email)}</p><p>${esc(D.infoCollect_usage)}</p>
