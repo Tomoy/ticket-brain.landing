@@ -474,14 +474,11 @@ ${PP.cards.map(([h, b]) => `          <div class="faq-item" style="padding:22px 
         <p class="updated">${esc(D.lastUpdated)}</p>
       </div></section>
       <section><div class="wrap narrow"><div class="doc">
-        <h2>${esc(D.whoWeAre_title)}</h2><p>${esc(D.whoWeAre_content)}</p>
-        <h2>${esc(D.infoCollect_title)}</h2>
-        <p>${esc(D.infoCollect_receipt)}</p><p>${esc(D.infoCollect_email)}</p><p>${esc(D.infoCollect_usage)}</p>
-        <h2>${esc(D.howStore_title)}</h2><p>${esc(D.howStore_content)}</p>
-        <h2>${esc(D.gdprRights_title)}</h2>
-        <p>${esc(D.gdprRights_access)}</p><p>${esc(D.gdprRights_rectification)}</p>
-        <p>${esc(D.gdprRights_erasure)}</p><p>${esc(D.gdprRights_portability)}</p>
-        <p>${esc(D.gdprRights_objection)}</p>
+        <div class="box"><p style="margin:0">${esc(D.summary)}</p></div>
+${D.sections.map(s => `        <h2>${esc(s.h)}</h2>
+${s.body.map(b => b.list
+  ? `        <ul>\n${b.list.map(i => `          <li>${esc(i)}</li>`).join("\n")}\n        </ul>`
+  : `        <p>${esc(b.p)}</p>`).join("\n")}`).join("\n")}
         <h2>${esc(D.contact_title)}</h2><p>${esc(D.contact_content)}</p>
         <div class="box"><p>${esc(D.contact_email)}<br>${esc(D.contact_address)}</p></div>
         <p>${esc(D.contact_authority)}</p>

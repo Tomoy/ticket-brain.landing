@@ -1,7 +1,7 @@
 // Bilingual copy for the site.
 //
 // faq and privacyDoc are lifted verbatim from the Spanish and English blocks
-// of the old src/contexts/LanguageContext.tsx — those two were the only parts
+// of the old src/contexts/LanguageContext.tsx. Those two were the only parts
 // of the React app that were ever fully translated.
 //
 // privacyPage and ui are new: the redesigned homepage was written in English
@@ -40,51 +40,255 @@ export const faq = {
   ],
 };
 
+/**
+ * The legal privacy policy.
+ *
+ * Rewritten 2026-09-10. The previous version was inherited from the old React
+ * landing page and described a product that no longer exists: it claimed we
+ * collected email addresses for a waitlist (the app never asks for one) and
+ * that receipt images were "deleted within 30 days" (they are never written to
+ * disk at all). It also failed to name Anthropic or Firebase, which is the
+ * disclosure the GDPR actually requires and the one Apple cross-checks against
+ * the App Privacy answers in App Store Connect.
+ *
+ * Every claim below was checked against the code:
+ *   - nothing but the photo leaves the device -> lib/data/local/app_database.dart
+ *     (drift/SQLite) and lib/data/local/coupon_image_store.dart hold everything
+ *     locally; there is no sync code.
+ *   - the photo is not stored -> api/main.py reads the upload into memory,
+ *     forwards it to the model and returns the result. Nothing touches disk.
+ *   - the anonymous device id -> lib/data/repositories/device_repository.dart,
+ *     a client-side uuid v4 sent as X-Device-Id purely for rate limiting.
+ *   - the analytics list -> lib/services/analytics.dart, every event and user
+ *     property enumerated. No amounts, store names or product names anywhere.
+ *
+ * Same warning as privacyPage below: ARCHITECTURE.md describes a target design
+ * that DOES store the original image in a Railway bucket and sync receipts to
+ * Postgres. The day that ships, sections 3 and 7 stop being true and have to be
+ * rewritten BEFORE the change goes live, not after.
+ *
+ * Structure: each section is { h, body: [...] } where a body entry is either
+ * { p } for a paragraph or { list } for a bulleted list, rendered in order.
+ */
 export const privacyDoc = {
   en: {
     title: `Privacy Policy`,
-    lastUpdated: `Last updated: September 2025`,
-    whoWeAre_title: `Who We Are`,
-    whoWeAre_content: `TicketBrain is a grocery receipt analysis service that helps users gain insights into their spending and shopping habits.`,
-    infoCollect_title: `Information We Collect`,
-    infoCollect_receipt: `• Receipt images and data extracted from them`,
-    infoCollect_email: `• Email addresses for our waitlist`,
-    infoCollect_usage: `• Usage analytics and app performance data`,
-    howStore_title: `How We Store and Protect Your Data`,
-    howStore_content: `Your data is stored securely using industry-standard encryption. Receipt images are processed and then deleted within 30 days. We never sell your personal information to third parties.`,
-    gdprRights_title: `Your Rights Under GDPR`,
-    gdprRights_access: `• Right to access your personal data`,
-    gdprRights_rectification: `• Right to rectification of inaccurate data`,
-    gdprRights_erasure: `• Right to erasure (right to be forgotten)`,
-    gdprRights_portability: `• Right to data portability`,
-    gdprRights_objection: `• Right to object to processing`,
+    lastUpdated: `Last updated: September 2026`,
+    summary: `The short version: TicketBrain has no accounts and never asks for your name, your email or your bank. Your receipts, coupons and budget live in a database on your own phone. The only thing that leaves your device is the photo of a receipt, which is read once to pull out the lines and is never stored by us.`,
+    sections: [
+      {
+        h: `Who We Are`,
+        body: [
+          { p: `TicketBrain is a grocery receipt scanning app built and run by one independent developer, not a company. Under the GDPR, that developer is the data controller for the limited processing described here. You will find the contact details at the end of this page.` },
+        ],
+      },
+      {
+        h: `What Stays On Your Phone`,
+        body: [
+          { p: `All of this is stored in a local database on your device and is never sent to us:` },
+          { list: [
+            `Your receipts: the store, the date, the total, and every line item with its price and category`,
+            `Your coupons, including the photos you take of them`,
+            `Your monthly budget, your household size and the goals you chose during setup`,
+            `Your settings: language, notification permissions and reminder preferences`,
+          ] },
+          { p: `We hold no copy of any of it. We cannot read it, we cannot recover it for you, and we have nothing to hand to anyone else. If you delete the app, it is gone. That is also why the app has an export button: that export is the only backup that exists.` },
+        ],
+      },
+      {
+        h: `The Receipt Photo`,
+        body: [
+          { p: `This is the one thing that leaves your phone. When you scan a receipt or a coupon, the photo is sent over an encrypted connection to our server, held in memory while an AI model reads the lines off it, and the extracted text comes straight back to your phone.` },
+          { p: `The image is never written to disk, never added to a database and never kept after the response is sent. There is no archive of your receipts on our side to lose, leak or be asked to hand over.` },
+          { p: `A randomly generated identifier travels with the request so that we can cap how many scans come from a single installation and keep the service usable for everyone. It is created on your phone, it is not derived from your device or from you, and it is not linked to anything else. It exists only in memory, for a rolling window of a few hours.` },
+        ],
+      },
+      {
+        h: `Usage Analytics`,
+        body: [
+          { p: `The app reports anonymous usage events so that we can tell which parts work and which are broken. This runs on Google Firebase Analytics.` },
+          { p: `What we send is limited to named events and coarse aggregates, for example: a scan was started, a receipt was parsed and how many line items it had, a coupon was saved, a setting was changed, the app language, whether notifications are allowed, and a range for how many receipts you have saved (such as "6-20") rather than the number itself.` },
+          { p: `What we never send: the amounts you spend, the names of the stores, the names of the products, the receipt photos, your budget figure, your email, your name, or any identifier we could use to find you. There is no account to attach any of it to.` },
+          { p: `Firebase assigns its own app installation identifier and records the device model, the operating system version and an approximate country. That is Google's standard collection for any app that uses it, and it is governed by Google's own privacy terms. Today the only way to stop it is to uninstall the app.` },
+        ],
+      },
+      {
+        h: `What We Never Do`,
+        body: [
+          { list: [
+            `We never connect to your bank. There is no account linking and no open banking provider in the middle.`,
+            `We never sell your data, and we never share your shopping habits with brands, retailers or data brokers. There is no cashback deal funding this app.`,
+            `We run no advertising and embed no advertising or tracking SDKs.`,
+            `We build no profile of you for marketing, and we make no automated decisions that produce legal effects for you.`,
+          ] },
+        ],
+      },
+      {
+        h: `Who Processes Data For Us`,
+        body: [
+          { p: `Three providers are involved, each for one narrow job:` },
+          { list: [
+            `Railway Corp. hosts the server that receives the photo and passes it on. It runs in Railway's Amsterdam region, inside the European Union.`,
+            `Anthropic PBC reads the receipt photo through the Claude API and returns the extracted lines. The image is sent for that purpose and nothing else.`,
+            `Google Ireland Limited provides Firebase Analytics for the anonymous usage events described above.`,
+          ] },
+          { p: `Our server is in the European Union. The receipt photo is sent to Anthropic in the United States to be read, and is not stored there. Firebase Analytics is operated by Google, which may process the anonymous events on infrastructure outside the European Union. Both of those transfers rely on the European Commission's Standard Contractual Clauses, included in the providers' terms.` },
+        ],
+      },
+      {
+        h: `How Long Data Is Kept`,
+        body: [
+          { p: `The receipt photo: not kept at all. It exists in server memory for the seconds the scan takes and is discarded when the response is sent.` },
+          { p: `The anonymous scan identifier: a few hours in memory, then discarded. It is also lost whenever the server restarts.` },
+          { p: `Analytics events: retained by Google Firebase for the period configured in our Firebase project, after which Google deletes them.` },
+          { p: `Everything else: for as long as you keep the app installed, on your phone, under your control.` },
+        ],
+      },
+      {
+        h: `Your Data, Your Control`,
+        body: [
+          { p: `Because your data lives on your device rather than in an account, most of what the GDPR gives you is something you can do yourself, immediately, without asking us:` },
+          { list: [
+            `Export everything: Settings has an export button that writes all your receipts and coupons to a file you can save or send wherever you like.`,
+            `Correct anything: every receipt and coupon can be edited after scanning, and nothing is saved until you have reviewed it.`,
+            `Delete anything: remove individual receipts and coupons from the app, or delete the app to erase all of it at once.`,
+          ] },
+        ],
+      },
+      {
+        h: `Your Rights Under GDPR`,
+        body: [
+          { p: `You have the right to access your personal data, to have inaccurate data corrected, to have your data erased, to receive it in a portable format, to object to processing and to restrict it.` },
+          { p: `In practice we hold almost nothing to exercise these against, which is the point of the design. For anything that remains, write to us at the address below and we will answer within one month.` },
+        ],
+      },
+      {
+        h: `Children`,
+        body: [
+          { p: `TicketBrain is not aimed at children and we do not knowingly process data from anyone under 14.` },
+        ],
+      },
+      {
+        h: `Changes To This Policy`,
+        body: [
+          { p: `If what the app does with your data changes, this page changes first, with a new date at the top. We will not quietly start collecting something this policy does not mention.` },
+        ],
+      },
+    ],
     contact_title: `Contact Us`,
     contact_content: `If you have any questions about this Privacy Policy or wish to exercise your rights, please contact us at:`,
     contact_email: `Email: hello@ticketbrain.app`,
-    contact_address: `Address: Madrid, Spain`,
+    contact_address: `Barcelona, Spain`,
     contact_authority: `If you believe we have not addressed your concerns adequately, you may contact the Spanish Data Protection Authority (AEPD) at www.aepd.es`,
   },
   es: {
     title: `Política de Privacidad`,
-    lastUpdated: `Última actualización: Septiembre 2025`,
-    whoWeAre_title: `Quiénes Somos`,
-    whoWeAre_content: `TicketBrain es un servicio de análisis de tickets de compra que ayuda a los usuarios a comprender mejor sus gastos y hábitos de consumo.`,
-    infoCollect_title: `Información que Recopilamos`,
-    infoCollect_receipt: `• Imágenes de tickets y los datos extraídos de ellas`,
-    infoCollect_email: `• Direcciones de correo electrónico para nuestra lista de espera`,
-    infoCollect_usage: `• Datos de uso y rendimiento de la aplicación`,
-    howStore_title: `Cómo Almacenamos y Protegemos tus Datos`,
-    howStore_content: `Tus datos se almacenan de forma segura utilizando encriptación con estándares de la industria. Las imágenes de tickets se procesan y se eliminan en un plazo máximo de 30 días. Nunca vendemos tu información personal a terceros.`,
-    gdprRights_title: `Tus Derechos según el RGPD`,
-    gdprRights_access: `• Derecho a acceder a tus datos personales`,
-    gdprRights_rectification: `• Derecho a rectificar datos inexactos`,
-    gdprRights_erasure: `• Derecho a la supresión (derecho al olvido)`,
-    gdprRights_portability: `• Derecho a la portabilidad de los datos`,
-    gdprRights_objection: `• Derecho a oponerte al tratamiento`,
-    contact_title: `Contáctanos`,
+    lastUpdated: `Última actualización: Septiembre 2026`,
+    summary: `La versión corta: TicketBrain no tiene cuentas y nunca te pide tu nombre, tu correo ni tu banco. Tus tickets, cupones y presupuesto viven en una base de datos en tu propio móvil. Lo único que sale de tu dispositivo es la foto del ticket, que se lee una vez para extraer las líneas y que nosotros no guardamos en ningún momento.`,
+    sections: [
+      {
+        h: `Quiénes Somos`,
+        body: [
+          { p: `TicketBrain es una app de escaneo de tickets de supermercado creada y mantenida por un desarrollador independiente, no por una empresa. A efectos del RGPD, ese desarrollador es el responsable del tratamiento limitado que se describe aquí. Los datos de contacto están al final de esta página.` },
+        ],
+      },
+      {
+        h: `Lo Que Se Queda En Tu Móvil`,
+        body: [
+          { p: `Todo esto se guarda en una base de datos local en tu dispositivo y nunca se nos envía:` },
+          { list: [
+            `Tus tickets: el establecimiento, la fecha, el total y cada línea con su precio y su categoría`,
+            `Tus cupones, incluidas las fotos que les haces`,
+            `Tu presupuesto mensual, el tamaño de tu hogar y los objetivos que elegiste al configurar la app`,
+            `Tus ajustes: idioma, permisos de notificación y preferencias de recordatorios`,
+          ] },
+          { p: `No tenemos ninguna copia de nada de esto. No podemos leerlo, no podemos recuperártelo y no tenemos nada que entregar a terceros. Si borras la app, desaparece. Por eso mismo la app tiene un botón de exportar: esa exportación es la única copia de seguridad que existe.` },
+        ],
+      },
+      {
+        h: `La Foto Del Ticket`,
+        body: [
+          { p: `Es lo único que sale de tu móvil. Cuando escaneas un ticket o un cupón, la foto se envía por una conexión cifrada a nuestro servidor, se mantiene en memoria mientras un modelo de IA lee las líneas, y el texto extraído vuelve directo a tu móvil.` },
+          { p: `La imagen no se escribe nunca en disco, no entra en ninguna base de datos y no se conserva una vez enviada la respuesta. No hay un archivo de tus tickets en nuestro lado que se pueda perder, filtrar o reclamar.` },
+          { p: `Junto a la petición viaja un identificador generado al azar, que nos sirve para limitar cuántos escaneos llegan desde una misma instalación y mantener el servicio utilizable para todos. Se crea en tu móvil, no se deriva de tu dispositivo ni de ti, y no está vinculado a nada más. Solo existe en memoria, durante una ventana de unas pocas horas.` },
+        ],
+      },
+      {
+        h: `Analítica De Uso`,
+        body: [
+          { p: `La app envía eventos de uso anónimos para que podamos saber qué partes funcionan y cuáles están rotas. Esto se apoya en Google Firebase Analytics.` },
+          { p: `Lo que enviamos se limita a eventos con nombre y agregados poco precisos, por ejemplo: se ha iniciado un escaneo, se ha procesado un ticket y cuántas líneas tenía, se ha guardado un cupón, se ha cambiado un ajuste, el idioma de la app, si las notificaciones están permitidas, y un rango de cuántos tickets tienes guardados (por ejemplo "6-20") en lugar de la cifra exacta.` },
+          { p: `Lo que no enviamos nunca: los importes que gastas, los nombres de los establecimientos, los nombres de los productos, las fotos de los tickets, tu presupuesto, tu correo, tu nombre ni ningún identificador con el que pudiéramos localizarte. No hay ninguna cuenta a la que asociar nada de eso.` },
+          { p: `Firebase asigna su propio identificador de instalación y registra el modelo del dispositivo, la versión del sistema operativo y un país aproximado. Es la recogida estándar de Google para cualquier app que lo utilice y se rige por las condiciones de privacidad de Google. Hoy la única forma de detenerla es desinstalar la app.` },
+        ],
+      },
+      {
+        h: `Lo Que No Hacemos Nunca`,
+        body: [
+          { list: [
+            `Nunca nos conectamos a tu banco. No hay que vincular ninguna cuenta ni hay un proveedor de open banking en medio.`,
+            `Nunca vendemos tus datos ni compartimos tus hábitos de compra con marcas, cadenas o intermediarios de datos. No hay ningún acuerdo de cashback financiando esta app.`,
+            `No mostramos publicidad ni incorporamos SDK de publicidad o de rastreo.`,
+            `No construimos ningún perfil tuyo con fines comerciales ni tomamos decisiones automatizadas que produzcan efectos jurídicos sobre ti.`,
+          ] },
+        ],
+      },
+      {
+        h: `Quién Trata Los Datos Por Nosotros`,
+        body: [
+          { p: `Intervienen tres proveedores, cada uno para una tarea concreta:` },
+          { list: [
+            `Railway Corp. aloja el servidor que recibe la foto y la reenvía. Está en la región de Ámsterdam de Railway, dentro de la Unión Europea.`,
+            `Anthropic PBC lee la foto del ticket a través de la API de Claude y devuelve las líneas extraídas. La imagen se envía para eso y para nada más.`,
+            `Google Ireland Limited proporciona Firebase Analytics para los eventos de uso anónimos descritos arriba.`,
+          ] },
+          { p: `Nuestro servidor está en la Unión Europea. La foto del ticket se envía a Anthropic en Estados Unidos para leerla, y no se almacena allí. Firebase Analytics lo opera Google, que puede tratar los eventos anónimos en infraestructura fuera de la Unión Europea. Esas dos transferencias se amparan en las Cláusulas Contractuales Tipo de la Comisión Europea, incluidas en las condiciones de los proveedores.` },
+        ],
+      },
+      {
+        h: `Cuánto Tiempo Se Conservan Los Datos`,
+        body: [
+          { p: `La foto del ticket: no se conserva en absoluto. Existe en la memoria del servidor los segundos que dura el escaneo y se descarta al enviar la respuesta.` },
+          { p: `El identificador anónimo de escaneo: unas pocas horas en memoria y se descarta. También se pierde cada vez que el servidor se reinicia.` },
+          { p: `Los eventos de analítica: los conserva Google Firebase durante el periodo configurado en nuestro proyecto de Firebase, tras el cual Google los elimina.` },
+          { p: `Todo lo demás: mientras mantengas la app instalada, en tu móvil y bajo tu control.` },
+        ],
+      },
+      {
+        h: `Tus Datos, Tu Control`,
+        body: [
+          { p: `Como tus datos viven en tu dispositivo y no en una cuenta, casi todo lo que te da el RGPD es algo que puedes hacer tú, al momento y sin pedírnoslo:` },
+          { list: [
+            `Exportar todo: en Ajustes hay un botón de exportar que vuelca todos tus tickets y cupones a un archivo que puedes guardar o enviar donde quieras.`,
+            `Corregir lo que sea: cada ticket y cada cupón se pueden editar después de escanearlos, y no se guarda nada hasta que lo has revisado.`,
+            `Borrar lo que sea: elimina tickets y cupones concretos desde la app, o borra la app para eliminarlo todo de una vez.`,
+          ] },
+        ],
+      },
+      {
+        h: `Tus Derechos Según El RGPD`,
+        body: [
+          { p: `Tienes derecho a acceder a tus datos personales, a que se rectifiquen los datos inexactos, a que se supriman, a recibirlos en un formato portable, a oponerte al tratamiento y a limitarlo.` },
+          { p: `En la práctica apenas tenemos nada sobre lo que puedas ejercerlos, que es justamente el objetivo del diseño. Para lo que quede, escríbenos a la dirección de abajo y te responderemos en el plazo de un mes.` },
+        ],
+      },
+      {
+        h: `Menores`,
+        body: [
+          { p: `TicketBrain no está dirigida a menores y no tratamos conscientemente datos de personas menores de 14 años.` },
+        ],
+      },
+      {
+        h: `Cambios En Esta Política`,
+        body: [
+          { p: `Si cambia lo que la app hace con tus datos, esta página cambia primero, con una fecha nueva arriba. No vamos a empezar a recoger en silencio algo que esta política no mencione.` },
+        ],
+      },
+    ],
+    contact_title: `Contacto`,
     contact_content: `Si tienes alguna pregunta sobre esta Política de Privacidad o deseas ejercer tus derechos, puedes ponerte en contacto con nosotros en:`,
-    contact_email: `Correo electrónico: hello@ticketbrain.app`,
-    contact_address: `Dirección: Madrid, España`,
+    contact_email: `Correo electrónico: hola@ticketbrain.app`,
+    contact_address: `Barcelona, España`,
     contact_authority: `Si consideras que no hemos resuelto adecuadamente tu solicitud, puedes contactar con la Agencia Española de Protección de Datos (AEPD) en www.aepd.es`,
   },
 };
