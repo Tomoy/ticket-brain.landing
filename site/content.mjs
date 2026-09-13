@@ -356,7 +356,7 @@ export const ui = {
     getApp: "Get the app", openMenu: "Open menu",
     footerTag: "Turn your grocery receipts into clear insights that actually help you save money.",
     comingSoon: "Coming soon", product: "Product", more: "More",
-    privacyPolicy: "Privacy policy",
+    privacyPolicy: "Privacy policy", support: "Support",
     blogTitle: "Grocery spending, explained",
     blogLede: "Insights on smart grocery shopping, AI-powered receipt analysis, and practical money-saving tips.",
     readMore: "Read more →", backToBlog: "← Back to blog", keepReading: "Keep reading",
@@ -372,7 +372,7 @@ export const ui = {
     getApp: "Descargar la app", openMenu: "Abrir menú",
     footerTag: "Convierte los tickets del súper en información clara que de verdad te ayuda a ahorrar.",
     comingSoon: "Muy pronto", product: "Producto", more: "Más",
-    privacyPolicy: "Política de privacidad",
+    privacyPolicy: "Política de privacidad", support: "Soporte",
     blogTitle: "El gasto del súper, explicado",
     blogLede: "Ideas sobre compras inteligentes, análisis de tickets con IA y consejos prácticos para ahorrar dinero.",
     readMore: "Leer más →", backToBlog: "← Volver al blog", keepReading: "Sigue leyendo",
@@ -381,5 +381,78 @@ export const ui = {
     notFoundTitle: "Esta página no existe",
     notFoundLede: "El enlace puede ser antiguo o estar mal escrito.", notFoundCta: "Volver al inicio",
     offerTitle: "¿Prefieres español?", offerCta: "Ver en español", offerClose: "Cerrar",
+  },
+};
+
+/**
+ * Support page. It exists mainly because App Store Connect and Play Console
+ * require a public support URL, and Apple's reviewers do open it: it has to
+ * load, show a real way to reach a human, and answer the obvious questions.
+ * The email addresses are the same iCloud+ ones the app's "Contact me" uses.
+ */
+export const supportPage = {
+  en: {
+    kicker: "Support",
+    title: "Need a hand with TicketBrain?",
+    lede: "TicketBrain is built and supported by one person, so you write to me directly. I read every message and usually reply within two working days.",
+    email: "hello@ticketbrain.app",
+    emailSubject: "TicketBrain support",
+    emailCta: "Email me",
+    emailNote: "If it is a bug, a screenshot and your phone model help a lot. You never need to send a receipt photo; describe what went wrong instead.",
+    faqTitle: "Quick answers",
+    faq: [
+      ["The scan failed or read the wrong lines",
+       "Scanning needs an internet connection and works best with a flat, well-lit receipt with the total visible. If a line comes out wrong you can edit it before saving, and nothing is stored until you confirm. If the same receipt fails twice, send me the store name and the error text."],
+      ["Where is my data stored?",
+       "On your phone, in a local database. There is no account and nothing is uploaded except the photo of a receipt while it is being read. That also means that if you delete the app, the data goes with it."],
+      ["How do I back up or move to a new phone?",
+       "Settings → Export my data creates a file with all your receipts and coupons. Save it to iCloud Drive, Google Drive or anywhere you like, then on the new phone use Settings → Restore from a backup. Restoring only adds what is missing; it never overwrites what you already have."],
+      ["Coupon reminders are not arriving",
+       "Reminders are local notifications, so the app needs notification permission. Check Settings → Coupon reminders in the app; if it says \"Blocked in device Settings\", allow notifications for TicketBrain in your phone's settings."],
+      ["Can I change the language?",
+       "Yes, from Settings → App language. You can follow the phone's language or pick English or Spanish. Spain gets Spain's Spanish; the rest of the Spanish-speaking world gets the neutral variant."],
+      ["How do I delete everything?",
+       "Delete the app. Since there is no account and no server copy, that removes all your data. If you turned on anonymous usage statistics, you can switch them off first in Settings → Share anonymous usage data."],
+      ["I want to ask for a feature",
+       "Please do. Feature requests are the best part of the inbox, and most of what is in the app today came from someone asking for it."],
+    ],
+    moreTitle: "More",
+    links: [
+      ["Frequently asked questions", "faq"],
+      ["How we handle privacy", "privacy"],
+      ["Privacy policy", "policy"],
+    ],
+  },
+  es: {
+    kicker: "Soporte",
+    title: "¿Necesitas ayuda con TicketBrain?",
+    lede: "TicketBrain la desarrolla y la mantiene una sola persona, así que me escribes directamente a mí. Leo todos los mensajes y suelo responder en dos días laborables.",
+    email: "hola@ticketbrain.app",
+    emailSubject: "Soporte TicketBrain",
+    emailCta: "Escríbeme",
+    emailNote: "Si es un error, una captura de pantalla y el modelo de tu móvil ayudan mucho. Nunca hace falta que mandes la foto de un ticket; cuéntame qué falló.",
+    faqTitle: "Respuestas rápidas",
+    faq: [
+      ["El escaneo falló o leyó mal las líneas",
+       "Escanear necesita conexión a internet y funciona mejor con el ticket plano, bien iluminado y con el total visible. Si una línea sale mal puedes editarla antes de guardar, y no se guarda nada hasta que confirmas. Si el mismo ticket falla dos veces, mándame el nombre de la tienda y el texto del error."],
+      ["¿Dónde se guardan mis datos?",
+       "En tu móvil, en una base de datos local. No hay cuenta y no se sube nada salvo la foto del ticket mientras se lee. Eso también significa que si borras la app, los datos se van con ella."],
+      ["¿Cómo hago una copia o cambio de móvil?",
+       "Ajustes → Exportar mis datos crea un archivo con todos tus tickets y cupones. Guárdalo en iCloud Drive, Google Drive o donde quieras, y en el móvil nuevo usa Ajustes → Restaurar desde una copia. Restaurar solo añade lo que falta; nunca sobrescribe lo que ya tienes."],
+      ["No me llegan los recordatorios de cupones",
+       "Los recordatorios son notificaciones locales, así que la app necesita permiso para notificar. Revisa Ajustes → Recordatorios de cupones dentro de la app; si dice \"Bloqueados en los Ajustes del móvil\", permite las notificaciones de TicketBrain en los ajustes del móvil."],
+      ["¿Puedo cambiar el idioma?",
+       "Sí, desde Ajustes → Idioma de la app. Puedes seguir el idioma del móvil o elegir español o inglés. En España se usa el español de España; en el resto de países hispanohablantes, la variante neutra."],
+      ["¿Cómo borro todo?",
+       "Borra la app. Como no hay cuenta ni copia en ningún servidor, con eso desaparecen todos tus datos. Si activaste las estadísticas anónimas de uso, puedes desactivarlas antes en Ajustes → Compartir datos de uso anónimos."],
+      ["Quiero pedir una función",
+       "Adelante. Las peticiones de funciones son lo mejor de la bandeja de entrada, y buena parte de lo que hay hoy en la app salió de alguien que la pidió."],
+    ],
+    moreTitle: "Más",
+    links: [
+      ["Preguntas frecuentes", "faq"],
+      ["Cómo tratamos la privacidad", "privacy"],
+      ["Política de privacidad", "policy"],
+    ],
   },
 };

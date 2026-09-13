@@ -20,7 +20,7 @@ import { marked } from "marked";
 import { cpSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "fs";
 import { dirname, join, resolve } from "path";
 import { fileURLToPath } from "url";
-import { faq, privacyDoc, privacyPage, ui } from "./content.mjs";
+import { faq, privacyDoc, privacyPage, supportPage, ui } from "./content.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const DIST = join(ROOT, "dist");
@@ -39,10 +39,11 @@ marked.setOptions({ breaks: true, gfm: true });
 
 const P = {
   en: { home: "/", blog: "/blog", post: (s) => `/blog/${s}`,
-        faq: "/frequently-asked-questions", privacy: "/privacy", policy: "/privacy-policy" },
+        faq: "/frequently-asked-questions", privacy: "/privacy", policy: "/privacy-policy",
+        support: "/support" },
   es: { home: "/es", blog: "/es/blog", post: (s) => `/es/blog/${s}`,
         faq: "/es/preguntas-frecuentes", privacy: "/es/privacidad",
-        policy: "/es/politica-de-privacidad" },
+        policy: "/es/politica-de-privacidad", support: "/es/soporte" },
 };
 const fileFor = (p) =>
   p === "/" ? "index.html" : p === "/es" ? "es/index.html" : `${p.slice(1)}.html`;
@@ -151,6 +152,7 @@ const footer = (lang) => {
               <li><a href="${p.faq}">${esc(t.nav[4])}</a></li>
               <li><a href="${p.privacy}">${esc(t.nav[5])}</a></li>
               <li><a href="${p.policy}">${esc(t.privacyPolicy)}</a></li>
+              <li><a href="${p.support}">${esc(t.support)}</a></li>
             </ul>
           </div>
         </div>
@@ -485,6 +487,39 @@ ${s.body.map(b => b.list
       </div></div></section>`,
     }));
     urls.push([p.policy, "0.6"]);
+
+    /* support: the URL App Store Connect and Play Console point at */
+    const S = supportPage[lang];
+    const mailto = `mailto:${S.email}?subject=${encodeURIComponent(S.emailSubject)}`;
+    write(p.support, page({
+      lang, path: p.support, alt: lang === "en" ? P.es.support : P.en.support,
+      title: lang === "en" ? "Support | TicketBrain" : "Soporte | TicketBrain",
+      description: S.lede,
+      body: `      <section class="page-hero"><div class="wrap narrow">
+        <p class="kicker">${esc(S.kicker)}</p>
+        <h1>${esc(S.title)}</h1>
+        <p>${esc(S.lede)}</p>
+      </div></section>
+      <section><div class="wrap narrow">
+        <div class="support-contact">
+          <a class="btn" href="${mailto}">${esc(S.emailCta)}</a>
+          <a class="support-email" href="${mailto}">${esc(S.email)}</a>
+          <p>${esc(S.emailNote)}</p>
+        </div>
+        <h2 class="support-h2">${esc(S.faqTitle)}</h2>
+        <div class="faq-list">
+${S.faq.map(([q, a]) => `          <details class="faq-item">
+            <summary>${esc(q)}</summary>
+            <div class="a">${esc(a)}</div>
+          </details>`).join("\n")}
+        </div>
+        <h2 class="support-h2">${esc(S.moreTitle)}</h2>
+        <ul class="support-links">
+${S.links.map(([l, k]) => `          <li><a class="lnk" href="${p[k]}">${esc(l)}</a></li>`).join("\n")}
+        </ul>
+      </div></section>`,
+    }));
+    urls.push([p.support, "0.6"]);
   }
 
   /* 404 — English only; Vercel serves one file for every unmatched path */
