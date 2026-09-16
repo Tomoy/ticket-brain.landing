@@ -85,6 +85,14 @@
       .store{display:flex;align-items:center;gap:11px;background:#fff;border:1px solid var(--line);
              border-radius:14px;padding:11px 20px;box-shadow:0 6px 18px rgba(15,61,46,.06)}
       .store svg{flex:none;fill:var(--ink)}
+      /* Live store = a link. The hover lift is the only cue that one badge is
+         clickable and the other is not, so it has to be clearly visible. */
+      a.store{text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s}
+      a.store:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(15,61,46,.14)}
+      a.store:focus-visible{outline:2px solid var(--orange-strong);outline-offset:3px}
+      /* Not-yet-live store: same shape, dimmed, so the pair still reads as
+         "two stores" but the eye lands on the one you can tap today. */
+      .store-soon{opacity:.62;box-shadow:none}
       .store-dark svg{fill:#fff}
       .store small{display:block;font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;
                    text-transform:uppercase;color:var(--muted);line-height:1.5}

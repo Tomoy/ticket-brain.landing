@@ -16,7 +16,7 @@ export const faq = {
     { q: `Can a grocery spending tracker app show me how my costs change over time?`, a: `Yes. You'll get simple comparisons like \\"this week vs. last week\\" or \\"this month vs. last month,\\" so you can spot trends and track if your spending is going up or down.` },
     { q: `How do I track my monthly grocery budget and spending?`, a: `With TicketBrain, You set a monthly grocery budget during onboarding, and the app tracks your progress with a simple bar showing how much you've spent and how much is left.` },
     { q: `Does TicketBrain work with receipts from different grocery stores?`, a: `The app is designed to work with common grocery store receipts and automatically extracts items, prices, and totals. Nothing is saved until you review it, so if a line looks off you correct it there and then, before it ever reaches your budget.` },
-    { q: `Is there a free app to analyse grocery receipts and spending?`, a: `TicketBrain is free to download and free to start using: you scan your supermarket receipts and get your spending broken into categories (produce, snacks, beverages and eight more) without typing anything in and without paying. After launch there will be a free tier with a monthly scan limit, and a subscription for unlimited scanning. The exact limits are not final yet, and everyone on the early access list will hear about them before they apply.` },
+    { q: `Is there a free app to analyse grocery receipts and spending?`, a: `TicketBrain is free to download and free to start using: you scan your supermarket receipts and get your spending broken into categories (produce, snacks, beverages and eight more) without typing anything in and without paying. There is a free tier with a monthly scan limit, and a subscription for unlimited scanning. The exact limits are still being tuned, and everyone on the mailing list will hear about any change before it applies.` },
     { q: `Is this a grocery receipt scanner app or meal planning tool?`, a: `For now, the focus is on helping you understand where your grocery money goes and how to stay on budget. Other features like meal planning or store price comparisons aren't part of the current version.` },
     { q: `Can I use this grocery budget app on my phone?`, a: `Absolutely. TicketBrain is a native mobile app available for both Android and iOS, so you can track your spending right from your pocket.` },
     { q: `How do I scan grocery receipts with my phone?`, a: `It's simple: download the app, take a photo of your receipt with your phone, and the app automatically extracts the information, splits it into categories, and shows you the breakdown.` },
@@ -31,7 +31,7 @@ export const faq = {
     { q: `¿Puede una app de seguimiento de gastos del supermercado mostrarme cómo cambian mis costos con el tiempo?`, a: `Sí. Obtendrás comparaciones simples como \\"esta semana vs. la semana pasada\\" o \\"este mes vs. el mes pasado\\", para que puedas detectar tendencias y rastrear si tu gasto está subiendo o bajando.` },
     { q: `¿Cómo rastrea mi presupuesto y gasto mensual del supermercado?`, a: `Con TicketBrain, estableces un presupuesto mensual de supermercado durante la configuración inicial, y la app rastrea tu progreso con una barra simple que muestra cuánto has gastado y cuánto te queda.` },
     { q: `¿TicketBrain funciona con recibos de diferentes supermercados?`, a: `La app está diseñada para funcionar con tickets habituales de supermercado y extrae automáticamente artículos, precios y totales. No se guarda nada hasta que lo revisas, así que si una línea está mal la corriges en el momento, antes de que llegue a tu presupuesto.` },
-    { q: `¿Hay una app gratuita para analizar recibos del supermercado y gastos?`, a: `TicketBrain es gratis de descargar y gratis para empezar a usar: escaneas tus tickets del supermercado y ves el gasto desglosado en categorías (frutas y verduras, snacks, bebidas y ocho más) sin escribir nada y sin pagar. Tras el lanzamiento habrá un plan gratuito con un límite de escaneos al mes y una suscripción para escaneos ilimitados. Los límites exactos aún no están cerrados, y quien esté en la lista de acceso anticipado lo sabrá antes de que se apliquen.` },
+    { q: `¿Hay una app gratuita para analizar recibos del supermercado y gastos?`, a: `TicketBrain es gratis de descargar y gratis para empezar a usar: escaneas tus tickets del supermercado y ves el gasto desglosado en categorías (frutas y verduras, snacks, bebidas y ocho más) sin escribir nada y sin pagar. Hay un plan gratuito con un límite de escaneos al mes y una suscripción para escaneos ilimitados. Los límites exactos aún se están ajustando, y quien esté en la lista de correo sabrá de cualquier cambio antes de que se aplique.` },
     { q: `¿Es esta una app de escaneo de recibos del supermercado o una herramienta de planificación de comidas?`, a: `Por ahora, el enfoque está en ayudarte a entender a dónde va tu dinero del supermercado y cómo mantenerte dentro del presupuesto. Otras características como planificación de comidas o comparación de precios de tiendas no son parte de la versión actual.` },
     { q: `¿Puedo usar esta app de presupuesto del supermercado en mi teléfono?`, a: `Absolutamente. TicketBrain es una app móvil nativa disponible para Android e iOS, así que puedes rastrear tu gasto directamente desde tu bolsillo.` },
     { q: `¿Cómo escaneo recibos del supermercado con mi teléfono?`, a: `Es simple: descarga la app, toma una foto de tu recibo con tu teléfono, y la app extrae automáticamente la información, la divide en categorías y te muestra el desglose.` },
@@ -348,6 +348,16 @@ export const privacyPage = {
   },
 };
 
+/**
+ * Store listings. A URL makes that badge a real download link everywhere it
+ * appears (hero, final CTA, footer, JSON-LD); null keeps it as a "coming soon"
+ * label. Flip `play` to the Play Store URL the day the Android build is live.
+ */
+export const STORES = {
+  apple: "https://apps.apple.com/app/id6809745492",
+  play: null,
+};
+
 /** Chrome: navigation, footer and page furniture. */
 export const ui = {
   en: {
@@ -355,7 +365,10 @@ export const ui = {
     nav: ["How it works", "Features", "Coupons", "Blog", "FAQ", "Privacy"],
     getApp: "Get the app", openMenu: "Open menu",
     footerTag: "Turn your grocery receipts into clear insights that actually help you save money.",
-    comingSoon: "Coming soon", product: "Product", more: "More",
+    storeLive: "Download on the", storeSoon: "Coming soon to",
+    appStoreLabel: "Download TicketBrain on the App Store",
+    playStoreLabel: "Get TicketBrain on Google Play",
+    product: "Product", more: "More",
     privacyPolicy: "Privacy policy", support: "Support",
     blogTitle: "Grocery spending, explained",
     blogLede: "Insights on smart grocery shopping, AI-powered receipt analysis, and practical money-saving tips.",
@@ -371,7 +384,10 @@ export const ui = {
     nav: ["Cómo funciona", "Funciones", "Cupones", "Blog", "Preguntas", "Privacidad"],
     getApp: "Descargar la app", openMenu: "Abrir menú",
     footerTag: "Convierte los tickets del súper en información clara que de verdad te ayuda a ahorrar.",
-    comingSoon: "Muy pronto", product: "Producto", more: "Más",
+    storeLive: "Descárgala en el", storeSoon: "Muy pronto en",
+    appStoreLabel: "Descargar TicketBrain en el App Store",
+    playStoreLabel: "Descargar TicketBrain en Google Play",
+    product: "Producto", more: "Más",
     privacyPolicy: "Política de privacidad", support: "Soporte",
     blogTitle: "El gasto del súper, explicado",
     blogLede: "Ideas sobre compras inteligentes, análisis de tickets con IA y consejos prácticos para ahorrar dinero.",
