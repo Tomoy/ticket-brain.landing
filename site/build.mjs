@@ -33,6 +33,139 @@ const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;")
 
 const CSS = read("site/styles.css");
 const SIGNUP_JS = read("site/pages/_signup.js");
+
+/* Google Analytics 4 property of the ticketbrain-landing-page Firebase project,
+   the same one the React version reported to. It is only ever loaded after the
+   visitor accepts the cookie notice; see CONSENT_JS. */
+const GA_ID = "G-5HP7HKP0YT";
+
+/**
+ * Cookie consent, Google Analytics and the language suggestion, in that order.
+ *
+ * Nothing from Google loads until the visitor presses "Allow analytics": no
+ * script, no cookie, no cookieless ping. That is the reading of the Spanish
+ * AEPD guidance that needs no argument. Rejecting is one click, the same size
+ * and weight as accepting, and "Cookie settings" in the footer reopens the
+ * choice on any page. A choice is re-asked after a year.
+ *
+ * The language banner shares the bottom of the screen, so it waits until the
+ * consent question is answered instead of stacking on top of it.
+ *
+ * Events (all sent only with consent; page views and referrers come for free):
+ *   app_store_click   {location: hero | final_cta | footer | body}
+ *   generate_lead     {form: android_waitlist}           (from _signup.js)
+ *   lang_switch       {to, via: nav | menu | banner}
+ *   lang_banner_dismiss
+ *   nav_click         {item, location: header | menu | footer}
+ *   get_app_click     {location: header | menu}
+ *   faq_open          {question}
+ *   related_post_click {post}
+ *   contact_click     {location}
+ * Mark app_store_click and generate_lead as key events in GA4.
+ */
+const CONSENT_JS = `      (function () {
+        var GA = "${GA_ID}", KEY = "tb-consent", YEAR = 365 * 864e5;
+        var bar = document.getElementById("consent");
+        var on = false;
+        function read(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }
+        function write(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+
+        function startAnalytics() {
+          if (on) return;
+          on = true;
+          window.dataLayer = window.dataLayer || [];
+          window.gtag = function () { dataLayer.push(arguments); };
+          gtag("js", new Date());
+          gtag("config", GA, { allow_google_signals: false, allow_ad_personalization_signals: false });
+          var s = document.createElement("script");
+          s.async = true;
+          s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA;
+          document.head.appendChild(s);
+        }
+        window.tbTrack = function (name, params) { if (on) gtag("event", name, params || {}); };
+
+        function clearGaCookies() {
+          document.cookie.split(";").forEach(function (c) {
+            var n = c.split("=")[0].trim();
+            if (n.indexOf("_ga") !== 0) return;
+            ["", location.hostname, ".ticketbrain.app"].forEach(function (d) {
+              document.cookie = n + "=; Max-Age=0; path=/" + (d ? "; domain=" + d : "");
+            });
+          });
+        }
+
+        function decide(yes) {
+          write(KEY, { v: yes ? 1 : 0, t: Date.now() });
+          bar.hidden = true;
+          if (yes) return startAnalytics(), offerLanguage();
+          clearGaCookies();
+          // gtag cannot be unloaded once running; a reload is the clean stop.
+          if (on) return location.reload();
+          offerLanguage();
+        }
+        bar.querySelector('[data-consent="yes"]').addEventListener("click", function () { decide(true); });
+        bar.querySelector('[data-consent="no"]').addEventListener("click", function () { decide(false); });
+        document.querySelectorAll("[data-consent-open]").forEach(function (b) {
+          b.addEventListener("click", function () { bar.hidden = false; bar.querySelector("button").focus(); });
+        });
+
+        // Sugerencia de idioma: sólo si el navegador está en el otro idioma y
+        // no se ha descartado antes.
+        var offered = false;
+        function offerLanguage() {
+          var lb = document.getElementById("langbar");
+          if (offered || !lb) return;
+          offered = true;
+          var LKEY = "tb-lang-choice", seen;
+          try { seen = localStorage.getItem(LKEY); } catch (e) {}
+          var browser = (navigator.language || "").toLowerCase().split("-")[0];
+          if (seen || browser !== lb.getAttribute("data-lang")) return;
+          lb.hidden = false;
+          function remember() { try { localStorage.setItem(LKEY, "1"); } catch (e) {} }
+          lb.querySelector(".langbar-close").addEventListener("click", function () {
+            remember();
+            lb.hidden = true;
+            tbTrack("lang_banner_dismiss");
+          });
+          lb.querySelector("a").addEventListener("click", remember);
+        }
+
+        var saved = read(KEY);
+        if (saved && Date.now() - saved.t < YEAR) {
+          if (saved.v) startAnalytics();
+          offerLanguage();
+        } else {
+          bar.hidden = false;
+        }
+
+        // One listener for every tracked click. Navigation between pages is
+        // already measured by page views; these are the actions in between.
+        document.addEventListener("click", function (e) {
+          var el = e.target.closest("a, button, summary");
+          if (!el || !on) return;
+          var where = el.closest(".menu-panel") ? "menu" : el.closest("header") ? "header"
+            : el.closest("footer") ? "footer" : el.closest(".langbar") ? "banner"
+            : el.closest(".hero") ? "hero" : el.closest("#get") ? "final_cta" : "body";
+          var href = el.getAttribute("href") || "";
+          var label = (el.textContent || "").trim().slice(0, 100);
+          if (el.tagName === "SUMMARY") {
+            var d = el.parentNode;
+            if (d.classList.contains("faq-item") && !d.open) tbTrack("faq_open", { question: label });
+          } else if (href.indexOf("apps.apple.com") > -1) {
+            tbTrack("app_store_click", { location: where });
+          } else if (el.hasAttribute("hreflang")) {
+            tbTrack("lang_switch", { to: el.getAttribute("hreflang"), via: where === "header" ? "nav" : where });
+          } else if (href.indexOf("mailto:") === 0) {
+            tbTrack("contact_click", { location: where });
+          } else if (el.classList.contains("btn") && /#get$/.test(href) && (where === "header" || where === "menu")) {
+            tbTrack("get_app_click", { location: where });
+          } else if (el.closest(".related-grid")) {
+            tbTrack("related_post_click", { post: href });
+          } else if (el.tagName === "A" && (where === "header" || where === "menu" || where === "footer")) {
+            tbTrack("nav_click", { item: label, location: where });
+          }
+        });
+      })();`;
 marked.setOptions({ breaks: true, gfm: true });
 
 /* ------------------------------------------------------------------ paths */
@@ -213,6 +346,7 @@ ${storeBadges(lang, { dark: true, indent: "              " })}
               <li><a href="${p.privacy}">${esc(t.nav[5])}</a></li>
               <li><a href="${p.policy}">${esc(t.privacyPolicy)}</a></li>
               <li><a href="${p.support}">${esc(t.support)}</a></li>
+              <li><button type="button" class="footlink" data-consent-open>${esc(t.cookieSettings)}</button></li>
             </ul>
           </div>
         </div>
@@ -242,6 +376,15 @@ function page({ lang, path, alt, title, description, body, jsonLd = [], noindex 
       <button type="button" class="langbar-close" aria-label="${esc(o.offerClose)}">&times;</button>
     </div>\n`
     : "";
+
+  const T = ui[lang];
+  const consent = `    <div class="consent" id="consent" role="region" aria-label="Cookies" hidden>
+      <p>${esc(T.consentText)} <a href="${P[lang].policy}#website">${esc(T.consentMore)}</a></p>
+      <div class="consent-actions">
+        <button type="button" data-consent="no">${esc(T.consentReject)}</button>
+        <button type="button" data-consent="yes">${esc(T.consentAccept)}</button>
+      </div>
+    </div>\n`;
 
   return `<!doctype html>
 <html lang="${lang}">
@@ -278,7 +421,7 @@ ${header(lang, alt, activeFor(path))}
 ${body}
     </main>
 ${footer(lang)}
-${langbar}    <script>
+${langbar}${consent}    <script>
       // Cierra el menú móvil al pulsar un enlace: es un <details>, y al saltar
       // a un ancla de la misma página se quedaba abierto tapándola.
       document.querySelectorAll(".menu-panel a").forEach(function (a) {
@@ -288,27 +431,7 @@ ${langbar}    <script>
         });
       });
 
-      // Sugerencia de idioma: se muestra sólo si el navegador está en el otro
-      // idioma y no se ha descartado antes. localStorage puede lanzar en modo
-      // privado, así que todo va envuelto.
-      (function () {
-        var bar = document.getElementById("langbar");
-        if (!bar) return;
-        var KEY = "tb-lang-choice";
-        var seen;
-        try { seen = localStorage.getItem(KEY); } catch (e) {}
-        var browser = (navigator.language || "").toLowerCase().split("-")[0];
-        if (seen || browser !== bar.getAttribute("data-lang")) return;
-        bar.hidden = false;
-        function remember() {
-          try { localStorage.setItem(KEY, "1"); } catch (e) {}
-        }
-        bar.querySelector(".langbar-close").addEventListener("click", function () {
-          remember();
-          bar.hidden = true;
-        });
-        bar.querySelector("a").addEventListener("click", remember);
-      })();
+${CONSENT_JS}
     </script>
 ${script ? `    <script>${script}</script>` : ""}
   </body>
@@ -409,7 +532,7 @@ function build() {
         : "Escanea cualquier ticket del supermercado y TicketBrain lee cada producto, lo categoriza y te muestra qué compras están disparando tu presupuesto.",
       body: read(`site/pages/home.${lang}.html`)
         .replaceAll("<!--STORES-->", storeBadges(lang, { indent: "              " }).trimStart()),
-      script: SIGNUP_JS,
+      script: `var T = ${JSON.stringify(ui[lang].signup)};\n${SIGNUP_JS}`,
       /* Both homepages carry the full entity graph. The Spanish one used to
          ship none at all, which left half the site structurally invisible to
          anything reading the page as data rather than as prose. */
@@ -568,7 +691,7 @@ ${PP.cards.map(([h, b]) => `          <div class="faq-item" style="padding:22px 
       </div></section>
       <section><div class="wrap narrow"><div class="doc">
         <div class="box"><p style="margin:0">${esc(D.summary)}</p></div>
-${D.sections.map(s => `        <h2>${esc(s.h)}</h2>
+${D.sections.map(s => `        <h2${s.id ? ` id="${s.id}"` : ""}>${esc(s.h)}</h2>
 ${s.body.map(b => b.list
   ? `        <ul>\n${b.list.map(i => `          <li>${esc(i)}</li>`).join("\n")}\n        </ul>`
   : `        <p>${esc(b.p)}</p>`).join("\n")}`).join("\n")}

@@ -103,6 +103,24 @@ What that means concretely here:
 
 Ahrefs Health Score: 100, zero errors, 22 indexable pages.
 
+## Analytics, only with consent
+
+The site reports to Google Analytics 4 (the `ticketbrain-landing-page` Firebase
+project), but nothing from Google loads until the visitor presses "Allow
+analytics" in the cookie notice: no script, no cookie, no cookieless ping.
+Refusing is one click, the same size as accepting, and "Cookie settings" in
+the footer reopens the choice. Withdrawing deletes the `_ga` cookies.
+
+Page views and referrers (including visits from ChatGPT, Perplexity and other
+answer engines) come automatically. On top of that, `CONSENT_JS` in
+`build.mjs` sends a short list of events: `app_store_click`, `generate_lead`
+(Android waitlist), `lang_switch`, `nav_click`, `get_app_click`, `faq_open`,
+`related_post_click`, `contact_click`. The list and its parameters are
+documented above the code.
+
+The privacy policy's "This Website" section describes exactly this. Change one,
+change the other.
+
 ## Adding things
 
 **A blog post.** Drop `slug.md` and `slug.es.md` in `site/posts/`. Frontmatter:

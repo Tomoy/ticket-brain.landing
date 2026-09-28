@@ -1,21 +1,21 @@
-// Posts to the same /api/subscribe Vercel function the React pages use.
+// Posts to the /api/subscribe Vercel function. T holds the messages in the
+// page's language; build.mjs defines it right above this file.
       (function () {
         var form = document.getElementById('signup');
+        if (!form) return;
         var input = document.getElementById('email');
         var btn = document.getElementById('submit');
         var msg = document.getElementById('formmsg');
+
+        function say(cls, text) { msg.className = 'formmsg ' + cls; msg.textContent = text; }
 
         form.addEventListener('submit', function (e) {
           e.preventDefault();
           var email = input.value.trim();
           msg.className = 'formmsg';
-          if (!/^\S+@\S+\.\S+$/.test(email)) {
-            msg.className = 'formmsg bad';
-            msg.textContent = 'Please enter a valid email address.';
-            return;
-          }
+          if (!/^\S+@\S+\.\S+$/.test(email)) return say('bad', T.invalid);
           btn.disabled = true;
-          btn.textContent = 'Sending...';
+          btn.textContent = T.sending;
           fetch('/api/subscribe', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -23,22 +23,24 @@
           })
             .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
             .then(function (res) {
-              if (res.ok && res.d && res.d.ok) {
-                msg.className = 'formmsg ok';
-                msg.textContent = "You're on the list. We'll write the day it launches.";
+              var d = res.d || {};
+              if (res.ok && d.ok) {
+                say('ok', T.ok);
                 form.reset();
+                window.tbTrack('generate_lead', { form: 'android_waitlist' });
+              } else if (d.data && d.data.title === 'Member Exists') {
+                // Mailchimp answers 400 for an address already on the list.
+                // For the visitor that is a success, not an error.
+                say('ok', T.exists);
               } else {
-                msg.className = 'formmsg bad';
-                msg.textContent = (res.d && res.d.error) || 'Something went wrong. Please try again.';
+                // d.error is the boolean `true`, never text: show our own.
+                say('bad', T.error);
               }
             })
-            .catch(function () {
-              msg.className = 'formmsg bad';
-              msg.textContent = 'Network error. Please try again later.';
-            })
+            .catch(function () { say('bad', T.network); })
             .then(function () {
               btn.disabled = false;
-              btn.textContent = 'Notify me';
+              btn.textContent = T.button;
             });
         });
       })();

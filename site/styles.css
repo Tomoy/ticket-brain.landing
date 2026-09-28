@@ -382,6 +382,24 @@ article.prose code{background:var(--green-50);padding:2px 6px;border-radius:5px;
    accesibles y rastreables, que es lo que recomienda Google. Va fija abajo
    para que aparecer no desplace nada de la página (cero CLS). */
 .langbar[hidden]{display:none}
+      /* Cookie notice. Same dark card language as the language banner so it
+         reads as part of the site, not a third-party popup. Both answers are
+         identical buttons: refusing must be exactly as easy as accepting. */
+      .consent[hidden]{display:none}
+      .consent{position:fixed;left:16px;right:16px;bottom:16px;z-index:61;max-width:620px;margin:0 auto;
+               background:var(--green-900);color:#dcece4;border-radius:16px;padding:18px 20px;
+               font-size:15px;line-height:1.5;box-shadow:0 14px 36px rgba(12,35,27,.30)}
+      .consent p{margin:0 0 14px}
+      .consent a{color:var(--orange);font-weight:600;text-decoration:underline}
+      .consent-actions{display:flex;gap:10px;justify-content:flex-end}
+      .consent-actions button{flex:0 1 auto;min-width:150px;padding:11px 18px;border-radius:999px;
+               font:700 15px var(--f-body);cursor:pointer;background:transparent;color:#fff;
+               border:1.5px solid #6fa38d}
+      .consent-actions button:hover{background:rgba(255,255,255,.08);border-color:#fff}
+      .consent-actions button:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+      @media(max-width:520px){.consent-actions button{flex:1 1 0;min-width:0}}
+      footer .footlink{background:none;border:0;padding:0;font:inherit;color:inherit;cursor:pointer}
+      footer .footlink:hover{color:#fff}
 .langbar{position:fixed;left:16px;right:16px;bottom:16px;z-index:60;max-width:540px;
          margin:0 auto;display:flex;align-items:center;gap:14px;
          background:var(--green-900);color:#dcece4;border-radius:14px;padding:13px 16px;

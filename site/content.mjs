@@ -18,7 +18,7 @@ export const faq = {
     { q: `Does TicketBrain work with receipts from different grocery stores?`, a: `The app is designed to work with common grocery store receipts and automatically extracts items, prices, and totals. Nothing is saved until you review it, so if a line looks off you correct it there and then, before it ever reaches your budget.` },
     { q: `Is there a free app to analyse grocery receipts and spending?`, a: `TicketBrain is free to download and free to start using: you scan your supermarket receipts and get your spending broken into categories (produce, snacks, beverages and eight more) without typing anything in and without paying. There is a free tier with a monthly scan limit, and a subscription for unlimited scanning. The exact limits are still being tuned, and everyone on the mailing list will hear about any change before it applies.` },
     { q: `Is this a grocery receipt scanner app or meal planning tool?`, a: `For now, the focus is on helping you understand where your grocery money goes and how to stay on budget. Other features like meal planning or store price comparisons aren't part of the current version.` },
-    { q: `Can I use this grocery budget app on my phone?`, a: `Absolutely. TicketBrain is a native mobile app available for both Android and iOS, so you can track your spending right from your pocket.` },
+    { q: `Can I use this grocery budget app on my phone?`, a: `Absolutely. TicketBrain is a native iPhone app, available now on the App Store. The Android version is in final testing, and you can leave your email on the homepage to hear the day it is out.` },
     { q: `How do I scan grocery receipts with my phone?`, a: `It's simple: download the app, take a photo of your receipt with your phone, and the app automatically extracts the information, splits it into categories, and shows you the breakdown.` },
     { q: `How can I stop overspending on groceries and avoid impulse supermarket purchases?`, a: `By reviewing your categorised spending after each shop, you'll see exactly which \\"extra\\" purchases are adding up. Many users find that simply becoming aware of these patterns helps reduce unnecessary buys.` },
     { q: `How much should I spend on groceries per month?`, a: `It depends on your household size, eating habits, and location. Apps like TicketBrain that track your receipts can help you monitor your grocery budget, compare your spending against your own goals, and see if you're in line with typical households.` },
@@ -33,7 +33,7 @@ export const faq = {
     { q: `¿TicketBrain funciona con recibos de diferentes supermercados?`, a: `La app está diseñada para funcionar con tickets habituales de supermercado y extrae automáticamente artículos, precios y totales. No se guarda nada hasta que lo revisas, así que si una línea está mal la corriges en el momento, antes de que llegue a tu presupuesto.` },
     { q: `¿Hay una app gratuita para analizar recibos del supermercado y gastos?`, a: `TicketBrain es gratis de descargar y gratis para empezar a usar: escaneas tus tickets del supermercado y ves el gasto desglosado en categorías (frutas y verduras, snacks, bebidas y ocho más) sin escribir nada y sin pagar. Hay un plan gratuito con un límite de escaneos al mes y una suscripción para escaneos ilimitados. Los límites exactos aún se están ajustando, y quien esté en la lista de correo sabrá de cualquier cambio antes de que se aplique.` },
     { q: `¿Es esta una app de escaneo de recibos del supermercado o una herramienta de planificación de comidas?`, a: `Por ahora, el enfoque está en ayudarte a entender a dónde va tu dinero del supermercado y cómo mantenerte dentro del presupuesto. Otras características como planificación de comidas o comparación de precios de tiendas no son parte de la versión actual.` },
-    { q: `¿Puedo usar esta app de presupuesto del supermercado en mi teléfono?`, a: `Absolutamente. TicketBrain es una app móvil nativa disponible para Android e iOS, así que puedes rastrear tu gasto directamente desde tu bolsillo.` },
+    { q: `¿Puedo usar esta app de presupuesto del supermercado en mi teléfono?`, a: `Absolutamente. TicketBrain es una app nativa para iPhone, ya disponible en el App Store. La versión para Android está en pruebas finales, y puedes dejar tu email en la página de inicio para saber el día que salga.` },
     { q: `¿Cómo escaneo recibos del supermercado con mi teléfono?`, a: `Es simple: descarga la app, toma una foto de tu recibo con tu teléfono, y la app extrae automáticamente la información, la divide en categorías y te muestra el desglose.` },
     { q: `¿Cómo puedo dejar de gastar de más en supermercado y evitar compras impulsivas?`, a: `Al revisar tu gasto categorizado después de cada compra, verás exactamente qué compras \\"extra\\" se están acumulando. Muchos usuarios encuentran que simplemente ser conscientes de estos patrones ayuda a reducir compras innecesarias.` },
     { q: `¿Cuánto debería gastar en supermercado al mes?`, a: `Depende del tamaño de tu hogar, hábitos alimentarios y ubicación. Apps como TicketBrain que rastrean tus recibos pueden ayudarte a monitorear tu presupuesto del supermercado, comparar tu gasto con tus propias metas y ver si estás en línea con hogares típicos.` },
@@ -74,7 +74,7 @@ export const privacyDoc = {
   en: {
     title: `Privacy Policy`,
     lastUpdated: `Last updated: September 2026`,
-    summary: `The short version: TicketBrain has no accounts and never asks for your name, your email or your bank. Your receipts, coupons and budget live in a database on your own phone. The only thing that leaves your device is the photo of a receipt, which is read once to pull out the lines and is never stored by us.`,
+    summary: `The short version: TicketBrain has no accounts and never asks for your name, your email or your bank. Your receipts, coupons and budget live in a database on your own phone. The only thing that leaves your device is the photo of a receipt, which is read once to pull out the lines and is never stored by us. This website is separate: it has an optional email list and, only if you allow it, Google Analytics. Both are explained under "This Website".`,
     sections: [
       {
         h: `Who We Are`,
@@ -142,6 +142,8 @@ export const privacyDoc = {
           { p: `The receipt photo: not kept at all. It exists in server memory for the seconds the scan takes and is discarded when the response is sent.` },
           { p: `The anonymous scan identifier: a few hours in memory, then discarded. It is also lost whenever the server restarts.` },
           { p: `Analytics events: retained by Google Firebase for the period configured in our Firebase project, after which Google deletes them.` },
+          { p: `Website analytics, if you allowed it: kept by Google Analytics for the retention period set in our property, at most 14 months. The cookies on your browser expire after two years, or as soon as you withdraw consent.` },
+          { p: `The website email list: until you unsubscribe or ask us to delete your address.` },
           { p: `Everything else: for as long as you keep the app installed, on your phone, under your control.` },
         ],
       },
@@ -155,6 +157,16 @@ export const privacyDoc = {
             `Delete anything: remove individual receipts and coupons from the app, or delete the app to erase all of it at once.`,
             `Turn off analytics: one switch in Settings stops the anonymous usage events.`,
           ] },
+        ],
+      },
+      {
+        id: `website`,
+        h: `This Website`,
+        body: [
+          { p: `Everything above is about the app. This website, ticketbrain.app, is separate, and it collects two things. Both are optional.` },
+          { p: `Analytics, only if you allow it. If you choose "Allow analytics" in the cookie notice, the site loads Google Analytics, which sets first-party cookies (_ga and _ga_ followed by an id, kept for up to two years) to count visits and to tell us which pages are read, which site or search engine sent you, and which buttons get used, such as the App Store link or the email form. Google also records an approximate location and your browser and device type. If you choose "No thanks", or simply ignore the notice, Google Analytics is never loaded and no cookie is set. Google's advertising features and Google signals are switched off, so none of this is used for ads. You can change your mind at any time with "Cookie settings" at the bottom of every page.` },
+          { p: `The email list, only if you join it. If you leave your email to hear when the Android version is out, it is stored with Mailchimp, operated by The Rocket Science Group LLC (Intuit) in the United States, under the safeguards in its data processing terms, including the European Commission's Standard Contractual Clauses. We use it only to write to you about TicketBrain, and rarely. Every email has an unsubscribe link, and you can ask us to delete your address at any time.` },
+          { p: `The legal basis for both is your consent, which you can withdraw whenever you like without affecting anything that happened before.` },
         ],
       },
       {
@@ -186,7 +198,7 @@ export const privacyDoc = {
   es: {
     title: `Política de Privacidad`,
     lastUpdated: `Última actualización: Septiembre 2026`,
-    summary: `La versión corta: TicketBrain no tiene cuentas y nunca te pide tu nombre, tu correo ni tu banco. Tus tickets, cupones y presupuesto viven en una base de datos en tu propio móvil. Lo único que sale de tu dispositivo es la foto del ticket, que se lee una vez para extraer las líneas y que nosotros no guardamos en ningún momento.`,
+    summary: `La versión corta: TicketBrain no tiene cuentas y nunca te pide tu nombre, tu correo ni tu banco. Tus tickets, cupones y presupuesto viven en una base de datos en tu propio móvil. Lo único que sale de tu dispositivo es la foto del ticket, que se lee una vez para extraer las líneas y que nosotros no guardamos en ningún momento. Esta web es aparte: tiene una lista de email opcional y, solo si lo permites, Google Analytics. Las dos cosas se explican en «Esta Web».`,
     sections: [
       {
         h: `Quiénes Somos`,
@@ -254,6 +266,8 @@ export const privacyDoc = {
           { p: `La foto del ticket: no se conserva en absoluto. Existe en la memoria del servidor los segundos que dura el escaneo y se descarta al enviar la respuesta.` },
           { p: `El identificador anónimo de escaneo: unas pocas horas en memoria y se descarta. También se pierde cada vez que el servidor se reinicia.` },
           { p: `Los eventos de analítica: los conserva Google Firebase durante el periodo configurado en nuestro proyecto de Firebase, tras el cual Google los elimina.` },
+          { p: `La analítica de la web, si la permitiste: la conserva Google Analytics durante el periodo configurado en nuestra propiedad, como máximo 14 meses. Las cookies de tu navegador caducan a los dos años, o en cuanto retiras el consentimiento.` },
+          { p: `La lista de email de la web: hasta que te des de baja o nos pidas que borremos tu dirección.` },
           { p: `Todo lo demás: mientras mantengas la app instalada, en tu móvil y bajo tu control.` },
         ],
       },
@@ -267,6 +281,16 @@ export const privacyDoc = {
             `Borrar lo que sea: elimina tickets y cupones concretos desde la app, o borra la app para eliminarlo todo de una vez.`,
             `Desactivar la analítica: un interruptor en Ajustes detiene los eventos de uso anónimos.`,
           ] },
+        ],
+      },
+      {
+        id: `website`,
+        h: `Esta Web`,
+        body: [
+          { p: `Todo lo anterior se refiere a la app. Esta web, ticketbrain.app, es aparte, y recoge dos cosas. Las dos son opcionales.` },
+          { p: `Analítica, solo si la permites. Si eliges «Permitir analítica» en el aviso de cookies, la web carga Google Analytics, que guarda cookies propias (_ga y _ga_ seguida de un identificador, durante un máximo de dos años) para contar visitas y saber qué páginas se leen, desde qué web o buscador llegaste y qué botones se usan, como el enlace al App Store o el formulario de email. Google registra además una ubicación aproximada y el tipo de navegador y dispositivo. Si eliges «No, gracias», o simplemente ignoras el aviso, Google Analytics no se carga nunca y no se guarda ninguna cookie. Las funciones de publicidad de Google y Google Signals están desactivadas, así que nada de esto se usa para anuncios. Puedes cambiar de opinión cuando quieras desde «Configurar cookies», al pie de cada página.` },
+          { p: `La lista de email, solo si te apuntas. Si dejas tu email para saber cuándo sale la versión de Android, se guarda en Mailchimp, de The Rocket Science Group LLC (Intuit), en Estados Unidos, con las garantías de sus condiciones de tratamiento de datos, incluidas las Cláusulas Contractuales Tipo de la Comisión Europea. Solo lo usamos para escribirte sobre TicketBrain, y pocas veces. Cada email lleva un enlace para darte de baja, y puedes pedirnos que borremos tu dirección cuando quieras.` },
+          { p: `La base legal de las dos cosas es tu consentimiento, que puedes retirar cuando quieras sin que afecte a nada de lo anterior.` },
         ],
       },
       {
@@ -378,6 +402,13 @@ export const ui = {
     notFoundTitle: "This page does not exist",
     notFoundLede: "The link may be old or mistyped.", notFoundCta: "Go back to the homepage",
     offerTitle: "Prefer English?", offerCta: "View in English", offerClose: "Dismiss",
+    consentText: "Can we use Google Analytics? It shows us which pages help and where visitors come from, so we can make this site better. It sets cookies and stays off unless you say yes. It has nothing to do with the app.",
+    consentAccept: "Allow analytics", consentReject: "No thanks", consentMore: "Details",
+    cookieSettings: "Cookie settings",
+    signup: { invalid: "Please enter a valid email address.", sending: "Sending...", button: "Notify me",
+              ok: "You're on the list. We'll write once, the day Android is out.",
+              exists: "You're already on the list. We'll write the day Android is out.",
+              error: "Something went wrong. Please try again.", network: "Network error. Please try again later." },
   },
   es: {
     locale: "es-ES", langName: "Español", otherLangName: "English",
@@ -397,6 +428,13 @@ export const ui = {
     notFoundTitle: "Esta página no existe",
     notFoundLede: "El enlace puede ser antiguo o estar mal escrito.", notFoundCta: "Volver al inicio",
     offerTitle: "¿Prefieres español?", offerCta: "Ver en español", offerClose: "Cerrar",
+    consentText: "¿Podemos usar Google Analytics? Nos dice qué páginas son útiles y de dónde llegan las visitas, para mejorar esta web. Usa cookies y no se activa a menos que digas que sí. No tiene nada que ver con la app.",
+    consentAccept: "Permitir analítica", consentReject: "No, gracias", consentMore: "Más info",
+    cookieSettings: "Configurar cookies",
+    signup: { invalid: "Escribe un email válido.", sending: "Enviando...", button: "Avísame",
+              ok: "Ya estás en la lista. Te escribimos una vez, el día que salga Android.",
+              exists: "Ya estabas en la lista. Te escribimos el día que salga Android.",
+              error: "Algo ha fallado. Vuelve a intentarlo.", network: "Error de conexión. Inténtalo más tarde." },
   },
 };
 
