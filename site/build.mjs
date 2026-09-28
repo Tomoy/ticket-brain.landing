@@ -351,11 +351,17 @@ const fmtDate = (d, lang) => new Date(d).toLocaleDateString(ui[lang].locale,
 
 /* sameAs is how a search or answer engine confirms this is a real entity and
    not just a site making claims about itself: every profile it can corroborate
-   against. Add a URL here only once it actually exists and names TicketBrain. */
+   against. A URL only earns its place here once that page names TicketBrain
+   and links back, otherwise the crawler follows it and finds nothing. */
 const SAME_AS = ["https://apps.apple.com/app/id6809745492"];
 
+/* One person built this, and saying so is worth more than an anonymous brand:
+   it is the difference between a claim and someone standing behind it. */
+const FOUNDER = { "@type": "Person", name: "Tomás Moyano",
+  sameAs: ["https://github.com/Tomoy"] };
+
 const ORG = { "@type": "Organization", name: "TicketBrain", url: SITE,
-  sameAs: SAME_AS,
+  sameAs: SAME_AS, founder: FOUNDER,
   logo: { "@type": "ImageObject", url: `${SITE}/icon-512x512.png`, width: 512, height: 512 } };
 
 /* ------------------------------------------------------------------ build */
