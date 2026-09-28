@@ -42,7 +42,7 @@ const GA_ID = "G-5HP7HKP0YT";
 /**
  * Cookie consent, Google Analytics and the language suggestion, in that order.
  *
- * Nothing from Google loads until the visitor presses "Allow analytics": no
+ * Nothing from Google loads until the visitor accepts the cookie notice: no
  * script, no cookie, no cookieless ping. That is the reading of the Spanish
  * AEPD guidance that needs no argument. Rejecting is one click, the same size
  * and weight as accepting, and "Cookie settings" in the footer reopens the
