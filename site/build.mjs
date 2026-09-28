@@ -146,6 +146,41 @@ const storeBadges = (lang, { dark = false, indent = "" } = {}) => {
   ].map((b) => indent + b).join("\n");
 };
 
+/**
+ * Comparison tables are the densest answer to "how does this compare to X",
+ * and the shape quoting engines extract most reliably, so the alternative
+ * posts lean on them. Two things have to happen for them to survive a phone:
+ * a wrapper that scrolls on its own (the page must never slide sideways), and
+ * a copy of each column heading on every cell, so CSS can stack the rows into
+ * cards instead of hiding the column the reader came for.
+ */
+const dressTables = (html) =>
+  html.replace(/<table>([\s\S]*?)<\/table>/g, (_, inner) => {
+    const head = inner.match(/<thead>([\s\S]*?)<\/thead>/);
+    const cols = head
+      ? [...head[1].matchAll(/<th[^>]*>([\s\S]*?)<\/th>/g)]
+          .map((m) => m[1].replace(/<[^>]+>/g, "").trim())
+      : [];
+    let col = 0;
+    const body = inner.replace(/<tbody>([\s\S]*?)<\/tbody>/, (__, rows) =>
+      `<tbody>${rows.replace(/<tr>|<td[^>]*>/g, (tag) => {
+        if (tag === "<tr>") { col = 0; return tag; }
+        const label = cols[col++] || "";
+        return label ? `<td data-col="${esc(label)}">` : tag;
+      })}</tbody>`);
+    return `<div class="tablewrap"><table>${body}</table></div>`;
+  });
+
+/* Minimal WebPage entity for the pages that are not the home, the blog or the
+   FAQ. "Is TicketBrain safe?" and "how do I contact them?" are questions an
+   answer engine gets asked, and these are the pages that hold the answer. */
+const webPage = (lang, path, name, description) => ({
+  "@context": "https://schema.org", "@type": "WebPage",
+  "@id": SITE + path, url: SITE + path, name, description,
+  inLanguage: ui[lang].locale, isPartOf: { "@type": "WebSite", name: "TicketBrain", url: SITE },
+  publisher: ORG,
+});
+
 const footer = (lang) => {
   const t = ui[lang], p = P[lang];
   return `
@@ -293,7 +328,7 @@ function loadPosts() {
       if (i > 0) meta[line.slice(0, i).trim()] = line.slice(i + 1).trim().replace(/^["']|["']$/g, "");
     });
     return { ...meta, image: meta.image ? `/blog-media/${meta.image}` : null,
-             html: marked.parse(parts.slice(2).join("---").trim()) };
+             html: dressTables(marked.parse(parts.slice(2).join("---").trim())) };
   };
   const files = readdirSync(dir).filter((f) => f.endsWith(".md"));
   const out = { en: [], es: [] };
@@ -314,7 +349,13 @@ function loadPosts() {
 const fmtDate = (d, lang) => new Date(d).toLocaleDateString(ui[lang].locale,
   { year: "numeric", month: "long", day: "numeric" });
 
+/* sameAs is how a search or answer engine confirms this is a real entity and
+   not just a site making claims about itself: every profile it can corroborate
+   against. Add a URL here only once it actually exists and names TicketBrain. */
+const SAME_AS = ["https://apps.apple.com/app/id6809745492"];
+
 const ORG = { "@type": "Organization", name: "TicketBrain", url: SITE,
+  sameAs: SAME_AS,
   logo: { "@type": "ImageObject", url: `${SITE}/icon-512x512.png`, width: 512, height: 512 } };
 
 /* ------------------------------------------------------------------ build */
@@ -363,18 +404,31 @@ function build() {
       body: read(`site/pages/home.${lang}.html`)
         .replaceAll("<!--STORES-->", storeBadges(lang, { indent: "              " }).trimStart()),
       script: SIGNUP_JS,
-      jsonLd: lang === "en" ? [
+      /* Both homepages carry the full entity graph. The Spanish one used to
+         ship none at all, which left half the site structurally invisible to
+         anything reading the page as data rather than as prose. */
+      jsonLd: [
         { "@context": "https://schema.org", ...ORG,
-          description: "Receipt scanning app that turns grocery receipts into spending insights.",
+          description: lang === "en"
+            ? "Receipt scanning app that turns grocery receipts into spending insights."
+            : "App de escaneo de tickets que convierte la compra del súper en información sobre tu gasto.",
           email: "hello@ticketbrain.app",
           address: { "@type": "PostalAddress", addressLocality: "Barcelona", addressCountry: "ES" } },
-        { "@context": "https://schema.org", "@type": "WebSite", name: "TicketBrain", url: SITE },
+        { "@context": "https://schema.org", "@type": "WebSite", name: "TicketBrain",
+          url: SITE + (lang === "en" ? "" : "/es"), inLanguage: ui[lang].locale },
         { "@context": "https://schema.org", "@type": "MobileApplication", name: "TicketBrain",
-          applicationCategory: "FinanceApplication", operatingSystem: "iOS, Android",
+          applicationCategory: "FinanceApplication",
+          /* Only the platforms you can actually install today. Listing Android
+             here while it is still in testing is the kind of small inaccuracy
+             an answer engine repeats back to someone as fact. */
+          operatingSystem: STORES.play ? "iOS, Android" : "iOS",
           downloadUrl: STORES.apple, installUrl: STORES.apple,
+          inLanguage: ui[lang].locale,
           offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
-          description: "Scan grocery receipts and see item-level spending by category and store, plus coupon reminders. No bank connection required." },
-      ] : [],
+          description: lang === "en"
+            ? "Scan grocery receipts and see item-level spending by category and store, plus coupon reminders. No bank connection required."
+            : "Escanea tickets del súper y ve el gasto producto a producto por categoría y tienda, con avisos de cupones. Sin conectar el banco." },
+      ],
     }));
     urls.push([p.home, "1.0"]);
 
@@ -431,7 +485,8 @@ ${others.map((o) => `            <a href="${p.post(o.slug)}"><b>${esc(o.title)}<
         </aside>` : ""}
       </div></section>`,
         jsonLd: [{ "@context": "https://schema.org", "@type": "BlogPosting",
-          headline: x.title, description: x.description, datePublished: x.date, inLanguage: lang,
+          headline: x.title, description: x.description, datePublished: x.date,
+          dateModified: x.updated || x.date, inLanguage: lang,
           image: `${SITE}/sharing-image.png`, author: ORG, publisher: ORG,
           mainEntityOfPage: { "@type": "WebPage", "@id": SITE + p.post(x.slug) } }],
       }));
@@ -473,6 +528,7 @@ ${F.map((f, i) => `          <details class="faq-item"${i === 0 ? " open" : ""}>
       title: lang === "en" ? "Privacy: no bank connection, no stored photos | TicketBrain"
                            : "Privacidad: sin conexión bancaria | TicketBrain",
       description: PP.lede,
+      jsonLd: [webPage(lang, p.privacy, PP.title, PP.lede)],
       body: `      <section class="page-hero"><div class="wrap narrow">
         <p class="kicker">${esc(PP.kicker)}</p>
         <h1>${esc(PP.title)}</h1>
@@ -498,6 +554,7 @@ ${PP.cards.map(([h, b]) => `          <div class="faq-item" style="padding:22px 
       description: lang === "en"
         ? "How TicketBrain collects, stores and protects your data. GDPR-compliant privacy policy for our grocery receipt scanning app."
         : "Cómo TicketBrain recoge, almacena y protege tus datos. Política de privacidad conforme al RGPD de nuestra app de escaneo de tickets.",
+      jsonLd: [webPage(lang, p.policy, D.title, D.summary)],
       body: `      <section class="page-hero"><div class="wrap narrow">
         <p class="kicker">${esc(t.legalKicker)}</p>
         <h1>${esc(D.title)}</h1>
@@ -523,6 +580,7 @@ ${s.body.map(b => b.list
       lang, path: p.support, alt: lang === "en" ? P.es.support : P.en.support,
       title: lang === "en" ? "Support | TicketBrain" : "Soporte | TicketBrain",
       description: S.lede,
+      jsonLd: [webPage(lang, p.support, S.title, S.lede)],
       body: `      <section class="page-hero"><div class="wrap narrow">
         <p class="kicker">${esc(S.kicker)}</p>
         <h1>${esc(S.title)}</h1>
@@ -569,7 +627,40 @@ ${S.links.map(([l, k]) => `          <li><a class="lnk" href="${p[k]}">${esc(l)}
     urls.map(([u, pr]) => `  <url>\n    <loc>${SITE}${u}</loc>\n    <lastmod>${today}</lastmod>\n    <priority>${pr}</priority>\n  </url>`).join("\n") +
     `\n</urlset>\n`);
 
-  console.log(`\n  ${count} pages · sitemap with ${urls.length} URLs · no JavaScript framework\n`);
+  /* llms.txt: the same map the sitemap gives a crawler, written as prose an
+     answer engine can read in one pass. Support for it is still patchy, but
+     it is generated from the real page list, so it cannot drift. */
+  const lines = (lang) => {
+    const p = P[lang], L = posts[lang];
+    return [`- [${lang === "en" ? "Home" : "Inicio"}](${SITE}${p.home})`,
+            `- [${ui[lang].faqTitle}](${SITE}${p.faq})`,
+            `- [${ui[lang].privacyPolicy}](${SITE}${p.privacy})`,
+            `- [Blog](${SITE}${p.blog})`,
+            ...L.map((x) => `- [${x.title}](${SITE}${p.post(x.slug)}): ${x.description}`)].join("\n");
+  };
+  writeFileSync(join(DIST, "llms.txt"), `# TicketBrain
+
+> A grocery receipt scanner for iPhone. Photograph a supermarket receipt and
+> the app reads every line item, sorts it into categories, and shows which
+> purchases are pushing your grocery budget up. No bank connection and no
+> account; receipts are stored on the phone, and the photo is read once and
+> never kept. Free to download, with a free tier and a subscription for
+> unlimited scanning. Made in Barcelona. Android is in testing.
+
+## English
+${lines("en")}
+
+## Español
+${lines("es")}
+
+## Notes
+- The site is static HTML; nothing requires JavaScript to read.
+- App Store: ${STORES.apple}
+- Google Play: ${STORES.play || "not released yet, the Android build is in final testing"}
+- Contact: hello@ticketbrain.app
+`);
+
+  console.log(`\n  ${count} pages · sitemap with ${urls.length} URLs · llms.txt · no JavaScript framework\n`);
 }
 
 build();

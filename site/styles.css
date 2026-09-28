@@ -278,6 +278,43 @@ article.prose blockquote{margin:0 0 22px;padding:4px 0 4px 22px;border-left:3px 
                          font-style:italic;color:var(--ink)}
 article.prose img{border-radius:16px;margin:0 0 22px}
 article.prose code{background:var(--green-50);padding:2px 6px;border-radius:5px;font-size:.9em}
+      /* Comparison tables. A table is the densest way to answer "how does this
+         compare to X", and the format quoting engines extract most reliably,
+         so the alternative posts lean on them. The wrapper scrolls on its own
+         at narrow widths: the table must never push the page sideways. */
+      article.prose .tablewrap{overflow-x:auto;margin:0 0 26px;
+                               border:1px solid var(--line);border-radius:14px}
+      article.prose table{border-collapse:collapse;width:100%;min-width:520px;font-size:15.5px}
+      article.prose th,article.prose td{text-align:left;padding:12px 16px;
+                                        border-bottom:1px solid var(--line);vertical-align:top}
+      article.prose thead th{background:var(--green-50);font-family:var(--f-head);font-size:14px;
+                             font-weight:700;color:var(--ink);line-height:1.35}
+      article.prose tbody tr:last-child th,article.prose tbody tr:last-child td{border-bottom:0}
+      /* First column is the dimension being compared, so it reads as a label. */
+      article.prose tbody td:first-child{color:var(--ink);font-weight:600}
+      /* On a phone a three-column table cannot fit, and scrolling it sideways
+         hides the column the reader came for. Each row becomes a card instead,
+         with the column heading printed above its value (build.mjs copies the
+         heading onto every cell as data-col). Nothing is hidden and nothing
+         scrolls. */
+      @media(max-width:620px){
+        article.prose .tablewrap{overflow-x:visible;border:0;border-radius:0}
+        article.prose table{min-width:0;font-size:16px;display:block}
+        article.prose thead{display:none}
+        article.prose tbody,article.prose tr,article.prose td{display:block}
+        article.prose tbody tr{border:1px solid var(--line);border-radius:14px;
+                               padding:4px 0;margin-bottom:12px}
+        article.prose td{border-bottom:0;padding:8px 16px}
+        /* A cell with no heading of its own is the row's subject: the label
+           the other cells in the card are answering. */
+        article.prose td:not([data-col]){font-family:var(--f-head);font-size:16px;
+                                         font-weight:700;padding-top:13px}
+        article.prose td[data-col]::before{content:attr(data-col);display:block;
+                                           font-family:var(--f-mono);font-size:10.5px;
+                                           letter-spacing:.09em;text-transform:uppercase;
+                                           color:var(--muted);margin-bottom:2px}
+        article.prose tbody tr:last-child td{border-bottom:0}
+      }
 .hero-img{width:100%;margin:0 0 44px;border-radius:22px;height:auto;aspect-ratio:25/16;object-fit:cover}
 
 .related{max-width:720px;margin:56px 0 0;padding-top:34px;border-top:1px solid var(--line)}
