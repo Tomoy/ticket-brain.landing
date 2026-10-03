@@ -73,7 +73,7 @@ export const faq = {
 export const privacyDoc = {
   en: {
     title: `Privacy Policy`,
-    lastUpdated: `Last updated: September 2026`,
+    lastUpdated: `Last updated: October 2026`,
     summary: `The short version: TicketBrain has no accounts and never asks for your name, your email or your bank. Your receipts, coupons and budget live in a database on your own phone. The only thing that leaves your device is the photo of a receipt, which is read once to pull out the lines and is never stored by us. This website is separate: it has an optional email list and, only if you allow it, Google Analytics. Both are explained under "This Website".`,
     sections: [
       {
@@ -100,7 +100,7 @@ export const privacyDoc = {
         body: [
           { p: `This is the one thing that leaves your phone. When you scan a receipt or a coupon, the photo is sent over an encrypted connection to our server, held in memory while an AI model reads the lines off it, and the extracted text comes straight back to your phone.` },
           { p: `The image is never written to disk, never added to a database and never kept after the response is sent. There is no archive of your receipts on our side to lose, leak or be asked to hand over.` },
-          { p: `A randomly generated identifier travels with the request so that we can cap how many scans come from a single installation and keep the service usable for everyone. It is created on your phone, it is not derived from your device or from you, and it is not linked to anything else. It exists only in memory, for a rolling window of a few hours.` },
+          { p: `A randomly generated identifier travels with the request so that we can cap how many scans come from a single installation and keep the service usable for everyone. It is created on your phone, it is not derived from your device or from you, and it is not linked to anything else. It is only ever held in the server's memory, never written to disk or to a database, and it disappears whenever the server restarts. The scan limits look back at most 30 days.` },
         ],
       },
       {
@@ -140,7 +140,7 @@ export const privacyDoc = {
         h: `How Long Data Is Kept`,
         body: [
           { p: `The receipt photo: not kept at all. It exists in server memory for the seconds the scan takes and is discarded when the response is sent.` },
-          { p: `The anonymous scan identifier: a few hours in memory, then discarded. It is also lost whenever the server restarts.` },
+          { p: `The anonymous scan identifier: only in the server's memory, never written to disk. The scan limits use at most the last 30 days, and the identifier disappears whenever the server restarts.` },
           { p: `Analytics events: retained by Google Firebase for the period configured in our Firebase project, after which Google deletes them.` },
           { p: `Website analytics, if you allowed it: kept by Google Analytics for the retention period set in our property, at most 14 months. The cookies on your browser expire after two years, or as soon as you withdraw consent.` },
           { p: `The website email list: until you unsubscribe or ask us to delete your address.` },
@@ -197,7 +197,7 @@ export const privacyDoc = {
   },
   es: {
     title: `Política de Privacidad`,
-    lastUpdated: `Última actualización: Septiembre 2026`,
+    lastUpdated: `Última actualización: Octubre 2026`,
     summary: `La versión corta: TicketBrain no tiene cuentas y nunca te pide tu nombre, tu correo ni tu banco. Tus tickets, cupones y presupuesto viven en una base de datos en tu propio móvil. Lo único que sale de tu dispositivo es la foto del ticket, que se lee una vez para extraer las líneas y que nosotros no guardamos en ningún momento. Esta web es aparte: tiene una lista de email opcional y, solo si lo permites, Google Analytics. Las dos cosas se explican en «Esta Web».`,
     sections: [
       {
@@ -224,7 +224,7 @@ export const privacyDoc = {
         body: [
           { p: `Es lo único que sale de tu móvil. Cuando escaneas un ticket o un cupón, la foto se envía por una conexión cifrada a nuestro servidor, se mantiene en memoria mientras un modelo de IA lee las líneas, y el texto extraído vuelve directo a tu móvil.` },
           { p: `La imagen no se escribe nunca en disco, no entra en ninguna base de datos y no se conserva una vez enviada la respuesta. No hay un archivo de tus tickets en nuestro lado que se pueda perder, filtrar o reclamar.` },
-          { p: `Junto a la petición viaja un identificador generado al azar, que nos sirve para limitar cuántos escaneos llegan desde una misma instalación y mantener el servicio utilizable para todos. Se crea en tu móvil, no se deriva de tu dispositivo ni de ti, y no está vinculado a nada más. Solo existe en memoria, durante una ventana de unas pocas horas.` },
+          { p: `Junto a la petición viaja un identificador generado al azar, que nos sirve para limitar cuántos escaneos llegan desde una misma instalación y mantener el servicio utilizable para todos. Se crea en tu móvil, no se deriva de tu dispositivo ni de ti, y no está vinculado a nada más. Solo se guarda en la memoria del servidor, nunca en disco ni en una base de datos, y desaparece cada vez que el servidor se reinicia. Los límites de escaneo miran como mucho los últimos 30 días.` },
         ],
       },
       {
@@ -264,7 +264,7 @@ export const privacyDoc = {
         h: `Cuánto Tiempo Se Conservan Los Datos`,
         body: [
           { p: `La foto del ticket: no se conserva en absoluto. Existe en la memoria del servidor los segundos que dura el escaneo y se descarta al enviar la respuesta.` },
-          { p: `El identificador anónimo de escaneo: unas pocas horas en memoria y se descarta. También se pierde cada vez que el servidor se reinicia.` },
+          { p: `El identificador anónimo de escaneo: solo en la memoria del servidor, nunca en disco. Los límites de escaneo usan como mucho los últimos 30 días, y el identificador desaparece cada vez que el servidor se reinicia.` },
           { p: `Los eventos de analítica: los conserva Google Firebase durante el periodo configurado en nuestro proyecto de Firebase, tras el cual Google los elimina.` },
           { p: `La analítica de la web, si la permitiste: la conserva Google Analytics durante el periodo configurado en nuestra propiedad, como máximo 14 meses. Las cookies de tu navegador caducan a los dos años, o en cuanto retiras el consentimiento.` },
           { p: `La lista de email de la web: hasta que te des de baja o nos pidas que borremos tu dirección.` },
