@@ -3,7 +3,7 @@ title: "Alternativa a SpendScan: escaneo de tickets centrado en tu presupuesto"
 seoTitle: "Alternativa a SpendScan para tu presupuesto"
 date: "2026-07-14"
 description: "SpendScan y TicketBrain leen los tickets del súper con IA. La diferencia está en qué priorizan. Aquí tienes una comparación honesta para que elijas."
-updated: "2026-09-28"
+updated: "2026-10-12"
 slug: "alternativa-a-spendscan"
 image: "blog-alt-spendscan.jpg"
 ---
@@ -48,7 +48,6 @@ responder:
 | "¿Qué categorías me rompen el presupuesto?" | TicketBrain |
 | "¿Voy a tiempo con el presupuesto del mes?" | TicketBrain |
 | "¿Me acordaré de este cupón antes de que caduque?" | TicketBrain |
-| "Necesito algo en Android hoy" | SpendScan |
 
 La columna de SpendScan refleja lo que ese producto comunica públicamente, no
 una auditoría función por función; revisa su web antes de decidir.
@@ -62,9 +61,7 @@ Elige TicketBrain si tu problema principal es que el gasto del súper ha subido
 y no consigues identificar a dónde se ha ido. Ese es el problema para el que
 estamos hechos.
 
-## Una nota honesta sobre disponibilidad
+## Disponibilidad
 
-TicketBrain ya está en el App Store para iPhone. Si usas Android, nuestra
-versión sigue en pruebas finales y SpendScan ya está disponible: preferimos
-decírtelo antes que hacerte perder el tiempo. Deja tu email en la página de
-inicio y te avisamos el día que salga la versión de Android.
+TicketBrain está disponible en el App Store para iPhone y en Google Play para
+Android, y es gratis de descargar.

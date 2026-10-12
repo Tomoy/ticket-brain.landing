@@ -3,7 +3,7 @@ title: "SpendScan Alternative: Receipt Scanning Focused on Your Budget"
 seoTitle: "SpendScan Alternative for Grocery Budgets"
 date: "2026-07-14"
 description: "SpendScan and TicketBrain both read your grocery receipts with AI. The difference is what they optimise for. Here is an honest comparison to help you pick."
-updated: "2026-09-28"
+updated: "2026-10-12"
 slug: "spendscan-alternative"
 image: "blog-alt-spendscan.jpg"
 ---
@@ -48,7 +48,6 @@ answered:
 | "Which categories are breaking my budget?" | TicketBrain |
 | "Am I on pace for this month's budget?" | TicketBrain |
 | "Will I remember this coupon before it expires?" | TicketBrain |
-| "I need something on Android today" | SpendScan |
 
 The SpendScan column reflects what that product leads with publicly rather
 than a feature-by-feature audit; check their site before deciding.
@@ -61,9 +60,7 @@ receipts in the first place.
 Pick TicketBrain if your main problem is that your grocery spending has grown
 and you cannot pin down where it went. That is the problem we are built for.
 
-## An honest note on availability
+## Availability
 
-TicketBrain is live on the App Store for iPhone. If you are on Android, our
-version is still in final testing, and SpendScan is shipping today: we would
-rather tell you that than waste your time. Leave your email on the homepage
-and we will let you know the day the Android build lands.
+TicketBrain is available on the App Store for iPhone and on Google Play for
+Android, and it is free to download.

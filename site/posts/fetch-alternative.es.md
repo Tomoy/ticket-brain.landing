@@ -3,7 +3,7 @@ title: "Alternativa a Fetch: convierte tus tickets en información, no en puntos
 seoTitle: "Alternativa a Fetch: información, no puntos"
 date: "2026-05-12"
 description: "Fetch convierte tus tickets en tarjetas regalo. Si prefieres que tus tickets te expliquen a dónde va el dinero del súper, esto es lo que cambia."
-updated: "2026-09-28"
+updated: "2026-10-12"
 slug: "alternativa-a-fetch"
 image: "blog-alt-fetch.jpg"
 ---
@@ -54,6 +54,5 @@ regalo y TicketBrain para entender el gasto. Responden a preguntas distintas.
 
 ## Dónde estamos
 
-TicketBrain ya está en el App Store para iPhone, y es gratis de descargar. La
-versión de Android está en pruebas finales: deja tu email en la página de
-inicio y te avisamos el día que llegue a Google Play.
+TicketBrain está disponible en el App Store para iPhone y en Google Play para
+Android, y es gratis de descargar.

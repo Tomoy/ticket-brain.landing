@@ -3,7 +3,7 @@ title: "YNAB Alternative for Groceries: See the Items, Not Just the Total"
 seoTitle: "YNAB Alternative for Grocery Spending"
 date: "2026-04-07"
 description: "Budgeting apps track groceries as one category. Here is why item-level receipt data changes what you can actually cut."
-updated: "2026-09-28"
+updated: "2026-10-12"
 slug: "ynab-alternative-groceries"
 image: "blog-alt-ynab.jpg"
 ---
@@ -62,6 +62,5 @@ are built to close.
 
 ## Where we are
 
-TicketBrain is live on the App Store for iPhone. The Android version is in
-final testing; leave your email on the homepage and we will tell you the day
-it reaches Google Play.
+TicketBrain is available on the App Store for iPhone and on Google Play for
+Android, and it is free to download.

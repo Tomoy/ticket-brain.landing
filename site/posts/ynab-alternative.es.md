@@ -3,7 +3,7 @@ title: "Alternativa a YNAB para el súper: mira los productos, no solo el total"
 seoTitle: "Alternativa a YNAB para el súper"
 date: "2026-04-07"
 description: "Las apps de presupuesto tratan el súper como una sola categoría. Por qué el detalle producto a producto cambia lo que puedes recortar."
-updated: "2026-09-28"
+updated: "2026-10-12"
 slug: "alternativa-a-ynab-supermercado"
 image: "blog-alt-ynab.jpg"
 ---
@@ -63,6 +63,5 @@ justo el hueco que venimos a cerrar.
 
 ## Dónde estamos
 
-TicketBrain ya está en el App Store para iPhone. La versión de Android está en
-pruebas finales: deja tu email en la página de inicio y te avisamos el día que
-llegue a Google Play.
+TicketBrain está disponible en el App Store para iPhone y en Google Play para
+Android, y es gratis de descargar.

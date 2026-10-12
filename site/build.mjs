@@ -32,7 +32,6 @@ const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;")
   .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 const CSS = read("site/styles.css");
-const SIGNUP_JS = read("site/pages/_signup.js");
 
 /* Google Analytics 4 property of the ticketbrain-landing-page Firebase project,
    the same one the React version reported to. It is only ever loaded after the
@@ -53,7 +52,7 @@ const GA_ID = "G-5HP7HKP0YT";
  *
  * Events (all sent only with consent; page views and referrers come for free):
  *   app_store_click   {location: hero | final_cta | footer | body}
- *   generate_lead     {form: android_waitlist}           (from _signup.js)
+ *   play_store_click  {location: hero | final_cta | footer | body}
  *   lang_switch       {to, via: nav | menu | banner}
  *   lang_banner_dismiss
  *   nav_click         {item, location: header | menu | footer}
@@ -61,7 +60,7 @@ const GA_ID = "G-5HP7HKP0YT";
  *   faq_open          {question}
  *   related_post_click {post}
  *   contact_click     {location}
- * Mark app_store_click and generate_lead as key events in GA4.
+ * Mark app_store_click and play_store_click as key events in GA4.
  */
 const CONSENT_JS = `      (function () {
         var GA = "${GA_ID}", KEY = "tb-consent", YEAR = 365 * 864e5;
@@ -153,6 +152,8 @@ const CONSENT_JS = `      (function () {
             if (d.classList.contains("faq-item") && !d.open) tbTrack("faq_open", { question: label });
           } else if (href.indexOf("apps.apple.com") > -1) {
             tbTrack("app_store_click", { location: where });
+          } else if (href.indexOf("play.google.com") > -1) {
+            tbTrack("play_store_click", { location: where });
           } else if (el.hasAttribute("hreflang")) {
             tbTrack("lang_switch", { to: el.getAttribute("hreflang"), via: where === "header" ? "nav" : where });
           } else if (href.indexOf("mailto:") === 0) {
@@ -266,16 +267,16 @@ const PLAY_ICON = `<svg viewBox="0 0 14 16" width="17" height="19" aria-hidden="
  */
 const storeBadges = (lang, { dark = false, indent = "" } = {}) => {
   const t = ui[lang];
-  const badge = (url, icon, name, label) => {
+  const badge = (store, url, icon, name, label) => {
     const cls = `store${dark ? " store-dark" : ""}${url ? "" : " store-soon"}`;
-    const inner = `${icon}<span><small>${esc(url ? t.storeLive : t.storeSoon)}</small><strong>${name}</strong></span>`;
+    const inner = `${icon}<span><small>${esc(url ? t.storeLive[store] : t.storeSoon)}</small><strong>${name}</strong></span>`;
     return url
       ? `<a class="${cls}" href="${url}" aria-label="${esc(label)}">${inner}</a>`
       : `<span class="${cls}">${inner}</span>`;
   };
   return [
-    badge(STORES.apple, APPLE_ICON, "App Store", t.appStoreLabel),
-    badge(STORES.play, PLAY_ICON, "Google Play", t.playStoreLabel),
+    badge("apple", STORES.apple, APPLE_ICON, "App Store", t.appStoreLabel),
+    badge("play", STORES.play, PLAY_ICON, "Google Play", t.playStoreLabel),
   ].map((b) => indent + b).join("\n");
 };
 
@@ -476,7 +477,7 @@ const fmtDate = (d, lang) => new Date(d).toLocaleDateString(ui[lang].locale,
    not just a site making claims about itself: every profile it can corroborate
    against. A URL only earns its place here once that page names TicketBrain
    and links back, otherwise the crawler follows it and finds nothing. */
-const SAME_AS = ["https://apps.apple.com/app/id6809745492"];
+const SAME_AS = [STORES.apple, STORES.play].filter(Boolean);
 
 /* One person built this, and saying so is worth more than an anonymous brand:
    it is the difference between a claim and someone standing behind it. */
@@ -532,7 +533,6 @@ function build() {
         : "Escanea cualquier ticket del supermercado y TicketBrain lee cada producto, lo categoriza y te muestra qué compras están disparando tu presupuesto.",
       body: read(`site/pages/home.${lang}.html`)
         .replaceAll("<!--STORES-->", storeBadges(lang, { indent: "              " }).trimStart()),
-      script: `var T = ${JSON.stringify(ui[lang].signup)};\n${SIGNUP_JS}`,
       /* Both homepages carry the full entity graph. The Spanish one used to
          ship none at all, which left half the site structurally invisible to
          anything reading the page as data rather than as prose. */
@@ -551,7 +551,8 @@ function build() {
              here while it is still in testing is the kind of small inaccuracy
              an answer engine repeats back to someone as fact. */
           operatingSystem: STORES.play ? "iOS, Android" : "iOS",
-          downloadUrl: STORES.apple, installUrl: STORES.apple,
+          downloadUrl: [STORES.apple, STORES.play].filter(Boolean),
+          installUrl: [STORES.apple, STORES.play].filter(Boolean),
           inLanguage: ui[lang].locale,
           offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
           description: lang === "en"
@@ -769,12 +770,12 @@ ${S.links.map(([l, k]) => `          <li><a class="lnk" href="${p[k]}">${esc(l)}
   };
   writeFileSync(join(DIST, "llms.txt"), `# TicketBrain
 
-> A grocery receipt scanner for iPhone. Photograph a supermarket receipt and
+> A grocery receipt scanner for iPhone and Android. Photograph a supermarket receipt and
 > the app reads every line item, sorts it into categories, and shows which
 > purchases are pushing your grocery budget up. No bank connection and no
 > account; receipts are stored on the phone, and the photo is read once and
 > never kept. Free to download, with a free tier and a subscription for
-> unlimited scanning. Made in Barcelona. Android is in testing.
+> unlimited scanning. Made in Barcelona.
 
 ## English
 ${lines("en")}
@@ -785,7 +786,7 @@ ${lines("es")}
 ## Notes
 - The site is static HTML; nothing requires JavaScript to read.
 - App Store: ${STORES.apple}
-- Google Play: ${STORES.play || "not released yet, the Android build is in final testing"}
+- Google Play: ${STORES.play}
 - Contact: hello@ticketbrain.app
 `);
 

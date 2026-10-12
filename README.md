@@ -1,13 +1,14 @@
 # TicketBrain landing page
 
 The marketing site for [TicketBrain](https://www.ticketbrain.app), a grocery
-receipt scanner for iPhone. You photograph a supermarket receipt, the app reads
+receipt scanner for iPhone and Android. You photograph a supermarket receipt, the app reads
 every line item, sorts it into categories, and shows which purchases are
 pushing your grocery budget up. No bank connection, no account.
 
 **Live:** [ticketbrain.app](https://www.ticketbrain.app) ·
 [/es](https://www.ticketbrain.app/es) ·
-[App Store](https://apps.apple.com/app/id6809745492)
+[App Store](https://apps.apple.com/app/id6809745492) ·
+[Google Play](https://play.google.com/store/apps/details?id=com.ticketbrain.app)
 
 ---
 
@@ -97,7 +98,7 @@ What that means concretely here:
 - **Claims match the code.** The privacy page was written against the actual
   API, and says so in a comment in `content.mjs`. The store badges and the
   `operatingSystem` field follow one `STORES` constant, so the site cannot
-  advertise an Android build that has not shipped.
+  advertise a store listing that does not exist yet.
 - **[`llms.txt`](https://www.ticketbrain.app/llms.txt)**, generated from the
   real page list so it cannot drift out of sync.
 
@@ -113,8 +114,8 @@ the footer reopens the choice. Withdrawing deletes the `_ga` cookies.
 
 Page views and referrers (including visits from ChatGPT, Perplexity and other
 answer engines) come automatically. On top of that, `CONSENT_JS` in
-`build.mjs` sends a short list of events: `app_store_click`, `generate_lead`
-(Android waitlist), `lang_switch`, `nav_click`, `get_app_click`, `faq_open`,
+`build.mjs` sends a short list of events: `app_store_click`, `play_store_click`,
+`lang_switch`, `nav_click`, `get_app_click`, `faq_open`,
 `related_post_click`, `contact_click`. The list and its parameters are
 documented above the code.
 
@@ -138,8 +139,9 @@ image: "blog-name.jpg"  # from site/assets/
 Markdown tables become comparison tables automatically: on a phone each row
 folds into a card so no column ends up scrolled off the edge.
 
-**A store link.** When the Android build ships, set `STORES.play` in
-`content.mjs`. Six badges, the schema and `llms.txt` all follow.
+**A store link.** Both store URLs live in `STORES` in `content.mjs`. The six
+badges, the schema and `llms.txt` all follow it; set one to `null` and its
+badge turns back into a dimmed "coming soon" label.
 
 **An FAQ entry.** Append to the `faq` array in `content.mjs`. The `FAQPage`
 JSON-LD is generated from the same array, so the page and the structured data
