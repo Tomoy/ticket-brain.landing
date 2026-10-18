@@ -49,4 +49,6 @@ Deja que la IA optimice tu compra en el supermercado. Con TicketBrain es sencill
 3. Recibe información clara y personalizada  
 4. Observa cómo crecen tus ahorros semana tras semana  
 
-El futuro de la compra inteligente no es solo encontrar ofertas, sino **entender tus hábitos y tomar mejores decisiones**. TicketBrain te da la visibilidad que necesitas para comprar con confianza y ahorrar más.  
+El futuro de la compra inteligente no es solo encontrar ofertas, sino **entender tus hábitos y tomar mejores decisiones**. TicketBrain te da la visibilidad que necesitas para comprar con confianza y ahorrar más.
+
+Y si usas los cupones de tu súper, mira cómo funcionan en cada cadena en nuestra guía de [cupones y vales del supermercado](/es/blog/cupones-descuento-supermercado).

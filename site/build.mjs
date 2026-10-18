@@ -315,6 +315,74 @@ const webPage = (lang, path, name, description) => ({
   publisher: ORG,
 });
 
+/**
+ * The closing "Preguntas frecuentes" / "Frequently asked questions" section of
+ * a post, read straight from its markdown: each ### heading is a question and
+ * the text under it the answer. One source for the page and its FAQPage
+ * JSON-LD, so the two can never say different things.
+ */
+const faqFrom = (md) => {
+  const m = md.match(/^## (?:Preguntas frecuentes|Frequently asked questions)\s*$([\s\S]*?)(?=^## |(?![\s\S]))/m);
+  if (!m) return [];
+  const plain = (t) => t.replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/[*_`]/g, "")
+    .replace(/\s+/g, " ").trim();
+  return m[1].split(/^### /m).slice(1).map((block) => {
+    const [q, ...rest] = block.split("\n");
+    return { q: plain(q), a: plain(rest.join("\n")) };
+  }).filter((f) => f.q && f.a);
+};
+
+/**
+ * Spending calculator. A post asks for one with a single line of HTML:
+ *   <div class="calc" data-calc='{"currency":"EUR","options":[...]}'></div>
+ * where each option is a household with one or more reference amounts. The
+ * form is rendered here, at build time, so it is complete before any script
+ * runs; CALC_JS only does the arithmetic.
+ */
+const CALC_TEXT = {
+  es: { who: "¿Cuántos sois en casa?", spend: "¿Cuánto gastas al mes en el súper?",
+        hint: "Escribe una cantidad para compararla.", more: "más", less: "menos", same: "Igual que" },
+  en: { who: "Who's in your household?", spend: "What do you spend on groceries a month?",
+        hint: "Enter an amount to compare.", more: "more", less: "less", same: "Same as" },
+};
+const dressCalcs = (html) => html.replace(/<div class="calc" data-calc='([^']+)'><\/div>/g, (_, raw) => {
+  const cfg = JSON.parse(raw), lang = cfg.lang, t = CALC_TEXT[lang];
+  const opts = cfg.options.map((o, i) =>
+    `<option value="${i}"${i === (cfg.selected || 0) ? " selected" : ""}>${esc(o.label)}</option>`).join("");
+  return `<div class="calc" data-calc='${raw}'>
+  <label>${esc(t.who)}<select>${opts}</select></label>
+  <label>${esc(t.spend)}<span class="calc-money"><input type="number" inputmode="decimal" min="0" step="1" placeholder="${cfg.currency === "EUR" ? "450" : "800"}"><b>${cfg.currency === "EUR" ? "€" : "$"}</b></span></label>
+  <div class="calc-out" aria-live="polite"><p>${esc(t.hint)}</p></div>
+  ${cfg.note ? `<p class="calc-note">${esc(cfg.note)}</p>` : ""}
+</div>`;
+});
+
+const CALC_JS = `      (function () {
+        var T = ${JSON.stringify(CALC_TEXT)};
+        document.querySelectorAll(".calc").forEach(function (box) {
+          var cfg = JSON.parse(box.getAttribute("data-calc"));
+          var t = T[cfg.lang], sel = box.querySelector("select"), inp = box.querySelector("input");
+          var out = box.querySelector(".calc-out");
+          var fmt = new Intl.NumberFormat(cfg.lang === "es" ? "es-ES" : "en-US",
+            { style: "currency", currency: cfg.currency, maximumFractionDigits: 0 });
+          function row(spend, ref) {
+            var pct = Math.round((spend / ref.amount - 1) * 100);
+            var verdict = pct === 0 ? t.same : Math.abs(pct) + " % " + (pct > 0 ? t.more : t.less);
+            if (cfg.lang === "en") verdict = pct === 0 ? t.same : Math.abs(pct) + "% " + (pct > 0 ? t.more : t.less) + " than";
+            else if (pct !== 0) verdict += " que";
+            return "<li><b>" + verdict + "</b> " + ref.name + ": " + fmt.format(ref.amount) + "</li>";
+          }
+          function update() {
+            var spend = parseFloat(String(inp.value).replace(",", "."));
+            if (!(spend > 0)) { out.innerHTML = "<p>" + t.hint + "</p>"; return; }
+            var o = cfg.options[sel.value];
+            out.innerHTML = "<ul>" + o.refs.map(function (r) { return row(spend, r); }).join("") + "</ul>";
+          }
+          sel.addEventListener("change", update);
+          inp.addEventListener("input", update);
+        });
+      })();`;
+
 const footer = (lang) => {
   const t = ui[lang], p = P[lang];
   return `
@@ -451,19 +519,22 @@ function loadPosts() {
       const i = line.indexOf(":");
       if (i > 0) meta[line.slice(0, i).trim()] = line.slice(i + 1).trim().replace(/^["']|["']$/g, "");
     });
+    const md = parts.slice(2).join("---").trim();
     return { ...meta, image: meta.image ? `/blog-media/${meta.image}` : null,
-             html: dressTables(marked.parse(parts.slice(2).join("---").trim())) };
+             faq: faqFrom(md),
+             html: dressCalcs(dressTables(marked.parse(md))) };
   };
+  /* A post is `slug.md` (English), `slug.es.md` (Spanish), or both. Only a
+     real pair gets hreflang and a language banner; a post written for one
+     market alone (Spanish chains, USDA figures) stands on its own. */
   const files = readdirSync(dir).filter((f) => f.endsWith(".md"));
   const out = { en: [], es: [] };
-  for (const f of files.filter((f) => !f.endsWith(".es.md"))) {
-    const base = f.replace(/\.md$/, "");
-    const en = parse(f);
-    const esFile = `${base}.es.md`;
-    const es = files.includes(esFile) ? parse(esFile) : null;
-    en.alt = es ? P.es.post(es.slug) : null;
-    out.en.push(en);
-    if (es) { es.alt = P.en.post(en.slug); out.es.push(es); }
+  const bases = [...new Set(files.map((f) => f.replace(/(\.es)?\.md$/, "")))];
+  for (const base of bases) {
+    const en = files.includes(`${base}.md`) ? parse(`${base}.md`) : null;
+    const es = files.includes(`${base}.es.md`) ? parse(`${base}.es.md`) : null;
+    if (en) { en.alt = es ? P.es.post(es.slug) : null; out.en.push(en); }
+    if (es) { es.alt = en ? P.en.post(en.slug) : null; out.es.push(es); }
   }
   const byDate = (a, b) => new Date(b.date) - new Date(a.date);
   out.en.sort(byDate); out.es.sort(byDate);
@@ -596,7 +667,11 @@ ${L.map((x) => `          <a class="post" href="${p.post(x.slug)}">
       const others = L.filter((o) => o.slug !== x.slug).slice(0, 2);
       write(p.post(x.slug), page({
         lang, path: p.post(x.slug), alt: x.alt,
-        title: `${x.seoTitle || x.title} | TicketBrain`, description: x.description,
+        // The brand suffix only when the whole title still fits in 60 characters.
+        title: `${x.seoTitle || x.title} | TicketBrain`.length <= 60
+          ? `${x.seoTitle || x.title} | TicketBrain` : (x.seoTitle || x.title),
+        description: x.description,
+        script: x.html.includes('class="calc"') ? CALC_JS : "",
         body: `      <section class="page-hero"><div class="wrap narrow">
         <a class="crumb" href="${p.blog}">${esc(t.backToBlog)}</a>
         <h1>${esc(x.title)}</h1>
@@ -617,8 +692,11 @@ ${others.map((o) => `            <a href="${p.post(o.slug)}"><b>${esc(o.title)}<
         jsonLd: [{ "@context": "https://schema.org", "@type": "BlogPosting",
           headline: x.title, description: x.description, datePublished: x.date,
           dateModified: x.updated || x.date, inLanguage: lang,
-          image: `${SITE}/sharing-image.png`, author: ORG, publisher: ORG,
-          mainEntityOfPage: { "@type": "WebPage", "@id": SITE + p.post(x.slug) } }],
+          image: x.image ? SITE + x.image : `${SITE}/sharing-image.png`, author: ORG, publisher: ORG,
+          mainEntityOfPage: { "@type": "WebPage", "@id": SITE + p.post(x.slug) } },
+          ...(x.faq.length ? [{ "@context": "https://schema.org", "@type": "FAQPage",
+            mainEntity: x.faq.map((f) => ({ "@type": "Question", name: f.q,
+              acceptedAnswer: { "@type": "Answer", text: f.a } })) }] : [])],
       }));
       urls.push([p.post(x.slug), "0.7"]);
     }

@@ -46,4 +46,6 @@ You can’t reverse global inflation, but you **can** influence your own basket:
 ## The Bottom Line
 Your grocery bill doubled because of a mix of global forces and small, unnoticed personal choices.  
 The good news? **You can’t control inflation, but you *can* control your habits.**  
-And often, that’s where the biggest savings hide.  
+And often, that’s where the biggest savings hide.
+
+Wondering whether your bill is actually high? Compare it with [how much you should spend on groceries a month](/blog/how-much-to-spend-on-groceries), by the USDA's official food plans.

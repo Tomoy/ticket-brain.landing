@@ -286,6 +286,18 @@ article.prose code{background:var(--green-50);padding:2px 6px;border-radius:5px;
       article.prose tbody tr:last-child th,article.prose tbody tr:last-child td{border-bottom:0}
       /* First column is the dimension being compared, so it reads as a label. */
       article.prose tbody td:first-child{color:var(--ink);font-weight:600}
+      /* Spending calculator inside a post: two fields and a live comparison. */
+      article.prose .calc{border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin:0 0 28px;
+                          background:var(--green-50);display:grid;gap:14px}
+      article.prose .calc label{display:grid;gap:6px;font-weight:600;color:var(--ink);font-size:15.5px}
+      article.prose .calc select,article.prose .calc input{font:inherit;font-weight:500;color:var(--ink);
+                          border:1px solid var(--line);border-radius:12px;padding:11px 14px;background:#fff;width:100%}
+      article.prose .calc-money{position:relative;display:block}
+      article.prose .calc-money b{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--muted)}
+      article.prose .calc-out p,article.prose .calc-out ul{margin:0;font-size:15.5px}
+      article.prose .calc-out ul{padding-left:20px}
+      article.prose .calc-out li{margin-bottom:6px}
+      article.prose .calc-note{margin:0;font-size:13.5px;color:var(--muted)}
       /* On a phone a three-column table cannot fit, and scrolling it sideways
          hides the column the reader came for. Each row becomes a card instead,
          with the column heading printed above its value (build.mjs copies the

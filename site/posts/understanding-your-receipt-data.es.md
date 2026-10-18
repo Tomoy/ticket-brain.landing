@@ -76,3 +76,5 @@ Aunque podrías analizar tickets manualmente, la IA de TicketBrain procesa miles
 - **Recomendaciones personalizadas** basadas en tus patrones únicos
 
 ¿Listo para desbloquear las perspectivas en tus tickets? Deja que TicketBrain te muestre lo que realmente significan tus datos de compra.
+
+Si tus tickets están repartidos entre el papel y las apps de cada cadena, te ayudará nuestra guía del [ticket digital del supermercado](/es/blog/ticket-digital-supermercado).

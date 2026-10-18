@@ -46,4 +46,6 @@ No puedes revertir la inflación global, pero **sí** puedes influir en tu propi
 ## En Resumen
 Tu cuenta del supermercado se duplicó por una mezcla de fuerzas globales y pequeñas decisiones personales que pasaron desapercibidas.  
 La buena noticia: **no puedes controlar la inflación, pero *sí* puedes controlar tus hábitos.**  
-Y muchas veces, ahí es donde se esconden los mayores ahorros.  
+Y muchas veces, ahí es donde se esconden los mayores ahorros.
+
+¿Quieres saber si tu cuenta es alta de verdad? Compárala con [el gasto medio en el supermercado en España](/es/blog/gasto-supermercado-mes) según el INE.
