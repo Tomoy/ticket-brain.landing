@@ -265,9 +265,23 @@ const PLAY_ICON = `<svg viewBox="0 0 14 16" width="17" height="19" aria-hidden="
  * same markup feeds the hero, the final CTA and the footer, so the day the
  * Android build ships only STORES.play changes.
  */
-const storeBadges = (lang, { dark = false, indent = "" } = {}) => {
+/**
+ * Download links carry a campaign tag so each store can say which page sent
+ * the install: App Store Connect > Campaigns reads `ct`, Play Console reads the
+ * UTM inside `referrer`. Only the clickable links are tagged; JSON-LD and
+ * llms.txt keep the clean listing URL, which is the app's identity.
+ */
+const APPLE_PROVIDER_TOKEN = "129030188";
+const tagStore = (store, url, ct) => {
+  if (!url) return url;
+  if (store === "apple") return `${url}?pt=${APPLE_PROVIDER_TOKEN}&ct=${encodeURIComponent(ct)}&mt=8`;
+  return `${url}&referrer=${encodeURIComponent(`utm_source=ticketbrain.app&utm_medium=web&utm_campaign=${ct}`)}`;
+};
+
+const storeBadges = (lang, { dark = false, indent = "", place = "footer" } = {}) => {
   const t = ui[lang];
-  const badge = (store, url, icon, name, label) => {
+  const badge = (store, rawUrl, icon, name, label) => {
+    const url = tagStore(store, rawUrl, `web-${place}-${lang}`);
     const cls = `store${dark ? " store-dark" : ""}${url ? "" : " store-soon"}`;
     const inner = `${icon}<span><small>${esc(url ? t.storeLive[store] : t.storeSoon)}</small><strong>${name}</strong></span>`;
     return url
@@ -520,9 +534,15 @@ function loadPosts() {
       if (i > 0) meta[line.slice(0, i).trim()] = line.slice(i + 1).trim().replace(/^["']|["']$/g, "");
     });
     const md = parts.slice(2).join("---").trim();
+    /* Our own download links inside a post get that post's campaign tag, so
+       the stores show which article sent the install. Links to other apps
+       are left alone. */
+    const tagged = (html) => html
+      .replaceAll(`href="${STORES.apple}"`, `href="${tagStore("apple", STORES.apple, `blog-${meta.slug}`)}"`)
+      .replaceAll(`href="${STORES.play}"`, `href="${tagStore("play", STORES.play, `blog-${meta.slug}`)}"`);
     return { ...meta, image: meta.image ? `/blog-media/${meta.image}` : null,
              faq: faqFrom(md),
-             html: dressCalcs(dressTables(marked.parse(md))) };
+             html: tagged(dressCalcs(dressTables(marked.parse(md)))) };
   };
   /* A post is `slug.md` (English), `slug.es.md` (Spanish), or both. Only a
      real pair gets hreflang and a language banner; a post written for one
@@ -603,7 +623,7 @@ function build() {
         ? "Scan any supermarket receipt and TicketBrain reads every item, categorises it, and shows which purchases are driving your grocery budget up."
         : "Escanea cualquier ticket del supermercado y TicketBrain lee cada producto, lo categoriza y te muestra qué compras están disparando tu presupuesto.",
       body: read(`site/pages/home.${lang}.html`)
-        .replaceAll("<!--STORES-->", storeBadges(lang, { indent: "              " }).trimStart()),
+        .replaceAll("<!--STORES-->", storeBadges(lang, { indent: "              ", place: "home" }).trimStart()),
       /* Both homepages carry the full entity graph. The Spanish one used to
          ship none at all, which left half the site structurally invisible to
          anything reading the page as data rather than as prose. */
