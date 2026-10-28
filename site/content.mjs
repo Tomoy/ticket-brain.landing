@@ -54,7 +54,12 @@ export const faq = {
  * Every claim below was checked against the code:
  *   - nothing but the photo leaves the device -> lib/data/local/app_database.dart
  *     (drift/SQLite) and lib/data/local/coupon_image_store.dart hold everything
- *     locally; there is no sync code.
+ *     locally; there is no sync code. One exception since 1.1, opt-in: the
+ *     text of receipts saved before 1.1 (store, location, each line's name,
+ *     quantity and unit, plus the local receipt id; no amounts, no dates) goes
+ *     once to POST /normalize after the user says yes in the Savings tab
+ *     (lib/screens/savings/old_receipts_card.dart, lib/services/
+ *     receipt_normalizer.dart). Same handling as the photo: memory only.
  *   - the photo is not stored -> api/main.py reads the upload into memory,
  *     forwards it to the model and returns the result. Nothing touches disk.
  *   - the anonymous device id -> lib/data/repositories/device_repository.dart,
@@ -73,8 +78,8 @@ export const faq = {
 export const privacyDoc = {
   en: {
     title: `Privacy Policy`,
-    lastUpdated: `Last updated: October 2026`,
-    summary: `The short version: TicketBrain has no accounts and never asks for your name, your email or your bank. Your receipts, coupons and budget live in a database on your own phone. The only thing that leaves your device is the photo of a receipt, which is read once to pull out the lines and is never stored by us. This website is separate: it uses Google Analytics only if you allow it, and holds an email list from before the Android launch. Both are explained under "This Website".`,
+    lastUpdated: `Last updated: 28 October 2026`,
+    summary: `The short version: TicketBrain has no accounts and never asks for your name, your email or your bank. Your receipts, coupons and budget live in a database on your own phone. What leaves your device is the photo of a receipt, which is read once to pull out the lines and is never stored by us, and, only if you say yes, the text of receipts you scanned before version 1.1, sent once so they can join the price comparison. This website is separate: it uses Google Analytics only if you allow it, and holds an email list from before the Android launch. Both are explained under "This Website".`,
     sections: [
       {
         h: `Who We Are`,
@@ -85,7 +90,7 @@ export const privacyDoc = {
       {
         h: `What Stays On Your Phone`,
         body: [
-          { p: `All of this is stored in a local database on your device and is never sent to us:` },
+          { p: `All of this is stored in a local database on your device. Apart from the one case explained under "Your Earlier Receipts", which only happens if you say yes, it is never sent to us:` },
           { list: [
             `Your receipts: the store, the date, the total, and every line item with its price and category`,
             `Your coupons, including the photos you take of them`,
@@ -98,9 +103,17 @@ export const privacyDoc = {
       {
         h: `The Receipt Photo`,
         body: [
-          { p: `This is the one thing that leaves your phone. When you scan a receipt or a coupon, the photo is sent over an encrypted connection to our server, held in memory while an AI model reads the lines off it, and the extracted text comes straight back to your phone.` },
+          { p: `This is the one thing that leaves your phone when you scan. When you scan a receipt or a coupon, the photo is sent over an encrypted connection to our server, held in memory while an AI model reads the lines off it, and the extracted text comes straight back to your phone.` },
           { p: `The image is never written to disk, never added to a database and never kept after the response is sent. There is no archive of your receipts on our side to lose, leak or be asked to hand over.` },
           { p: `A randomly generated identifier travels with the request so that we can cap how many scans come from a single installation and keep the service usable for everyone. It is created on your phone, it is not derived from your device or from you, and it is not linked to anything else. It is only ever held in the server's memory, never written to disk or to a database, and it disappears whenever the server restarts. The scan limits look back at most 30 days.` },
+        ],
+      },
+      {
+        h: `Your Earlier Receipts, Only If You Say Yes`,
+        body: [
+          { p: `Price comparison arrived in version 1.1. Receipts you scanned before that are missing the details it needs, and their photos no longer exist. To add them, the app asks you first in the Savings tab. Only if you say yes does it send, once, the text you already have saved for each one: the store name, its address, and the name and quantity of every line, along with an internal receipt number that only serves to match up the answer. Amounts, dates, photos and your budget are not sent.` },
+          { p: `It travels the same way as the photo: over an encrypted connection to our server, which passes it to an AI model to recognise the chain, the province and which product each line is, and the result comes back to your phone. It carries the same random identifier as a scan, for the same purpose: limiting how much one installation can send. It is never written to disk or added to a database. A receipt that already has those details is never sent again.` },
+          { p: `If you choose "Not now", nothing is sent, and you can change your mind from the Savings tab. Once you say yes, receipts from an older backup that you restore later are added the same way.` },
         ],
       },
       {
@@ -129,17 +142,18 @@ export const privacyDoc = {
         body: [
           { p: `Three providers are involved, each for one narrow job:` },
           { list: [
-            `Railway Corp. hosts the server that receives the photo and passes it on. It runs in Railway's Amsterdam region, inside the European Union.`,
-            `Anthropic PBC reads the receipt photo through the Claude API and returns the extracted lines. The image is sent for that purpose and nothing else.`,
+            `Railway Corp. hosts the server that receives the photo, and the text of your earlier receipts if you agreed to add them, and passes them on. It runs in Railway's Amsterdam region, inside the European Union.`,
+            `Anthropic PBC reads the receipt photo through the Claude API and returns the extracted lines. The image is sent for that purpose and nothing else. If you agree to add your earlier receipts, it also sorts their text, as explained above.`,
             `Google Ireland Limited provides Firebase Analytics for the anonymous usage events described above.`,
           ] },
-          { p: `Our server is in the European Union. The receipt photo is sent to Anthropic in the United States to be read, and is not stored there. Firebase Analytics is operated by Google, which may process the anonymous events on infrastructure outside the European Union. Both of those transfers rely on the European Commission's Standard Contractual Clauses, included in the providers' terms.` },
+          { p: `Our server is in the European Union. The receipt photo, and the text of your earlier receipts if you agree to add them, are sent to Anthropic in the United States to be read, and are not stored there. Firebase Analytics is operated by Google, which may process the anonymous events on infrastructure outside the European Union. Both of those transfers rely on the European Commission's Standard Contractual Clauses, included in the providers' terms.` },
         ],
       },
       {
         h: `How Long Data Is Kept`,
         body: [
           { p: `The receipt photo: not kept at all. It exists in server memory for the seconds the scan takes and is discarded when the response is sent.` },
+          { p: `The text of your earlier receipts, if you agreed to add them: the same as the photo. It exists in server memory while it is processed and is discarded when the response is sent.` },
           { p: `The anonymous scan identifier: only in the server's memory, never written to disk. The scan limits use at most the last 30 days, and the identifier disappears whenever the server restarts.` },
           { p: `Analytics events: retained by Google Firebase for the period configured in our Firebase project, after which Google deletes them.` },
           { p: `Website analytics, if you allowed it: kept by Google Analytics for the retention period set in our property, at most 14 months. The cookies on your browser expire after two years, or as soon as you withdraw consent.` },
@@ -197,8 +211,8 @@ export const privacyDoc = {
   },
   es: {
     title: `Política de Privacidad`,
-    lastUpdated: `Última actualización: Octubre 2026`,
-    summary: `La versión corta: TicketBrain no tiene cuentas y nunca te pide tu nombre, tu correo ni tu banco. Tus tickets, cupones y presupuesto viven en una base de datos en tu propio móvil. Lo único que sale de tu dispositivo es la foto del ticket, que se lee una vez para extraer las líneas y que nosotros no guardamos en ningún momento. Esta web es aparte: usa Google Analytics solo si lo permites, y conserva una lista de email de antes del lanzamiento de Android. Las dos cosas se explican en «Esta Web».`,
+    lastUpdated: `Última actualización: 28 de octubre de 2026`,
+    summary: `La versión corta: TicketBrain no tiene cuentas y nunca te pide tu nombre, tu correo ni tu banco. Tus tickets, cupones y presupuesto viven en una base de datos en tu propio móvil. Lo que sale de tu dispositivo es la foto del ticket, que se lee una vez para extraer las líneas y que nosotros no guardamos en ningún momento, y, solo si lo aceptas, el texto de los tickets que escaneaste antes de la versión 1.1, que se envía una vez para sumarlos a la comparación de precios. Esta web es aparte: usa Google Analytics solo si lo permites, y conserva una lista de email de antes del lanzamiento de Android. Las dos cosas se explican en «Esta Web».`,
     sections: [
       {
         h: `Quiénes Somos`,
@@ -209,7 +223,7 @@ export const privacyDoc = {
       {
         h: `Lo Que Se Queda En Tu Móvil`,
         body: [
-          { p: `Todo esto se guarda en una base de datos local en tu dispositivo y nunca se nos envía:` },
+          { p: `Todo esto se guarda en una base de datos local en tu dispositivo. Salvo el caso que se explica en «Tus Tickets Anteriores», que solo ocurre si lo aceptas, nunca se nos envía:` },
           { list: [
             `Tus tickets: el establecimiento, la fecha, el total y cada línea con su precio y su categoría`,
             `Tus cupones, incluidas las fotos que les haces`,
@@ -222,9 +236,17 @@ export const privacyDoc = {
       {
         h: `La Foto Del Ticket`,
         body: [
-          { p: `Es lo único que sale de tu móvil. Cuando escaneas un ticket o un cupón, la foto se envía por una conexión cifrada a nuestro servidor, se mantiene en memoria mientras un modelo de IA lee las líneas, y el texto extraído vuelve directo a tu móvil.` },
+          { p: `Es lo único que sale de tu móvil al escanear. Cuando escaneas un ticket o un cupón, la foto se envía por una conexión cifrada a nuestro servidor, se mantiene en memoria mientras un modelo de IA lee las líneas, y el texto extraído vuelve directo a tu móvil.` },
           { p: `La imagen no se escribe nunca en disco, no entra en ninguna base de datos y no se conserva una vez enviada la respuesta. No hay un archivo de tus tickets en nuestro lado que se pueda perder, filtrar o reclamar.` },
           { p: `Junto a la petición viaja un identificador generado al azar, que nos sirve para limitar cuántos escaneos llegan desde una misma instalación y mantener el servicio utilizable para todos. Se crea en tu móvil, no se deriva de tu dispositivo ni de ti, y no está vinculado a nada más. Solo se guarda en la memoria del servidor, nunca en disco ni en una base de datos, y desaparece cada vez que el servidor se reinicia. Los límites de escaneo miran como mucho los últimos 30 días.` },
+        ],
+      },
+      {
+        h: `Tus Tickets Anteriores, Solo Si Lo Aceptas`,
+        body: [
+          { p: `La comparación de precios llegó con la versión 1.1. A los tickets que escaneaste antes les faltan los datos que necesita, y sus fotos ya no existen. Para sumarlos, la app te lo pregunta antes en la pestaña Ahorro. Solo si dices que sí envía, una vez, el texto que ya tienes guardado de cada uno: el nombre del establecimiento, su dirección y el nombre y la cantidad de cada línea, junto a un número interno del ticket que solo sirve para emparejar la respuesta. No se envían importes, fechas, fotos ni nada de tu presupuesto.` },
+          { p: `Viaja por el mismo camino que la foto: una conexión cifrada a nuestro servidor, que lo pasa a un modelo de IA para reconocer la cadena, la provincia y qué producto es cada línea, y el resultado vuelve a tu móvil. Lleva el mismo identificador aleatorio que un escaneo, para lo mismo: limitar cuánto puede enviar una instalación. No se escribe en disco ni entra en ninguna base de datos. Un ticket que ya tiene esos datos no se vuelve a enviar.` },
+          { p: `Si eliges «Ahora no», no se envía nada, y puedes cambiar de opinión desde la pestaña Ahorro. Una vez que dices que sí, los tickets de una copia de seguridad antigua que restaures después se suman de la misma forma.` },
         ],
       },
       {
@@ -253,17 +275,18 @@ export const privacyDoc = {
         body: [
           { p: `Intervienen tres proveedores, cada uno para una tarea concreta:` },
           { list: [
-            `Railway Corp. aloja el servidor que recibe la foto y la reenvía. Está en la región de Ámsterdam de Railway, dentro de la Unión Europea.`,
-            `Anthropic PBC lee la foto del ticket a través de la API de Claude y devuelve las líneas extraídas. La imagen se envía para eso y para nada más.`,
+            `Railway Corp. aloja el servidor que recibe la foto, y el texto de tus tickets anteriores si aceptaste sumarlos, y los reenvía. Está en la región de Ámsterdam de Railway, dentro de la Unión Europea.`,
+            `Anthropic PBC lee la foto del ticket a través de la API de Claude y devuelve las líneas extraídas. La imagen se envía para eso y para nada más. Si aceptas sumar tus tickets anteriores, también ordena su texto, como se explica arriba.`,
             `Google Ireland Limited proporciona Firebase Analytics para los eventos de uso anónimos descritos arriba.`,
           ] },
-          { p: `Nuestro servidor está en la Unión Europea. La foto del ticket se envía a Anthropic en Estados Unidos para leerla, y no se almacena allí. Firebase Analytics lo opera Google, que puede tratar los eventos anónimos en infraestructura fuera de la Unión Europea. Esas dos transferencias se amparan en las Cláusulas Contractuales Tipo de la Comisión Europea, incluidas en las condiciones de los proveedores.` },
+          { p: `Nuestro servidor está en la Unión Europea. La foto del ticket, y el texto de tus tickets anteriores si aceptas sumarlos, se envían a Anthropic en Estados Unidos para leerlos, y no se almacenan allí. Firebase Analytics lo opera Google, que puede tratar los eventos anónimos en infraestructura fuera de la Unión Europea. Esas dos transferencias se amparan en las Cláusulas Contractuales Tipo de la Comisión Europea, incluidas en las condiciones de los proveedores.` },
         ],
       },
       {
         h: `Cuánto Tiempo Se Conservan Los Datos`,
         body: [
           { p: `La foto del ticket: no se conserva en absoluto. Existe en la memoria del servidor los segundos que dura el escaneo y se descarta al enviar la respuesta.` },
+          { p: `El texto de tus tickets anteriores, si aceptaste sumarlos: igual que la foto. Existe en la memoria del servidor mientras se procesa y se descarta al enviar la respuesta.` },
           { p: `El identificador anónimo de escaneo: solo en la memoria del servidor, nunca en disco. Los límites de escaneo usan como mucho los últimos 30 días, y el identificador desaparece cada vez que el servidor se reinicia.` },
           { p: `Los eventos de analítica: los conserva Google Firebase durante el periodo configurado en nuestro proyecto de Firebase, tras el cual Google los elimina.` },
           { p: `La analítica de la web, si la permitiste: la conserva Google Analytics durante el periodo configurado en nuestra propiedad, como máximo 14 meses. Las cookies de tu navegador caducan a los dos años, o en cuanto retiras el consentimiento.` },
@@ -450,7 +473,7 @@ export const supportPage = {
       ["The scan failed or read the wrong lines",
        "Scanning needs an internet connection and works best with a flat, well-lit receipt with the total visible. If a line comes out wrong you can edit it before saving, and nothing is stored until you confirm. If the same receipt fails twice, send me the store name and the error text."],
       ["Where is my data stored?",
-       "On your phone, in a local database. There is no account and nothing is uploaded except the photo of a receipt while it is being read. That also means that if you delete the app, the data goes with it."],
+       "On your phone, in a local database. There is no account and nothing is uploaded except the photo of a receipt while it is being read, and, if you agree to add them to the price comparison, the text of receipts from before version 1.1, once. That also means that if you delete the app, the data goes with it."],
       ["How do I back up or move to a new phone?",
        "Settings → Export my data creates a file with all your receipts and coupons. Save it to iCloud Drive, Google Drive or anywhere you like, then on the new phone use Settings → Restore from a backup. Restoring only adds what is missing; it never overwrites what you already have."],
       ["Coupon reminders are not arriving",
@@ -482,7 +505,7 @@ export const supportPage = {
       ["El escaneo falló o leyó mal las líneas",
        "Escanear necesita conexión a internet y funciona mejor con el ticket plano, bien iluminado y con el total visible. Si una línea sale mal puedes editarla antes de guardar, y no se guarda nada hasta que confirmas. Si el mismo ticket falla dos veces, mándame el nombre de la tienda y el texto del error."],
       ["¿Dónde se guardan mis datos?",
-       "En tu móvil, en una base de datos local. No hay cuenta y no se sube nada salvo la foto del ticket mientras se lee. Eso también significa que si borras la app, los datos se van con ella."],
+       "En tu móvil, en una base de datos local. No hay cuenta y no se sube nada salvo la foto del ticket mientras se lee y, si aceptas sumarlos a la comparación de precios, el texto de los tickets anteriores a la versión 1.1, una sola vez. Eso también significa que si borras la app, los datos se van con ella."],
       ["¿Cómo hago una copia o cambio de móvil?",
        "Ajustes → Exportar mis datos crea un archivo con todos tus tickets y cupones. Guárdalo en iCloud Drive, Google Drive o donde quieras, y en el móvil nuevo usa Ajustes → Restaurar desde una copia. Restaurar solo añade lo que falta; nunca sobrescribe lo que ya tienes."],
       ["No me llegan los recordatorios de cupones",
