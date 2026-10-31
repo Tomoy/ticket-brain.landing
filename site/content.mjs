@@ -78,7 +78,7 @@ export const faq = {
 export const privacyDoc = {
   en: {
     title: `Privacy Policy`,
-    lastUpdated: `Last updated: 28 October 2026`,
+    lastUpdated: `Last updated: 31 October 2026`,
     summary: `The short version: TicketBrain has no accounts and never asks for your name, your email or your bank. Your receipts, coupons and budget live in a database on your own phone. What leaves your device is the photo of a receipt, which is read once to pull out the lines and is never stored by us, and, only if you say yes, the text of receipts you scanned before version 1.1, sent once so they can join the price comparison. This website is separate: it uses Google Analytics only if you allow it, and holds an email list from before the Android launch. Both are explained under "This Website".`,
     sections: [
       {
@@ -111,7 +111,7 @@ export const privacyDoc = {
       {
         h: `Your Earlier Receipts, Only If You Say Yes`,
         body: [
-          { p: `Price comparison arrived in version 1.1. Receipts you scanned before that are missing the details it needs, and their photos no longer exist. To add them, the app asks you first in the Savings tab. Only if you say yes does it send, once, the text you already have saved for each one: the store name, its address, and the name and quantity of every line, along with an internal receipt number that only serves to match up the answer. Amounts, dates, photos and your budget are not sent.` },
+          { p: `Price comparison arrived in version 1.1. Receipts you scanned before that are missing the details it needs, and their photos no longer exist. To add them, the app asks you first in the Savings tab. Only if you say yes does it send, once, the text you already have saved for each one: the store name, its address, and the name, quantity and unit of every line, along with an internal receipt number that only serves to match up the answer. Amounts, dates, photos and your budget are not sent.` },
           { p: `It travels the same way as the photo: over an encrypted connection to our server, which passes it to an AI model to recognise the chain, the province and which product each line is, and the result comes back to your phone. It carries the same random identifier as a scan, for the same purpose: limiting how much one installation can send. It is never written to disk or added to a database. A receipt that already has those details is never sent again.` },
           { p: `If you choose "Not now", nothing is sent, and you can change your mind from the Savings tab. Once you say yes, receipts from an older backup that you restore later are added the same way.` },
         ],
@@ -121,7 +121,7 @@ export const privacyDoc = {
         body: [
           { p: `The app reports anonymous usage events so that we can tell which parts work and which are broken. This runs on Google Firebase Analytics.` },
           { p: `What we send is limited to named events and coarse aggregates, for example: a scan was started, a receipt was parsed and how many line items it had, a coupon was saved, a setting was changed, the app language, whether notifications are allowed, and a range for how many receipts you have saved (such as "6-20") rather than the number itself.` },
-          { p: `What we never send: the amounts you spend, the names of the stores, the names of the products, the receipt photos, your budget figure, your email, your name, or any identifier we could use to find you. There is no account to attach any of it to.` },
+          { p: `What we never send to analytics: the amounts you spend, the names of the stores, the names of the products, the receipt photos, your budget figure, your email, your name, or any identifier we could use to find you. There is no account to attach any of it to.` },
           { p: `Firebase assigns its own app installation identifier and records the device model, the operating system version and an approximate country. That is Google's standard collection for any app that uses it, and it is governed by Google's own privacy terms.` },
           { p: `You can turn all of this off in the app, under Settings, and it stays off. Uninstalling the app also ends it.` },
         ],
@@ -211,7 +211,7 @@ export const privacyDoc = {
   },
   es: {
     title: `Política de Privacidad`,
-    lastUpdated: `Última actualización: 28 de octubre de 2026`,
+    lastUpdated: `Última actualización: 31 de octubre de 2026`,
     summary: `La versión corta: TicketBrain no tiene cuentas y nunca te pide tu nombre, tu correo ni tu banco. Tus tickets, cupones y presupuesto viven en una base de datos en tu propio móvil. Lo que sale de tu dispositivo es la foto del ticket, que se lee una vez para extraer las líneas y que nosotros no guardamos en ningún momento, y, solo si lo aceptas, el texto de los tickets que escaneaste antes de la versión 1.1, que se envía una vez para sumarlos a la comparación de precios. Esta web es aparte: usa Google Analytics solo si lo permites, y conserva una lista de email de antes del lanzamiento de Android. Las dos cosas se explican en «Esta Web».`,
     sections: [
       {
@@ -244,7 +244,7 @@ export const privacyDoc = {
       {
         h: `Tus Tickets Anteriores, Solo Si Lo Aceptas`,
         body: [
-          { p: `La comparación de precios llegó con la versión 1.1. A los tickets que escaneaste antes les faltan los datos que necesita, y sus fotos ya no existen. Para sumarlos, la app te lo pregunta antes en la pestaña Ahorro. Solo si dices que sí envía, una vez, el texto que ya tienes guardado de cada uno: el nombre del establecimiento, su dirección y el nombre y la cantidad de cada línea, junto a un número interno del ticket que solo sirve para emparejar la respuesta. No se envían importes, fechas, fotos ni nada de tu presupuesto.` },
+          { p: `La comparación de precios llegó con la versión 1.1. A los tickets que escaneaste antes les faltan los datos que necesita, y sus fotos ya no existen. Para sumarlos, la app te lo pregunta antes en la pestaña Ahorro. Solo si dices que sí envía, una vez, el texto que ya tienes guardado de cada uno: el nombre del establecimiento, su dirección y el nombre, la cantidad y la unidad de cada línea, junto a un número interno del ticket que solo sirve para emparejar la respuesta. No se envían importes, fechas, fotos ni nada de tu presupuesto.` },
           { p: `Viaja por el mismo camino que la foto: una conexión cifrada a nuestro servidor, que lo pasa a un modelo de IA para reconocer la cadena, la provincia y qué producto es cada línea, y el resultado vuelve a tu móvil. Lleva el mismo identificador aleatorio que un escaneo, para lo mismo: limitar cuánto puede enviar una instalación. No se escribe en disco ni entra en ninguna base de datos. Un ticket que ya tiene esos datos no se vuelve a enviar.` },
           { p: `Si eliges «Ahora no», no se envía nada, y puedes cambiar de opinión desde la pestaña Ahorro. Una vez que dices que sí, los tickets de una copia de seguridad antigua que restaures después se suman de la misma forma.` },
         ],
@@ -254,7 +254,7 @@ export const privacyDoc = {
         body: [
           { p: `La app envía eventos de uso anónimos para que podamos saber qué partes funcionan y cuáles están rotas. Esto se apoya en Google Firebase Analytics.` },
           { p: `Lo que enviamos se limita a eventos con nombre y agregados poco precisos, por ejemplo: se ha iniciado un escaneo, se ha procesado un ticket y cuántas líneas tenía, se ha guardado un cupón, se ha cambiado un ajuste, el idioma de la app, si las notificaciones están permitidas, y un rango de cuántos tickets tienes guardados (por ejemplo "6-20") en lugar de la cifra exacta.` },
-          { p: `Lo que no enviamos nunca: los importes que gastas, los nombres de los establecimientos, los nombres de los productos, las fotos de los tickets, tu presupuesto, tu correo, tu nombre ni ningún identificador con el que pudiéramos localizarte. No hay ninguna cuenta a la que asociar nada de eso.` },
+          { p: `Lo que no enviamos nunca a la analítica: los importes que gastas, los nombres de los establecimientos, los nombres de los productos, las fotos de los tickets, tu presupuesto, tu correo, tu nombre ni ningún identificador con el que pudiéramos localizarte. No hay ninguna cuenta a la que asociar nada de eso.` },
           { p: `Firebase asigna su propio identificador de instalación y registra el modelo del dispositivo, la versión del sistema operativo y un país aproximado. Es la recogida estándar de Google para cualquier app que lo utilice y se rige por las condiciones de privacidad de Google.` },
           { p: `Puedes desactivar todo esto en la propia app, en Ajustes, y se queda desactivado. Desinstalar la app también lo detiene.` },
         ],
@@ -364,7 +364,7 @@ export const privacyPage = {
   en: {
     kicker: "Privacy",
     title: "We never ask for your bank credentials, because we don't need them.",
-    lede: "TicketBrain only reads the photo you take. Your history lives in a local database on your own phone, and the app works offline.",
+    lede: "TicketBrain only reads the photo you take and, if you agree, the text of your earlier receipts, once. Your history lives in a local database on your own phone, and the app works offline.",
     cards: [
       ["No bank connection",
        "There is no account linking step, no open-banking provider in between, and no credentials to hand over."],
@@ -380,7 +380,7 @@ export const privacyPage = {
   es: {
     kicker: "Privacidad",
     title: "Nunca te pedimos las credenciales de tu banco, porque no las necesitamos.",
-    lede: "TicketBrain solo lee la foto que haces. Tu historial vive en una base de datos local en tu propio teléfono, y la app funciona sin conexión.",
+    lede: "TicketBrain solo lee la foto que haces y, si lo aceptas, el texto de tus tickets anteriores, una vez. Tu historial vive en una base de datos local en tu propio teléfono, y la app funciona sin conexión.",
     cards: [
       ["Sin conexión bancaria",
        "No hay que vincular ninguna cuenta, no hay un proveedor de open banking en medio y no hay credenciales que entregar."],
