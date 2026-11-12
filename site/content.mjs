@@ -78,7 +78,7 @@ export const faq = {
 export const privacyDoc = {
   en: {
     title: `Privacy Policy`,
-    lastUpdated: `Last updated: 31 October 2026`,
+    lastUpdated: `Last updated: 12 November 2026`,
     summary: `The short version: TicketBrain has no accounts and never asks for your name, your email or your bank. Your receipts, coupons and budget live in a database on your own phone. What leaves your device is the photo of a receipt, which is read once to pull out the lines and is never stored by us, and, only if you say yes, the text of receipts you scanned before version 1.1, sent once so they can join the price comparison. This website is separate: it uses Google Analytics only if you allow it, and holds an email list from before the Android launch. Both are explained under "This Website".`,
     sections: [
       {
@@ -211,7 +211,7 @@ export const privacyDoc = {
   },
   es: {
     title: `Política de Privacidad`,
-    lastUpdated: `Última actualización: 31 de octubre de 2026`,
+    lastUpdated: `Última actualización: 12 de noviembre de 2026`,
     summary: `La versión corta: TicketBrain no tiene cuentas y nunca te pide tu nombre, tu correo ni tu banco. Tus tickets, cupones y presupuesto viven en una base de datos en tu propio móvil. Lo que sale de tu dispositivo es la foto del ticket, que se lee una vez para extraer las líneas y que nosotros no guardamos en ningún momento, y, solo si lo aceptas, el texto de los tickets que escaneaste antes de la versión 1.1, que se envía una vez para sumarlos a la comparación de precios. Esta web es aparte: usa Google Analytics solo si lo permites, y conserva una lista de email de antes del lanzamiento de Android. Las dos cosas se explican en «Esta Web».`,
     sections: [
       {
